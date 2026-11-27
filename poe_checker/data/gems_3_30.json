@@ -1,0 +1,5059 @@
+{
+"actives": {
+"Fireball": [
+"intelligence",
+"grants_active_skill",
+"projectile",
+"spell",
+"area",
+"fire"
+],
+"Fireball of Radiation": [
+"intelligence",
+"grants_active_skill",
+"projectile",
+"spell",
+"area",
+"duration",
+"fire"
+],
+"Vaal Fireball": [
+"intelligence",
+"grants_active_skill",
+"projectile",
+"spell",
+"area",
+"vaal",
+"fire"
+],
+"Ice Nova": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"nova"
+],
+"Ice Nova of Frostbolts": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"nova"
+],
+"Ice Nova of Deep Freeze": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"nova"
+],
+"Vaal Ice Nova": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"vaal",
+"cold",
+"nova"
+],
+"Leap Slam": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"movement",
+"travel",
+"slam"
+],
+"Leap Slam of Groundbreaking": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"movement",
+"travel",
+"slam"
+],
+"Charged Dash": [
+"dexterity",
+"grants_active_skill",
+"movement",
+"area",
+"channelling",
+"attack",
+"melee",
+"lightning"
+],
+"Charged Dash of Projection": [
+"dexterity",
+"grants_active_skill",
+"area",
+"channelling",
+"attack",
+"melee",
+"lightning"
+],
+"Blade Flurry": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"channelling",
+"melee"
+],
+"Blade Flurry of Incision": [
+"critical",
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"channelling",
+"melee"
+],
+"Holy Sweep": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"lightning"
+],
+"Holy Sweep of Hammerfalls": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"lightning",
+"duration"
+],
+"Ground Slam": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Ground Slam of Earthshaking": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Vaal Ground Slam": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"vaal",
+"slam"
+],
+"Cleave": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee"
+],
+"Cleave of Rage": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee"
+],
+"Shield Charge": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"movement",
+"travel",
+"physical"
+],
+"Enduring Cry": [
+"warcry",
+"strength",
+"grants_active_skill",
+"area",
+"duration"
+],
+"Double Strike": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"physical"
+],
+"Double Strike of Impaling": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"physical"
+],
+"Double Strike of Momentum": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike"
+],
+"Vaal Double Strike": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"duration",
+"vaal",
+"physical"
+],
+"Lacerate": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"physical"
+],
+"Lacerate of Butchering": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"melee"
+],
+"Lacerate of Haemorrhage": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"physical"
+],
+"Elemental Hit": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"fire",
+"cold",
+"lightning",
+"area",
+"random_element"
+],
+"Elemental Hit of the Spectrum": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"fire",
+"cold",
+"lightning",
+"area",
+"bow"
+],
+"Immortal Call": [
+"strength",
+"grants_active_skill",
+"spell",
+"duration",
+"guard"
+],
+"Vaal Immortal Call": [
+"strength",
+"grants_active_skill",
+"spell",
+"duration",
+"vaal",
+"guard"
+],
+"Dual Strike": [
+"critical",
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike"
+],
+"Dual Strike of Ambidexterity": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike"
+],
+"Whirling Blades": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"movement",
+"travel"
+],
+"Frenzy": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"bow"
+],
+"Frenzy of Onslaught": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike"
+],
+"Detonate Dead": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Detonate Dead of Scavenging": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Detonate Dead of Chain Reaction": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Vaal Detonate Dead": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"vaal",
+"fire"
+],
+"Volatile Dead": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Volatile Dead of Confinement": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"duration"
+],
+"Volatile Dead of Seething": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Unearth": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"projectile",
+"area",
+"physical"
+],
+"Split Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"bow"
+],
+"Split Arrow of Splitting": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"bow"
+],
+"Cold Snap": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"duration"
+],
+"Cold Snap of Power": [
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold"
+],
+"Vaal Cold Snap": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal",
+"cold"
+],
+"Raise Zombie": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion"
+],
+"Raise Zombie of Slamming": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion"
+],
+"Raise Zombie of Falling": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion"
+],
+"Caustic Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"duration",
+"chaos",
+"bow"
+],
+"Caustic Arrow of Poison": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"chaos",
+"bow"
+],
+"Blood Rage": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"physical"
+],
+"Righteous Fire": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Righteous Fire of Arcane Devotion": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Vaal Righteous Fire": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"vaal",
+"duration"
+],
+"Discharge": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"cold",
+"lightning",
+"nova"
+],
+"Discharge of Misery": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"cold",
+"lightning",
+"nova"
+],
+"Portal": [
+"low_max_level",
+"grants_active_skill",
+"spell"
+],
+"Vaal Breach": [
+"low_max_level",
+"grants_active_skill",
+"spell",
+"vaal"
+],
+"Flicker Strike": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"movement",
+"duration"
+],
+"Flicker Strike of Power": [
+"critical",
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"movement",
+"duration"
+],
+"Vaal Flicker Strike": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"movement",
+"vaal",
+"duration"
+],
+"Spark": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"lightning"
+],
+"Spark of the Nova": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"lightning"
+],
+"Spark of Unpredictability": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"lightning"
+],
+"Vaal Spark": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"vaal",
+"lightning"
+],
+"Ice Spear": [
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold"
+],
+"Ice Spear of Splitting": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold"
+],
+"Raise Spectre": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion"
+],
+"Raise Spectre of Transience": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion",
+"duration"
+],
+"Infernal Blow": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"strike",
+"fire",
+"duration"
+],
+"Infernal Blow of Immolation": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"strike",
+"fire",
+"duration"
+],
+"Glacial Hammer": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"cold"
+],
+"Glacial Hammer of Shattering": [
+"critical",
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"cold"
+],
+"Vaal Glacial Hammer": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"duration",
+"area",
+"vaal",
+"cold"
+],
+"Frost Wall": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"cold"
+],
+"Wall of Force": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration"
+],
+"Freezing Pulse": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold"
+],
+"Shock Nova": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning",
+"nova"
+],
+"Shock Nova of Procession": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning",
+"nova"
+],
+"Viper Strike": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"duration",
+"melee",
+"strike",
+"chaos"
+],
+"Viper Strike of the Mamba": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"duration",
+"melee",
+"strike",
+"chaos"
+],
+"Phase Run": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"movement",
+"physical",
+"travel"
+],
+"Explosive Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"duration",
+"fire",
+"bow"
+],
+"Temporal Chains": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"curse",
+"hex"
+],
+"Elemental Weakness": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"curse",
+"hex"
+],
+"Warlord's Mark": [
+"strength",
+"grants_active_skill",
+"spell",
+"curse",
+"mark"
+],
+"Punishment": [
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"curse",
+"hex"
+],
+"Enfeeble": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"curse",
+"hex"
+],
+"Assassin's Mark": [
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"curse",
+"mark"
+],
+"Sniper's Mark": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"curse",
+"mark"
+],
+"Despair": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"chaos",
+"curse",
+"hex"
+],
+"Lightning Warp": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"movement",
+"lightning",
+"travel"
+],
+"Vaal Lightning Warp": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal",
+"lightning",
+"movement",
+"travel"
+],
+"Summon Skeletons": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion",
+"duration"
+],
+"Summon Skeletons of Archers": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion",
+"duration"
+],
+"Summon Skeletons of Mages": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion",
+"duration",
+"random_element"
+],
+"Vaal Summon Skeletons": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion",
+"duration",
+"vaal"
+],
+"Heavy Strike": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike"
+],
+"Heavy Strike of Trarthus": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike"
+],
+"Dominating Blow": [
+"strength",
+"grants_active_skill",
+"attack",
+"minion",
+"duration",
+"melee",
+"strike"
+],
+"Dominating Blow of Inspiring": [
+"strength",
+"grants_active_skill",
+"attack",
+"minion",
+"duration",
+"melee",
+"strike"
+],
+"Rain of Arrows": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"projectile",
+"bow"
+],
+"Rain of Arrows of Artillery": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"projectile",
+"bow"
+],
+"Rain of Arrows of Saturation": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"projectile",
+"bow"
+],
+"Vaal Rain of Arrows": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"projectile",
+"vaal",
+"bow"
+],
+"Firestorm": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"fire"
+],
+"Firestorm of Meteors": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Firestorm of Pelting": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"fire"
+],
+"Lightning Strike": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"melee",
+"strike",
+"lightning"
+],
+"Lightning Strike of Arcing": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"melee",
+"strike",
+"lightning",
+"chaining"
+],
+"Vaal Lightning Strike": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"duration",
+"vaal",
+"lightning",
+"projectile"
+],
+"Tempest Shield": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"lightning",
+"chaining"
+],
+"Mana-Infused Staff": [
+"intelligence",
+"grants_active_skill",
+"arcane",
+"spell",
+"area",
+"duration",
+"lightning"
+],
+"Molten Shell": [
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"fire",
+"physical",
+"guard"
+],
+"Vaal Molten Shell": [
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"fire",
+"physical",
+"vaal",
+"guard"
+],
+"Power Siphon": [
+"critical",
+"intelligence",
+"grants_active_skill",
+"attack",
+"projectile"
+],
+"Power Siphon of the Archmage": [
+"intelligence",
+"grants_active_skill",
+"attack",
+"projectile",
+"lightning"
+],
+"Vaal Power Siphon": [
+"critical",
+"intelligence",
+"grants_active_skill",
+"attack",
+"projectile",
+"vaal"
+],
+"Puncture": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"duration",
+"physical",
+"bow"
+],
+"Puncture of Shanking": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"duration",
+"physical"
+],
+"Lightning Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"projectile",
+"lightning",
+"bow"
+],
+"Lightning Arrow of Electrocution": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"lightning",
+"bow"
+],
+"Haste": [
+"aura",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Vaal Haste": [
+"aura",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal"
+],
+"Purity of Elements": [
+"aura",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Vitality": [
+"aura",
+"strength",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Discipline": [
+"aura",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Vaal Discipline": [
+"aura",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal"
+],
+"Grace": [
+"aura",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Vaal Grace": [
+"aura",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal"
+],
+"Determination": [
+"aura",
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"physical"
+],
+"Anger": [
+"aura",
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Hatred": [
+"aura",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"cold"
+],
+"Wrath": [
+"aura",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning"
+],
+"Burning Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"fire",
+"bow"
+],
+"Burning Arrow of Vigour": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"fire",
+"bow"
+],
+"Vaal Burning Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"vaal",
+"fire",
+"bow"
+],
+"Clarity": [
+"aura",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Vaal Clarity": [
+"aura",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal"
+],
+"Detonate Mines": [
+"low_max_level",
+"mine",
+"grants_active_skill",
+"spell"
+],
+"Shockwave Totem": [
+"totem",
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"physical",
+"nova"
+],
+"Shockwave Totem of Authority": [
+"totem",
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"physical",
+"nova"
+],
+"Rejuvenation Totem": [
+"totem",
+"aura",
+"strength",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Icicle Mine": [
+"mine",
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold",
+"aura",
+"area"
+],
+"Icicle Mine of Fanning": [
+"mine",
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold",
+"aura",
+"area"
+],
+"Icicle Mine of Sabotage": [
+"mine",
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold",
+"aura",
+"area"
+],
+"Conversion Trap": [
+"trap",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration"
+],
+"Bear Trap": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"physical"
+],
+"Bear Trap of Skewers": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"physical"
+],
+"Fire Trap": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"fire"
+],
+"Fire Trap of Blasting": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"fire"
+],
+"Decoy Totem": [
+"totem",
+"strength",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Devouring Totem": [
+"totem",
+"strength",
+"grants_active_skill",
+"spell"
+],
+"Ethereal Knives": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"projectile",
+"physical"
+],
+"Ethereal Knives of Lingering Blades": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"projectile",
+"physical",
+"duration"
+],
+"Ethereal Knives of the Massacre": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"projectile",
+"physical"
+],
+"Ice Shot": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"cold",
+"bow"
+],
+"Ice Shot of Penetration": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"cold",
+"bow"
+],
+"Creeping Frost": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"area",
+"cold"
+],
+"Creeping Frost of Floes": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"area",
+"cold"
+],
+"Arc": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"chaining",
+"lightning"
+],
+"Arc of Surging": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"lightning"
+],
+"Arc of Oscillating": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"chaining",
+"lightning"
+],
+"Vaal Arc": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"chaining",
+"vaal",
+"lightning",
+"duration"
+],
+"Arctic Armour": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"cold"
+],
+"Vaal Arctic Armour": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"cold",
+"vaal"
+],
+"Holy Flame Totem": [
+"totem",
+"strength",
+"grants_active_skill",
+"spell",
+"projectile",
+"fire",
+"channelling",
+"physical",
+"area"
+],
+"Holy Flame Totem of Ire": [
+"totem",
+"strength",
+"grants_active_skill",
+"spell",
+"projectile",
+"fire",
+"channelling",
+"physical",
+"area"
+],
+"Flammability": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"fire",
+"curse",
+"hex"
+],
+"Frostbite": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"cold",
+"curse",
+"hex"
+],
+"Conductivity": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"lightning",
+"curse",
+"hex"
+],
+"Storm Burst": [
+"area",
+"intelligence",
+"grants_active_skill",
+"spell",
+"lightning",
+"channelling",
+"duration",
+"physical"
+],
+"Storm Burst of Repulsion": [
+"area",
+"intelligence",
+"grants_active_skill",
+"spell",
+"lightning",
+"channelling",
+"duration",
+"physical"
+],
+"Incinerate": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"fire",
+"channelling",
+"area"
+],
+"Incinerate of Expanse": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"fire",
+"channelling",
+"area"
+],
+"Incinerate of Venting": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"fire",
+"channelling",
+"area"
+],
+"Cyclone": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"movement",
+"channelling"
+],
+"Cyclone of Tumult": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"movement",
+"channelling"
+],
+"Vaal Cyclone": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"duration",
+"vaal",
+"movement",
+"channelling"
+],
+"Searing Bond": [
+"strength",
+"grants_active_skill",
+"spell",
+"totem",
+"fire"
+],
+"Searing Bond of Detonation": [
+"strength",
+"grants_active_skill",
+"spell",
+"totem",
+"fire",
+"area",
+"duration"
+],
+"Reave": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"melee"
+],
+"Reave of Refraction": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"melee"
+],
+"Vaal Reave": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"vaal"
+],
+"Lightning Trap": [
+"trap",
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"lightning"
+],
+"Lightning Trap of Sparking": [
+"trap",
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"lightning"
+],
+"Vaal Lightning Trap": [
+"trap",
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"vaal",
+"lightning"
+],
+"Smoke Mine": [
+"mine",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"movement",
+"travel",
+"blink"
+],
+"Animate Guardian": [
+"strength",
+"grants_active_skill",
+"spell",
+"minion"
+],
+"Animate Guardian of Smiting": [
+"strength",
+"grants_active_skill",
+"spell",
+"minion",
+"lightning"
+],
+"Spectral Shield Throw": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"physical"
+],
+"Spectral Shield Throw of Shattering": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"cold"
+],
+"Spectral Shield Throw of Trarthus": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"physical"
+],
+"Spectral Throw": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile"
+],
+"Spectral Throw of Materialising": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile"
+],
+"Spectral Throw of Trarthus": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile"
+],
+"Vaal Spectral Throw": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"vaal"
+],
+"Animate Weapon": [
+"dexterity",
+"grants_active_skill",
+"duration",
+"minion",
+"spell",
+"physical"
+],
+"Animate Weapon of Self Reflection": [
+"dexterity",
+"grants_active_skill",
+"duration",
+"minion",
+"spell"
+],
+"Animate Weapon of Ranged Arms": [
+"dexterity",
+"grants_active_skill",
+"duration",
+"minion",
+"spell",
+"physical"
+],
+"Purity of Fire": [
+"aura",
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"fire"
+],
+"Vaal Impurity of Fire": [
+"aura",
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal",
+"fire"
+],
+"Purity of Ice": [
+"aura",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"cold"
+],
+"Vaal Impurity of Ice": [
+"aura",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal",
+"cold"
+],
+"Purity of Lightning": [
+"aura",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning"
+],
+"Vaal Impurity of Lightning": [
+"aura",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal",
+"lightning"
+],
+"Storm Call": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"lightning"
+],
+"Storm Call of Trarthus": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"physical"
+],
+"Vaal Storm Call": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal",
+"lightning"
+],
+"Flameblast": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"channelling"
+],
+"Flameblast of Celerity": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"channelling"
+],
+"Flameblast of Contraction": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"channelling"
+],
+"Vaal Flameblast": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"vaal",
+"fire",
+"channelling"
+],
+"Barrage": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"bow"
+],
+"Barrage of Volley Fire": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"bow"
+],
+"Ball Lightning": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"area",
+"lightning"
+],
+"Ball Lightning of Orbiting": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"area",
+"lightning"
+],
+"Ball Lightning of Static": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning",
+"orb"
+],
+"Summon Raging Spirit": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion",
+"duration",
+"fire"
+],
+"Summon Raging Spirit of Enormity": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion",
+"duration",
+"fire"
+],
+"Flame Surge": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"duration"
+],
+"Flame Surge of Combusting": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"duration"
+],
+"Desecrate": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"chaos"
+],
+"Flesh Offering": [
+"minion",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration"
+],
+"Bone Offering": [
+"minion",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration"
+],
+"Spirit Offering": [
+"minion",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration"
+],
+"Glacial Cascade": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"physical"
+],
+"Glacial Cascade of the Fissure": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"physical"
+],
+"Molten Strike": [
+"strength",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"melee",
+"strike",
+"fire"
+],
+"Molten Strike of the Zenith": [
+"strength",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"melee",
+"strike",
+"fire"
+],
+"Convocation": [
+"grants_active_skill",
+"spell",
+"duration",
+"minion"
+],
+"Pyroclast Mine": [
+"mine",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"fire",
+"area",
+"aura",
+"nova"
+],
+"Pyroclast Mine of Sabotage": [
+"mine",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"fire",
+"area",
+"aura",
+"nova"
+],
+"Tornado Shot": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"bow"
+],
+"Tornado Shot of Cloudburst": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"bow"
+],
+"Herald of Ash": [
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"herald",
+"duration"
+],
+"Herald of Ice": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"herald"
+],
+"Herald of Thunder": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"lightning",
+"herald"
+],
+"Herald of Agony": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"herald",
+"minion",
+"chaos",
+"physical"
+],
+"Herald of Purity": [
+"strength",
+"grants_active_skill",
+"spell",
+"herald",
+"minion",
+"duration",
+"physical"
+],
+"Poacher's Mark": [
+"physical",
+"dexterity",
+"grants_active_skill",
+"spell",
+"curse",
+"mark"
+],
+"Lightning Tendrils": [
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning",
+"channelling"
+],
+"Lightning Tendrils of Eccentricity": [
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning",
+"channelling"
+],
+"Lightning Tendrils of Escalation": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning",
+"channelling"
+],
+"Kinetic Blast": [
+"intelligence",
+"grants_active_skill",
+"attack",
+"projectile",
+"area"
+],
+"Kinetic Blast of Clustering": [
+"intelligence",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"physical"
+],
+"Blink Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"minion",
+"duration",
+"movement",
+"travel",
+"bow"
+],
+"Blink Arrow of Bombarding Clones": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"minion",
+"duration",
+"movement",
+"travel",
+"bow"
+],
+"Blink Arrow of Prismatic Clones": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"minion",
+"duration",
+"movement",
+"travel",
+"random_element",
+"bow"
+],
+"Mirror Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"minion",
+"duration",
+"movement",
+"travel",
+"bow"
+],
+"Mirror Arrow of Bombarding Clones": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"minion",
+"duration",
+"movement",
+"travel",
+"bow"
+],
+"Mirror Arrow of Prismatic Clones": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"minion",
+"duration",
+"movement",
+"travel",
+"random_element",
+"bow"
+],
+"Glacial Shield Swipe": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"cold",
+"physical",
+"retaliation"
+],
+"Swordstorm": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"retaliation"
+],
+"Eviscerate": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"retaliation",
+"physical"
+],
+"Static Strike": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"area",
+"duration",
+"lightning",
+"chaining"
+],
+"Static Strike of Gathering Lightning": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"duration",
+"lightning",
+"chaining"
+],
+"Crushing Fist": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"slam",
+"area",
+"retaliation"
+],
+"Divine Retribution": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning",
+"physical",
+"retaliation"
+],
+"Vengeful Cry": [
+"warcry",
+"strength",
+"grants_active_skill",
+"area",
+"duration",
+"retaliation"
+],
+"Summon Chaos Golem": [
+"intelligence",
+"grants_active_skill",
+"chaos",
+"minion",
+"spell",
+"golem"
+],
+"Summon Chaos Golem of Hordes": [
+"intelligence",
+"grants_active_skill",
+"chaos",
+"minion",
+"spell",
+"golem"
+],
+"Summon Chaos Golem of the Maelström": [
+"intelligence",
+"grants_active_skill",
+"chaos",
+"minion",
+"spell",
+"golem"
+],
+"Summon Ice Golem": [
+"critical",
+"dexterity",
+"grants_active_skill",
+"cold",
+"minion",
+"spell",
+"golem"
+],
+"Summon Ice Golem of Hordes": [
+"dexterity",
+"grants_active_skill",
+"cold",
+"minion",
+"spell",
+"golem"
+],
+"Summon Ice Golem of Shattering": [
+"dexterity",
+"grants_active_skill",
+"cold",
+"minion",
+"spell",
+"golem"
+],
+"Summon Flame Golem": [
+"strength",
+"grants_active_skill",
+"fire",
+"minion",
+"spell",
+"golem"
+],
+"Summon Flame Golem of Hordes": [
+"strength",
+"grants_active_skill",
+"fire",
+"minion",
+"spell",
+"golem"
+],
+"Summon Flame Golem of the Meteor": [
+"strength",
+"grants_active_skill",
+"fire",
+"minion",
+"spell",
+"golem"
+],
+"Summon Lightning Golem": [
+"intelligence",
+"grants_active_skill",
+"lightning",
+"minion",
+"spell",
+"golem"
+],
+"Summon Lightning Golem of Hordes": [
+"intelligence",
+"grants_active_skill",
+"lightning",
+"minion",
+"spell",
+"golem"
+],
+"Ice Crash": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"cold",
+"slam"
+],
+"Ice Crash of Cadence": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"cold",
+"slam"
+],
+"Rallying Cry": [
+"warcry",
+"strength",
+"grants_active_skill",
+"area",
+"duration"
+],
+"Infernal Cry": [
+"warcry",
+"strength",
+"grants_active_skill",
+"area",
+"duration",
+"fire",
+"attack",
+"melee",
+"trigger"
+],
+"Flame Dash": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"movement",
+"duration",
+"fire",
+"travel",
+"blink"
+],
+"Flame Dash of Return": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"movement",
+"duration",
+"fire"
+],
+"Vigilant Strike": [
+"attack",
+"strength",
+"grants_active_skill",
+"melee",
+"strike"
+],
+"Frost Blades": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"melee",
+"strike",
+"cold"
+],
+"Frost Blades of Katabasis": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"cold",
+"area",
+"duration"
+],
+"Rolling Magma": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"projectile",
+"chaining"
+],
+"Wild Strike": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"lightning",
+"cold",
+"fire",
+"projectile",
+"area",
+"chaining",
+"random_element"
+],
+"Wild Strike of Extremes": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"lightning",
+"cold",
+"fire",
+"projectile",
+"area",
+"chaining",
+"random_element"
+],
+"Ice Trap": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"cold"
+],
+"Ice Trap of Hollowness": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"cold"
+],
+"Blast Rain": [
+"fire",
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"projectile",
+"bow"
+],
+"Blast Rain of Trarthus": [
+"fire",
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"projectile",
+"duration",
+"bow"
+],
+"Galvanic Arrow": [
+"lightning",
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"bow"
+],
+"Galvanic Arrow of Energy": [
+"lightning",
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"bow"
+],
+"Galvanic Arrow of Surging": [
+"lightning",
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"bow"
+],
+"Bladefall": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"physical",
+"duration"
+],
+"Bladefall of Volleys": [
+"critical",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"physical"
+],
+"Bladefall of Impaling": [
+"critical",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"physical"
+],
+"Bladefall of Trarthus": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"physical",
+"arcane",
+"duration"
+],
+"Blade Vortex": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"physical"
+],
+"Blade Vortex of the Scythe": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"physical"
+],
+"Vaal Blade Vortex": [
+"critical",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"vaal",
+"physical"
+],
+"Frost Bomb": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"cold",
+"orb"
+],
+"Frost Bomb of Instability": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"cold"
+],
+"Frost Bomb of Forthcoming": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"cold"
+],
+"Siege Ballista": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"totem",
+"bow"
+],
+"Siege Ballista of Splintering": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"totem",
+"bow"
+],
+"Siege Ballista of Trarthus": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"totem",
+"bow"
+],
+"Orb of Storms": [
+"lightning",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaining",
+"orb"
+],
+"Orb of Storms of Squalls": [
+"lightning",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaining",
+"orb"
+],
+"Summon Stone Golem": [
+"strength",
+"grants_active_skill",
+"minion",
+"spell",
+"golem",
+"physical"
+],
+"Summon Stone Golem of Hordes": [
+"strength",
+"grants_active_skill",
+"minion",
+"spell",
+"golem",
+"physical"
+],
+"Summon Stone Golem of Safeguarding": [
+"strength",
+"grants_active_skill",
+"minion",
+"spell",
+"golem",
+"physical"
+],
+"Earthquake": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"duration",
+"slam"
+],
+"Earthquake of Amplification": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"duration",
+"slam"
+],
+"Contagion": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"chaos"
+],
+"Contagion of Subsiding": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"chaos"
+],
+"Contagion of Transference": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"chaos"
+],
+"Wither": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"chaos",
+"channelling"
+],
+"Blight": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"chaos",
+"area",
+"channelling",
+"duration"
+],
+"Blight of Contagion": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"chaos",
+"area",
+"channelling",
+"duration"
+],
+"Blight of Atrophy": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"chaos",
+"area",
+"channelling",
+"duration"
+],
+"Essence Drain": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"chaos",
+"area"
+],
+"Essence Drain of Desperation": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"chaos",
+"area"
+],
+"Essence Drain of Wickedness": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"duration",
+"chaos",
+"area"
+],
+"Sunder": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Sunder of Earthbreaking": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Sunder of Trarthus": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Frostbolt": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold"
+],
+"Vortex": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"duration",
+"nova"
+],
+"Vortex of Projection": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"duration",
+"nova"
+],
+"Dark Bargain": [
+"minion",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaining",
+"chaos",
+"nova"
+],
+"Dark Bargain of Trarthus": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaos",
+"nova"
+],
+"Scorching Ray": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"fire",
+"duration",
+"channelling"
+],
+"Scorching Ray of Immolation": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"fire",
+"duration",
+"channelling"
+],
+"Cremation": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"duration",
+"projectile",
+"orb"
+],
+"Cremation of Exhuming": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"duration",
+"projectile",
+"orb"
+],
+"Cremation of the Volcano": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"duration",
+"projectile",
+"orb"
+],
+"Bodyswap": [
+"intelligence",
+"grants_active_skill",
+"movement",
+"spell",
+"area",
+"fire",
+"travel"
+],
+"Bodyswap of Sacrifice": [
+"intelligence",
+"grants_active_skill",
+"movement",
+"spell",
+"area",
+"fire",
+"travel",
+"minion"
+],
+"Tectonic Slam": [
+"fire",
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Tectonic Slam of Cataclysm": [
+"fire",
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Vulnerability": [
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"curse",
+"physical",
+"hex"
+],
+"Explosive Trap": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"physical"
+],
+"Explosive Trap of Shrapnel": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"physical"
+],
+"Explosive Trap of Magnitude": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"physical"
+],
+"Siphoning Trap": [
+"trap",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"cold"
+],
+"Siphoning Trap of Pain": [
+"trap",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"cold"
+],
+"Flamethrower Trap": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"fire"
+],
+"Flamethrower Trap of Stability": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"fire"
+],
+"Lightning Spire Trap": [
+"trap",
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"lightning"
+],
+"Lightning Spire Trap of Zapping": [
+"trap",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"lightning"
+],
+"Lightning Spire Trap of Overloading": [
+"trap",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"lightning"
+],
+"Seismic Trap": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"area",
+"physical"
+],
+"Seismic Trap of Swells": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"physical"
+],
+"Vaal Earthquake": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"duration",
+"vaal",
+"slam"
+],
+"Vaal Blight": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"chaos",
+"area",
+"duration",
+"vaal",
+"nova",
+"channelling"
+],
+"Consecrated Path": [
+"fire",
+"strength",
+"grants_active_skill",
+"melee",
+"attack",
+"area",
+"movement",
+"duration",
+"slam"
+],
+"Consecrated Path of Endurance": [
+"fire",
+"strength",
+"grants_active_skill",
+"melee",
+"attack",
+"area",
+"movement",
+"duration",
+"slam"
+],
+"Smite": [
+"lightning",
+"strength",
+"grants_active_skill",
+"melee",
+"attack",
+"area",
+"duration",
+"strike",
+"aura"
+],
+"Smite of Divine Judgement": [
+"lightning",
+"strength",
+"grants_active_skill",
+"melee",
+"attack",
+"area",
+"strike"
+],
+"Scourge Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"channelling",
+"chaos",
+"bow"
+],
+"Scourge Arrow of Menace": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"chaos",
+"bow"
+],
+"Toxic Rain": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"chaos",
+"duration",
+"projectile",
+"bow"
+],
+"Toxic Rain of Sporeburst": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"chaos",
+"duration",
+"projectile",
+"bow"
+],
+"Toxic Rain of Withering": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"chaos",
+"duration",
+"projectile",
+"bow"
+],
+"Summon Holy Relic": [
+"intelligence",
+"grants_active_skill",
+"minion",
+"spell"
+],
+"Summon Holy Relic of Conviction": [
+"intelligence",
+"grants_active_skill",
+"minion",
+"spell"
+],
+"Winter Orb": [
+"cold",
+"intelligence",
+"grants_active_skill",
+"spell",
+"channelling",
+"area",
+"duration",
+"projectile",
+"orb"
+],
+"Lancing Steel": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"physical"
+],
+"Lancing Steel of Spraying": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile"
+],
+"Storm Brand": [
+"lightning",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaining",
+"duration",
+"brand"
+],
+"Storm Brand of Indecision": [
+"lightning",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaining",
+"duration",
+"brand"
+],
+"War Banner": [
+"strength",
+"grants_active_skill",
+"area",
+"spell",
+"duration",
+"aura",
+"physical",
+"banner"
+],
+"Dread Banner": [
+"strength",
+"grants_active_skill",
+"area",
+"spell",
+"duration",
+"aura",
+"banner"
+],
+"Shattering Steel": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"physical"
+],
+"Shattering Steel of Ammunition": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"physical",
+"duration"
+],
+"Armageddon Brand": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"duration",
+"brand"
+],
+"Armageddon Brand of Volatility": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"duration",
+"brand"
+],
+"Armageddon Brand of Recall": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"duration",
+"brand"
+],
+"Brand Recall": [
+"brand",
+"intelligence",
+"grants_active_skill",
+"spell"
+],
+"Purifying Flame": [
+"fire",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"physical"
+],
+"Purifying Flame of Revelations": [
+"fire",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"physical"
+],
+"Soulrend": [
+"chaos",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"projectile"
+],
+"Soulrend of Reaping": [
+"chaos",
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile"
+],
+"Soulrend of the Spiral": [
+"chaos",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"projectile"
+],
+"Bane": [
+"chaos",
+"trigger",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"hex"
+],
+"Bane of Condemnation": [
+"chaos",
+"trigger",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"hex"
+],
+"Wave of Conviction": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"fire",
+"lightning",
+"physical"
+],
+"Wave of Conviction of Trarthus": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"physical",
+"fire",
+"nova"
+],
+"Zealotry": [
+"aura",
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Divine Ire": [
+"lightning",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"channelling",
+"physical"
+],
+"Divine Ire of Holy Lightning": [
+"lightning",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"channelling",
+"physical"
+],
+"Divine Ire of Disintegration": [
+"lightning",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"channelling",
+"physical"
+],
+"Malevolence": [
+"aura",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Steelskin": [
+"strength",
+"grants_active_skill",
+"spell",
+"duration",
+"guard"
+],
+"Dash": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"movement",
+"travel",
+"blink"
+],
+"Bladestorm": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"duration"
+],
+"Bladestorm of Uncertainty": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"duration"
+],
+"Blood and Sand": [
+"low_max_level",
+"strength",
+"grants_active_skill",
+"spell",
+"stance"
+],
+"Berserk": [
+"strength",
+"grants_active_skill",
+"spell"
+],
+"Perforate": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Perforate of Duality": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Perforate of Bloodshed": [
+"physical",
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam"
+],
+"Chain Hook": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"movement",
+"melee"
+],
+"Chain Hook of Angling": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee"
+],
+"Chain Hook of Trarthus": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee"
+],
+"Frostblink": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"movement",
+"duration",
+"cold",
+"travel",
+"blink",
+"area"
+],
+"Frostblink of Wintry Blast": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"movement",
+"cold",
+"travel",
+"area"
+],
+"Precision": [
+"aura",
+"critical",
+"dexterity",
+"grants_active_skill",
+"spell",
+"area"
+],
+"Flesh and Stone": [
+"strength",
+"grants_active_skill",
+"spell",
+"aura",
+"area",
+"stance",
+"physical"
+],
+"Pride": [
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"aura",
+"physical"
+],
+"Cobra Lash": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"chaos"
+],
+"Summon Carrion Golem": [
+"intelligence",
+"grants_active_skill",
+"physical",
+"minion",
+"spell",
+"golem"
+],
+"Summon Carrion Golem of Hordes": [
+"intelligence",
+"grants_active_skill",
+"physical",
+"minion",
+"spell",
+"golem"
+],
+"Summon Carrion Golem of Scavenging": [
+"intelligence",
+"grants_active_skill",
+"physical",
+"minion",
+"spell",
+"golem"
+],
+"Withering Step": [
+"dexterity",
+"grants_active_skill",
+"travel",
+"area",
+"chaos",
+"movement",
+"blink",
+"spell",
+"duration"
+],
+"Plague Bearer": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"chaos",
+"area"
+],
+"Stormblast Mine": [
+"mine",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning",
+"aura",
+"nova"
+],
+"Summon Skitterbots": [
+"trap",
+"mine",
+"intelligence",
+"grants_active_skill",
+"spell",
+"minion",
+"cold",
+"lightning",
+"area",
+"aura"
+],
+"Pestilent Strike": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"area",
+"duration",
+"chaos"
+],
+"Venom Gyre": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"chaos",
+"duration"
+],
+"Shrapnel Ballista": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"totem",
+"bow"
+],
+"Shrapnel Ballista of Steel": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"totem",
+"physical",
+"bow"
+],
+"Ensnaring Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"bow"
+],
+"Artillery Ballista": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"totem",
+"area",
+"fire",
+"projectile",
+"bow"
+],
+"Artillery Ballista of Cross Strafe": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"totem",
+"area",
+"fire",
+"projectile",
+"bow"
+],
+"Artillery Ballista of Focus Fire": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"totem",
+"area",
+"fire",
+"projectile",
+"bow"
+],
+"Arcane Cloak": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"guard",
+"lightning",
+"arcane"
+],
+"Stormbind": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"channelling",
+"lightning",
+"duration",
+"arcane"
+],
+"Stormbind of Teleportation": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"channelling",
+"lightning",
+"duration",
+"arcane",
+"movement",
+"travel",
+"blink"
+],
+"Kinetic Bolt": [
+"intelligence",
+"grants_active_skill",
+"attack",
+"projectile"
+],
+"Kinetic Bolt of Fragmentation": [
+"intelligence",
+"grants_active_skill",
+"attack",
+"projectile"
+],
+"Blade Blast": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"physical"
+],
+"Blade Blast of Unloading": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"physical",
+"nova"
+],
+"Blade Blast of Dagger Detonation": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"area",
+"physical",
+"nova"
+],
+"Spellslinger": [
+"trigger",
+"intelligence",
+"grants_active_skill",
+"spell"
+],
+"Arcanist Brand": [
+"trigger",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"brand"
+],
+"Intimidating Cry": [
+"warcry",
+"strength",
+"grants_active_skill",
+"area",
+"duration",
+"physical"
+],
+"Seismic Cry": [
+"warcry",
+"strength",
+"grants_active_skill",
+"area",
+"duration"
+],
+"Ancestral Cry": [
+"warcry",
+"strength",
+"grants_active_skill",
+"area",
+"duration"
+],
+"Penance Brand": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"physical",
+"lightning",
+"duration",
+"brand"
+],
+"Penance Brand of Dissipation": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"physical",
+"lightning",
+"duration",
+"brand"
+],
+"Penance Brand of Conduction": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"physical",
+"lightning",
+"duration",
+"brand"
+],
+"Wintertide Brand": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"cold",
+"duration",
+"brand"
+],
+"Earthshatter": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam",
+"duration"
+],
+"Earthshatter of Fragility": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam",
+"duration"
+],
+"Earthshatter of Prominence": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"slam",
+"duration"
+],
+"General's Cry": [
+"warcry",
+"strength",
+"grants_active_skill",
+"area",
+"duration"
+],
+"Blazing Salvo": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"fire",
+"projectile"
+],
+"Void Sphere": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"physical",
+"chaos",
+"orb"
+],
+"Void Sphere of Rending": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"physical",
+"chaos",
+"orb"
+],
+"Crackling Lance": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning"
+],
+"Crackling Lance of Branching": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning"
+],
+"Crackling Lance of Disintegration": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning"
+],
+"Frost Shield": [
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"cold"
+],
+"Splitting Steel": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"physical"
+],
+"Splitting Steel of Ammunition": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"physical"
+],
+"Sigil of Power": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"lightning",
+"arcane"
+],
+"Flame Wall": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"fire"
+],
+"Hexblast": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaos",
+"hex"
+],
+"Hexblast of Contradiction": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaos",
+"hex"
+],
+"Hexblast of Havoc": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaos",
+"hex"
+],
+"Hydrosphere": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"cold",
+"orb",
+"lightning",
+"physical"
+],
+"Exsanguinate": [
+"strength",
+"grants_active_skill",
+"spell",
+"chaining",
+"physical",
+"duration"
+],
+"Exsanguinate of Transmission": [
+"strength",
+"grants_active_skill",
+"spell",
+"chaining",
+"physical",
+"duration"
+],
+"Corrupting Fever": [
+"strength",
+"grants_active_skill",
+"spell",
+"duration",
+"physical"
+],
+"Reap": [
+"strength",
+"grants_active_skill",
+"spell",
+"physical",
+"area",
+"duration"
+],
+"Reap of Butchery": [
+"strength",
+"grants_active_skill",
+"spell",
+"physical",
+"area",
+"duration"
+],
+"Petrified Blood": [
+"strength",
+"grants_active_skill",
+"spell"
+],
+"Defiance Banner": [
+"strength",
+"grants_active_skill",
+"area",
+"spell",
+"duration",
+"aura",
+"banner"
+],
+"Voltaxic Burst": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaos",
+"lightning",
+"nova",
+"duration"
+],
+"Rage Vortex": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"duration"
+],
+"Rage Vortex of Berserking": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area"
+],
+"Spectral Helix": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile"
+],
+"Spectral Helix of Trarthus": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile"
+],
+"Battlemage's Cry": [
+"warcry",
+"critical",
+"trigger",
+"strength",
+"grants_active_skill",
+"area",
+"duration"
+],
+"Absolution": [
+"strength",
+"grants_active_skill",
+"spell",
+"minion",
+"duration",
+"physical",
+"lightning",
+"area"
+],
+"Absolution of Inspiring": [
+"strength",
+"grants_active_skill",
+"spell",
+"minion",
+"duration",
+"physical",
+"lightning",
+"area"
+],
+"Forbidden Rite": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaos",
+"projectile"
+],
+"Forbidden Rite of Soul Sacrifice": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"chaos",
+"projectile"
+],
+"Ambush": [
+"critical",
+"dexterity",
+"grants_active_skill",
+"spell",
+"movement",
+"duration",
+"travel"
+],
+"Manabond": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning",
+"arcane"
+],
+"Blade Trap": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"attack",
+"area"
+],
+"Blade Trap of Greatswords": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"duration"
+],
+"Blade Trap of Laceration": [
+"trap",
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"physical"
+],
+"Storm Rain": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"lightning",
+"projectile",
+"bow"
+],
+"Storm Rain of the Conduit": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"lightning",
+"projectile",
+"bow"
+],
+"Storm Rain of the Fence": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"lightning",
+"projectile",
+"bow"
+],
+"Shield Crush": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"physical"
+],
+"Shield Crush of the Chieftain": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"fire"
+],
+"Summon Reaper": [
+"intelligence",
+"grants_active_skill",
+"physical",
+"minion",
+"spell"
+],
+"Summon Reaper of Revenants": [
+"intelligence",
+"grants_active_skill",
+"minion",
+"spell"
+],
+"Summon Reaper of Eviscerating": [
+"intelligence",
+"grants_active_skill",
+"physical",
+"minion",
+"spell"
+],
+"Boneshatter": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"area",
+"duration",
+"physical"
+],
+"Boneshatter of Complex Trauma": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"area",
+"duration",
+"physical"
+],
+"Boneshatter of Carnage": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"strike",
+"area"
+],
+"Explosive Concoction": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"fire",
+"cold",
+"lightning",
+"projectile"
+],
+"Explosive Concoction of Destruction": [
+"critical",
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"fire",
+"cold",
+"lightning",
+"projectile"
+],
+"Eye of Winter": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold"
+],
+"Eye of Winter of Finality": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold"
+],
+"Eye of Winter of Transience": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"projectile",
+"cold"
+],
+"Poisonous Concoction": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"chaos",
+"projectile"
+],
+"Poisonous Concoction of Bouncing": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"chaos",
+"projectile",
+"chaining"
+],
+"Temporal Rift": [
+"dexterity",
+"grants_active_skill",
+"spell"
+],
+"Tornado": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"physical",
+"area",
+"orb"
+],
+"Tornado of Elemental Turbulence": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"physical",
+"area",
+"orb",
+"fire",
+"cold",
+"lightning",
+"random_element"
+],
+"Energy Blade": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"lightning"
+],
+"Soul Link": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"link"
+],
+"Flame Link": [
+"strength",
+"grants_active_skill",
+"spell",
+"duration",
+"link",
+"fire"
+],
+"Arcane Link": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"link",
+"lightning",
+"arcane"
+],
+"Vampiric Link": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"link"
+],
+"Protective Link": [
+"strength",
+"grants_active_skill",
+"spell",
+"duration",
+"link"
+],
+"Intuitive Link": [
+"trigger",
+"dexterity",
+"grants_active_skill",
+"spell",
+"duration",
+"link"
+],
+"Destructive Link": [
+"critical",
+"intelligence",
+"grants_active_skill",
+"spell",
+"duration",
+"link"
+],
+"Lightning Conduit": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning"
+],
+"Lightning Conduit of the Heavens": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"lightning"
+],
+"Galvanic Field": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"lightning",
+"chaining",
+"orb"
+],
+"Galvanic Field of Intensity": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"lightning",
+"chaining",
+"orb"
+],
+"Alchemist's Mark": [
+"dexterity",
+"grants_active_skill",
+"spell",
+"curse",
+"mark",
+"area",
+"duration",
+"fire",
+"chaos"
+],
+"Volcanic Fissure": [
+"melee",
+"strength",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"slam",
+"fire"
+],
+"Volcanic Fissure of Snaking": [
+"melee",
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"slam",
+"fire"
+],
+"Vaal Volcanic Fissure": [
+"melee",
+"strength",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"slam",
+"fire",
+"vaal"
+],
+"Frozen Legion": [
+"strength",
+"grants_active_skill",
+"spell",
+"cold",
+"attack",
+"melee",
+"area"
+],
+"Frozen Legion of Rallying": [
+"strength",
+"grants_active_skill",
+"spell",
+"cold",
+"attack",
+"melee",
+"area"
+],
+"Vaal Cleave": [
+"strength",
+"grants_active_skill",
+"attack",
+"area",
+"melee",
+"vaal",
+"duration"
+],
+"Vaal Caustic Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"duration",
+"chaos",
+"vaal",
+"bow"
+],
+"Vaal Molten Strike": [
+"strength",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"melee",
+"strike",
+"fire",
+"chaining",
+"vaal"
+],
+"Vaal Venom Gyre": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"chaos",
+"duration",
+"vaal"
+],
+"Vaal Smite": [
+"lightning",
+"strength",
+"grants_active_skill",
+"melee",
+"attack",
+"area",
+"duration",
+"strike",
+"aura",
+"vaal"
+],
+"Vaal Blade Flurry": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"channelling",
+"melee",
+"vaal"
+],
+"Vaal Reap": [
+"strength",
+"grants_active_skill",
+"spell",
+"physical",
+"area",
+"duration",
+"vaal"
+],
+"Vaal Animate Weapon": [
+"dexterity",
+"grants_active_skill",
+"duration",
+"minion",
+"spell",
+"vaal",
+"physical"
+],
+"Vaal Lightning Arrow": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"projectile",
+"lightning",
+"vaal",
+"bow"
+],
+"Vaal Absolution": [
+"strength",
+"grants_active_skill",
+"spell",
+"minion",
+"duration",
+"physical",
+"lightning",
+"vaal",
+"area"
+],
+"Vaal Domination": [
+"strength",
+"grants_active_skill",
+"spell",
+"minion",
+"duration",
+"vaal",
+"attack",
+"melee",
+"strike"
+],
+"Vaal Ice Shot": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"area",
+"cold",
+"vaal",
+"duration",
+"bow"
+],
+"Vaal Firestorm": [
+"intelligence",
+"grants_active_skill",
+"spell",
+"area",
+"duration",
+"fire",
+"vaal"
+],
+"Vaal Rejuvenation Totem": [
+"totem",
+"aura",
+"strength",
+"grants_active_skill",
+"spell",
+"area",
+"vaal"
+],
+"Snipe": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"projectile",
+"channelling",
+"physical",
+"bow"
+],
+"Conflagration": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"fire",
+"area",
+"projectile",
+"duration",
+"bow"
+],
+"Kinetic Rain": [
+"intelligence",
+"grants_active_skill",
+"attack",
+"area",
+"projectile",
+"duration",
+"trigger"
+],
+"Kinetic Rain of Impact": [
+"intelligence",
+"grants_active_skill",
+"attack",
+"area",
+"projectile"
+],
+"Somatic Shell": [
+"intelligence",
+"grants_active_skill",
+"duration",
+"physical",
+"attack",
+"area",
+"projectile"
+],
+"Thunderstorm": [
+"dexterity",
+"grants_active_skill",
+"attack",
+"area",
+"duration",
+"lightning",
+"bow",
+"projectile",
+"trigger"
+],
+"Kinetic Fusillade": [
+"intelligence",
+"grants_active_skill",
+"attack",
+"projectile",
+"duration",
+"area"
+],
+"Kinetic Fusillade of Detonation": [
+"intelligence",
+"grants_active_skill",
+"attack",
+"projectile",
+"duration",
+"area"
+],
+"Holy Hammers": [
+"strength",
+"grants_active_skill",
+"attack",
+"slam",
+"melee",
+"area",
+"lightning"
+],
+"Holy Hammers of Spirals": [
+"strength",
+"grants_active_skill",
+"attack",
+"slam",
+"melee",
+"area",
+"lightning"
+],
+"Shield of Light": [
+"strength",
+"grants_active_skill",
+"attack",
+"melee",
+"area",
+"lightning",
+"physical",
+"retaliation"
+],
+"Holy Strike": [
+"strength",
+"grants_active_skill",
+"minion",
+"attack",
+"melee",
+"strike",
+"lightning",
+"duration"
+],
+"Divine Blast": [
+"strength",
+"grants_active_skill",
+"area",
+"attack",
+"physical",
+"duration",
+"fire"
+],
+"Divine Blast of Radiance": [
+"strength",
+"grants_active_skill",
+"area",
+"attack",
+"physical",
+"duration",
+"fire",
+"orb"
+],
+"Quickstep": [
+"grants_active_skill",
+"spell",
+"movement",
+"travel",
+"blink"
+],
+"Automation": [
+"trigger",
+"intelligence",
+"grants_active_skill",
+"spell"
+],
+"Autoexertion": [
+"warcry",
+"trigger",
+"strength",
+"grants_active_skill",
+"spell"
+],
+"Pact of Beidat": [
+"exceptional",
+"projectile",
+"chaining",
+"area",
+"grants_active_skill",
+"spell",
+"pact"
+],
+"Pact of Ghorr": [
+"exceptional",
+"grants_active_skill",
+"spell",
+"pact",
+"area",
+"duration",
+"projectile",
+"physical",
+"trigger"
+],
+"Pact of K'Tash": [
+"exceptional",
+"grants_active_skill",
+"spell",
+"pact"
+],
+"Pact of Lycia": [
+"exceptional",
+"channelling",
+"grants_active_skill",
+"spell",
+"pact",
+"lightning",
+"area",
+"trigger"
+]
+},
+"supports": [
+"Added Chaos Damage",
+"Added Cold Damage",
+"Added Fire Damage",
+"Added Lightning Damage",
+"Additional Accuracy",
+"Advanced Traps",
+"Ancestral Call",
+"Annihilation",
+"Arcane Surge",
+"Archmage",
+"Arrogance",
+"Arrow Nova",
+"Awakened Added Chaos Damage",
+"Awakened Added Cold Damage",
+"Awakened Added Fire Damage",
+"Awakened Added Lightning Damage",
+"Awakened Ancestral Call",
+"Awakened Arrow Nova",
+"Awakened Blasphemy",
+"Awakened Brutality",
+"Awakened Burning Damage",
+"Awakened Cast On Critical Strike",
+"Awakened Cast While Channelling",
+"Awakened Chain",
+"Awakened Cold Penetration",
+"Awakened Controlled Destruction",
+"Awakened Deadly Ailments",
+"Awakened Elemental Damage with Attacks",
+"Awakened Elemental Focus",
+"Awakened Empower",
+"Awakened Enhance",
+"Awakened Enlighten",
+"Awakened Fire Penetration",
+"Awakened Fork",
+"Awakened Generosity",
+"Awakened Greater Multiple Projectiles",
+"Awakened Hextouch",
+"Awakened Increased Area of Effect",
+"Awakened Lightning Penetration",
+"Awakened Melee Physical Damage",
+"Awakened Melee Splash",
+"Awakened Minion Damage",
+"Awakened Multistrike",
+"Awakened Spell Cascade",
+"Awakened Spell Echo",
+"Awakened Swift Affliction",
+"Awakened Unbound Ailments",
+"Awakened Unleash",
+"Awakened Vicious Projectiles",
+"Awakened Void Manipulation",
+"Ballista Totem",
+"Barrage Support",
+"Behead",
+"Blasphemy",
+"Blastchain Mine",
+"Blessed Call",
+"Blind",
+"Block Chance Reduction",
+"Bloodlust",
+"Bloodsoaked Banner",
+"Bloodthirst",
+"Bonechill",
+"Bonespire",
+"Brutality",
+"Burning Damage",
+"Cast On Critical Strike",
+"Cast on Death",
+"Cast on Melee Kill",
+"Cast on Ward Break",
+"Cast when Damage Taken",
+"Cast when Stunned",
+"Cast while Channelling",
+"Chain",
+"Chance to Bleed",
+"Chance to Flee",
+"Chance to Poison",
+"Charged Mines",
+"Charged Traps",
+"Close Combat",
+"Cluster Traps",
+"Cold Penetration",
+"Cold to Fire",
+"Combustion",
+"Communion",
+"Companionship",
+"Concentrated Effect",
+"Congregation",
+"Constriction",
+"Controlled Blaze",
+"Controlled Destruction",
+"Cooldown Recovery",
+"Corrupting Cry",
+"Coursing Current",
+"Critical Strike Affliction",
+"Cruelty",
+"Crystalfall",
+"Cull the Weak",
+"Culling Strike",
+"Cursed Ground",
+"Damage on Full Life",
+"Deadly Ailments",
+"Decay",
+"Destitution",
+"Devour",
+"Diminishment",
+"Disempower",
+"Divine Blessing",
+"Divine Sentinel",
+"Earthbreaker",
+"Eclipse",
+"Efficacy",
+"Eldritch Blasphemy",
+"Elemental Army",
+"Elemental Damage with Attacks",
+"Elemental Focus",
+"Elemental Penetration",
+"Elemental Proliferation",
+"Empower",
+"Encumbrance",
+"Endurance Charge on Melee Stun",
+"Energy Leech",
+"Enhance",
+"Enlighten",
+"Eternal Blessing",
+"Excommunicate",
+"Exemplar",
+"Expert Retaliation",
+"Faster Attacks",
+"Faster Casting",
+"Faster Projectiles",
+"Feeding Frenzy",
+"Fire Penetration",
+"Fissure",
+"Fist of War",
+"Flamewood",
+"Focused Ballista",
+"Focused Channelling",
+"Fork",
+"Fortify",
+"Foulgrasp",
+"Fresh Meat",
+"Frigid Bond",
+"Frostmage",
+"Generosity",
+"Gluttony",
+"Greater Ancestral Call",
+"Greater Chain",
+"Greater Devour",
+"Greater Fork",
+"Greater Kinetic Instability",
+"Greater Multiple Projectiles",
+"Greater Multistrike",
+"Greater Spell Cascade",
+"Greater Spell Echo",
+"Greater Unleash",
+"Greater Volley",
+"Guardian's Blessing",
+"Hallow",
+"Hex Bloom",
+"Hexpass",
+"Hextoad",
+"Hextouch",
+"High-Impact Mine",
+"Hiveborn",
+"Hypothermia",
+"Ice Bite",
+"Ignite Proliferation",
+"Immolate",
+"Impale",
+"Impending Doom",
+"Impotence",
+"Increased Area of Effect",
+"Increased Critical Damage",
+"Increased Critical Strikes",
+"Infernal Legion",
+"Infused Channelling",
+"Innervate",
+"Inspiration",
+"Intensify",
+"Invention",
+"Invert the Rules",
+"Iron Grip",
+"Iron Will",
+"Item Quantity",
+"Item Rarity",
+"Kinetic Instability",
+"Knockback",
+"Less Duration",
+"Lethal Dose",
+"Lethargy",
+"Life Gain on Hit",
+"Life Leech",
+"Lifetap",
+"Lightning Penetration",
+"Living Lightning",
+"Locus Mine",
+"Machinations",
+"Maim",
+"Mana Leech",
+"Manaforged Arrows",
+"Mark On Hit",
+"Meat Shield",
+"Mediocrity",
+"Melee Physical Damage",
+"Melee Splash",
+"Minefield",
+"Minion Damage",
+"Minion Life",
+"Minion Speed",
+"Mirage Archer",
+"Momentum",
+"More Duration",
+"Multiple Projectiles",
+"Multiple Totems",
+"Multiple Traps",
+"Multistrike",
+"Nightblade",
+"Nullification",
+"Overcharge",
+"Overexertion",
+"Overheat",
+"Overloaded Intensity",
+"Pacifism",
+"Penance",
+"Physical to Lightning",
+"Pierce",
+"Pinpoint",
+"Point Blank",
+"Poverty",
+"Power Charge On Critical",
+"Predator",
+"Prismatic Burst",
+"Pulverise",
+"Pyre",
+"Rage",
+"Returning Projectiles",
+"Rupture",
+"Ruthless",
+"Sacred Wisps",
+"Sacrifice",
+"Sadism",
+"Scornful Herald",
+"Second Wind",
+"Shockwave",
+"Slower Projectiles",
+"Spell Cascade",
+"Spell Echo",
+"Spell Totem",
+"Spellblade",
+"Stun",
+"Summon Phantasm",
+"Swift Affliction",
+"Swift Assembly",
+"Swiftbrand",
+"Taxation",
+"Transfusion",
+"Trap",
+"Trap and Mine Damage",
+"Trauma",
+"Trinity",
+"Unbound Ailments",
+"Unholy Trinity",
+"Unleash",
+"Urgent Orders",
+"Vaal Sacrifice",
+"Vaal Temptation",
+"Vicious Projectiles",
+"Vile Toxins",
+"Void Manipulation",
+"Void Shockwave",
+"Voidstorm",
+"Volatility",
+"Volley",
+"Windburst",
+"Withering Touch"
+]
+}

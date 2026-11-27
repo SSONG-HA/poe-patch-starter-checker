@@ -1,0 +1,82 @@
+==============================================================================
+ PoE 패치노트 스타터 생존·버프 검증기 v1.0.0
+==============================================================================
+패치노트 : Announcements - New and Changed Gems in Path of Exile 1: Covens of Umbra · 패치 3.30
+출처     : https://www.pathofexile.com/forum/view-thread/4013898
+분석 시각: 2026-11-27 14:53
+항목 수  : 9개 (빌드 9개 검사)
+판정 요약: 🔴 0 · 🟡 3 · 🟢 6
+
+[1] 스타터 생존 검증
+------------------------------------------------------------------------------
+🟡 일부 조정  독조 엘리멘탈리스트 (Doom Blast)  (Elementalist · 97레벨)
+   주력: Doom Blast, Tempest Shield
+   → 보조 스킬 'Summon Flame Golem' 너프 외 2건
+   · 보조 스킬 'Summon Flame Golem' — 너프 -25.0% ← Summon Flame Golem
+       New: Golems grant 24% increased Damage
+       Old: Golems grant 29% increased Damage
+       New: Golems grant 15% increased Area of Effect
+       Old: Golems grant 20% increased Area of Effect
+   · 보조 스킬 'Summon Stone Golem' — 너프 -20.0% ← Summon Stone Golem
+       New: Golems grant 16% increased Defences
+       Old: Golems grant 20% increased Defences
+   · 보조 스킬 'Summon Lightning Golem' — 너프 -20.0% ← Summon Lightning Golem
+       New: Golems grant 8% increased Attack and Cast Speed
+       Old: Golems grant 10% increased Attack and Cast Speed
+
+🟡 일부 조정  절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)  (Elementalist · 100레벨)
+   주력: Eviscerate
+   → 보조 스킬 'Summon Flame Golem' 너프 외 2건
+   · 보조 스킬 'Summon Flame Golem' — 너프 -25.0% ← Summon Flame Golem
+       New: Golems grant 24% increased Damage
+       Old: Golems grant 29% increased Damage
+       New: Golems grant 15% increased Area of Effect
+       Old: Golems grant 20% increased Area of Effect
+   · 보조 스킬 'Summon Stone Golem' — 너프 -20.0% ← Summon Stone Golem
+       New: Golems grant 16% increased Defences
+       Old: Golems grant 20% increased Defences
+   · 보조 스킬 'Summon Lightning Golem' — 너프 -20.0% ← Summon Lightning Golem
+       New: Golems grant 8% increased Attack and Cast Speed
+       Old: Golems grant 10% increased Attack and Cast Speed
+
+🟡 일부 조정  중독 신성한 유물 네크로맨서 (Bula)  (Necromancer · 98레벨)
+   주력: Summon Holy Relic of Conviction, Lancing Steel of Spraying
+   → 보조 스킬 'Summon Stone Golem' 너프
+   · 보조 스킬 'Summon Stone Golem' — 너프 -20.0% ← Summon Stone Golem
+       New: Golems grant 16% increased Defences
+       Old: Golems grant 20% increased Defences
+
+🟢 무사통과  CoC 금단의 의식 어쌔신 (MrJim 저예산)  (Assassin · 93레벨)
+   주력: Forbidden Rite of Soul Sacrifice
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  RF 치프틴 (Pohx SRI)  (Chieftain · 90레벨)
+   주력: Scorching Ray of Immolation, Righteous Fire
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  쌍수 타격 글래디에이터 (Ephemeral Edge)  (Gladiator · 98레벨)
+   주력: Dual Strike of Ambidexterity
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  작열 광선 RF 치프틴 (내 캐릭터)  (Chieftain · 95레벨)
+   주력: Scorching Ray of Immolation, Righteous Fire
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  지배의 일격 가디언 (ArminYou 스타터)  (Guardian · 95레벨)
+   주력: Dominating Blow of Inspiring
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  회오리바람 인퀴지터 (BalorMage 스타터)  (Inquisitor · 94레벨)
+   주력: Tornado of Elemental Turbulence
+   → 패치노트에서 관련 변경 없음
+
+[2] 대폭 상향(버프) TOP 1
+------------------------------------------------------------------------------
+ 1. Flame Link — 스킬 +29.6% · 혼합
+     damage: 211.50 → 274 (+29.6%) · Linked target gains 219 to 329 Added
+       Fire Damage
+     링크: https://poedb.tw/kr/Flame_Link | https://poe.ninja/poe1/builds?skill=Flame_Link
+
+==============================================================================
+주의: 판정은 패치노트 문장과 빌드 구성 요소의 이름 매칭·수치 비교로 계산됩니다.
+      실제 체감은 젬 레벨·장비·플레이 방식에 따라 다를 수 있습니다.

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "poe-patch-starter-checker"
+version = "1.0.0"
+description = "PoE 패치노트로 리그 스타터 생존 여부와 대폭 상향된 스킬을 검사하는 데스크톱 도구"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.setuptools]
+packages = ["poe_checker"]
+
+[tool.setuptools.package-data]
+poe_checker = ["data/*.json", "data/builds/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]

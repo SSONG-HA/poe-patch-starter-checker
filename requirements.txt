@@ -1,0 +1,4 @@
+# 실행에 필요한 외부 패키지는 없습니다.
+# (Python 3.10+ 표준 라이브러리만 사용: tkinter, urllib, zlib, xml.etree, json)
+#
+# 개발·빌드용 도구는 requirements-dev.txt 를 참고하세요.

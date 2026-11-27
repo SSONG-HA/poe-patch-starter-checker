@@ -1,0 +1,1252 @@
+{
+  "tool": "PoE 패치노트 스타터 생존·버프 검증기",
+  "version": "1.0.0",
+  "generated_at": "2026-11-27T14:54:00",
+  "patch": {
+    "title": "patch_notes_synthetic_full.txt",
+    "source": "tests/fixtures/patch_notes_synthetic_full.txt",
+    "version_hint": "3.30.0",
+    "entry_count": 23
+  },
+  "summary": {
+    "red": 5,
+    "yellow": 3,
+    "green": 1
+  },
+  "builds": [
+    {
+      "id": "rf-chieftain-pohx",
+      "name": "RF 치프틴 (Pohx SRI)",
+      "verdict": "red",
+      "label": "🔴 핵심 너프 주의",
+      "headline": "주력 스킬 'Righteous Fire' 너프 외 2건",
+      "class": "Marauder",
+      "ascendancy": "Chieftain",
+      "level": 90,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Scorching Ray of Immolation",
+        "Righteous Fire"
+      ],
+      "supports": [
+        "Multiple Totems",
+        "Spell Totem",
+        "Lifetap",
+        "Efficacy",
+        "Controlled Destruction",
+        "Swift Affliction",
+        "Elemental Focus",
+        "Faster Attacks"
+      ],
+      "uniques": [
+        "Nebulis",
+        "Cloak of Flame",
+        "Annihilation's Approach",
+        "Kalandra's Touch",
+        "Immortal Flesh",
+        "Rational Doctrine",
+        "Watcher's Eye"
+      ],
+      "keystones": [
+        "Glancing Blows"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Righteous Fire",
+          "entity_kind": "main_skill",
+          "entry": "Righteous Fire",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "critical",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Now deals 39.7 base Fire Damage per second at gem level 1 (previously 49.4).",
+            "Now deals 2447.9 base Fire Damage per second at gem level 20 (previously 3142.6).",
+            "Now grants 20% more Spell Damage (previously 30%)."
+          ]
+        },
+        {
+          "entity": "Scorching Ray of Immolation",
+          "entity_kind": "main_skill",
+          "entry": "Scorching Ray of Immolation",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 33.33,
+          "lines": [
+            "Now deals 20% more Damage (previously 15%).",
+            "Now has 10% increased Area of Effect."
+          ]
+        },
+        {
+          "entity": "Chieftain",
+          "entity_kind": "ascendancy",
+          "entry": "Chieftain",
+          "entry_kind": "ascendancy",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 100.0,
+          "lines": [
+            "Ramako, Sun's Light now grants 50% increased Fire Damage (previously 40%).",
+            "Hinekora, Death's Fury now has a 10% chance to Cover Enemies in Ash on Hit (previously 5%)."
+          ]
+        },
+        {
+          "entity": "Nebulis",
+          "entity_kind": "unique",
+          "entry": "Nebulis",
+          "entry_kind": "unique",
+          "direction": "nerf",
+          "severity": "critical",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Now grants 6% increased Elemental Damage per 100 Intelligence (previously 10%)."
+          ]
+        },
+        {
+          "entity": "Cloak of Flame",
+          "entity_kind": "unique",
+          "entry": "Cloak of Flame",
+          "entry_kind": "unique",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 33.33,
+          "lines": [
+            "Now grants 20% of Physical Damage from Hits taken as Fire Damage (previously 15%).",
+            "Now has 500 Armour (previously 400)."
+          ]
+        },
+        {
+          "entity": "Annihilation's Approach",
+          "entity_kind": "unique",
+          "entry": "Annihilation's Approach",
+          "entry_kind": "unique",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 33.33,
+          "lines": [
+            "Now grants 40% increased Movement Speed (previously 30%)."
+          ]
+        },
+        {
+          "entity": "Glancing Blows",
+          "entity_kind": "keystone",
+          "entry": "Glancing Blows",
+          "entry_kind": "keystone",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 20.0,
+          "lines": [
+            "Now has 60% chance to Block Attack Damage (previously 50%)."
+          ]
+        },
+        {
+          "entity": "Shield Charge",
+          "entity_kind": "secondary_skill",
+          "entry": "Shield Charge",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "Mana Cost reduced from 12 to 9."
+          ]
+        },
+        {
+          "entity": "Malevolence",
+          "entity_kind": "secondary_skill",
+          "entry": "Malevolence",
+          "entry_kind": "gem",
+          "direction": "mixed",
+          "severity": "minor",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "No longer grants 20% increased Skill Effect Duration.",
+            "Now grants 15% increased Damage over Time (previously 12%)."
+          ]
+        },
+        {
+          "entity": "Elemental Focus",
+          "entity_kind": "support",
+          "entry": "Elemental Focus Support",
+          "entry_kind": "support",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "Supported Skills now deal 25% more Elemental Damage (previously 20%)."
+          ]
+        },
+        {
+          "entity": "Lifetap",
+          "entity_kind": "support",
+          "entry": "Lifetap Support",
+          "entry_kind": "support",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 33.33,
+          "lines": [
+            "Supported Skills now cost 20% less Life (previously 15%)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "impending-doom-elementalist",
+      "name": "독조 엘리멘탈리스트 (Doom Blast)",
+      "verdict": "red",
+      "label": "🔴 핵심 너프 주의",
+      "headline": "키스톤 'Mind Over Matter' 너프 외 2건",
+      "class": "Witch",
+      "ascendancy": "Elementalist",
+      "level": 97,
+      "tree_version": "3_30",
+      "main_skills": [
+        "Doom Blast",
+        "Tempest Shield",
+        "Arctic Armour"
+      ],
+      "supports": [
+        "Enlighten",
+        "Void Manipulation",
+        "Unbound Ailments",
+        "Deadly Ailments",
+        "Faster Attacks",
+        "Momentum",
+        "Spell Cascade"
+      ],
+      "uniques": [
+        "Foulborn Doedre's Scorn",
+        "Vixen's Entrapment",
+        "Betrayal's Sting",
+        "Taste of Hate",
+        "The Balance of Terror"
+      ],
+      "keystones": [
+        "Eldritch Battery",
+        "Mind Over Matter",
+        "Zealot's Oath"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Mind Over Matter",
+          "entity_kind": "keystone",
+          "entry": "Mind Over Matter",
+          "entry_kind": "keystone",
+          "direction": "nerf",
+          "severity": "critical",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Now causes 30% of Damage to be taken from Mana before Life (previously 40%)."
+          ]
+        },
+        {
+          "entity": "Shield Charge",
+          "entity_kind": "secondary_skill",
+          "entry": "Shield Charge",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "Mana Cost reduced from 12 to 9."
+          ]
+        },
+        {
+          "entity": "Malevolence",
+          "entity_kind": "secondary_skill",
+          "entry": "Malevolence",
+          "entry_kind": "gem",
+          "direction": "mixed",
+          "severity": "minor",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "No longer grants 20% increased Skill Effect Duration.",
+            "Now grants 15% increased Damage over Time (previously 12%)."
+          ]
+        },
+        {
+          "entity": "Void Manipulation",
+          "entity_kind": "support",
+          "entry": "Void Manipulation Support",
+          "entry_kind": "support",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Supported Skills now deal 30% more Chaos Damage (previously 35%)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rf-chieftain-330",
+      "name": "작열 광선 RF 치프틴 (내 캐릭터)",
+      "verdict": "red",
+      "label": "🔴 핵심 너프 주의",
+      "headline": "주력 스킬 'Righteous Fire' 너프 외 2건",
+      "class": "Marauder",
+      "ascendancy": "Chieftain",
+      "level": 95,
+      "tree_version": "3_30",
+      "main_skills": [
+        "Scorching Ray of Immolation",
+        "Righteous Fire"
+      ],
+      "supports": [
+        "Efficacy",
+        "Spell Totem",
+        "Multiple Totems",
+        "Lifetap",
+        "Controlled Destruction",
+        "Swift Affliction",
+        "Elemental Focus",
+        "Enlighten",
+        "Faster Attacks"
+      ],
+      "uniques": [
+        "Annihilation's Approach",
+        "Nebulis",
+        "Cloak of Flame",
+        "Immortal Flesh",
+        "Dawnbreaker",
+        "Watcher's Eye"
+      ],
+      "keystones": [
+        "Glancing Blows"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Righteous Fire",
+          "entity_kind": "main_skill",
+          "entry": "Righteous Fire",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "critical",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Now deals 39.7 base Fire Damage per second at gem level 1 (previously 49.4).",
+            "Now deals 2447.9 base Fire Damage per second at gem level 20 (previously 3142.6).",
+            "Now grants 20% more Spell Damage (previously 30%)."
+          ]
+        },
+        {
+          "entity": "Scorching Ray of Immolation",
+          "entity_kind": "main_skill",
+          "entry": "Scorching Ray of Immolation",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 33.33,
+          "lines": [
+            "Now deals 20% more Damage (previously 15%).",
+            "Now has 10% increased Area of Effect."
+          ]
+        },
+        {
+          "entity": "Chieftain",
+          "entity_kind": "ascendancy",
+          "entry": "Chieftain",
+          "entry_kind": "ascendancy",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 100.0,
+          "lines": [
+            "Ramako, Sun's Light now grants 50% increased Fire Damage (previously 40%).",
+            "Hinekora, Death's Fury now has a 10% chance to Cover Enemies in Ash on Hit (previously 5%)."
+          ]
+        },
+        {
+          "entity": "Nebulis",
+          "entity_kind": "unique",
+          "entry": "Nebulis",
+          "entry_kind": "unique",
+          "direction": "nerf",
+          "severity": "critical",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Now grants 6% increased Elemental Damage per 100 Intelligence (previously 10%)."
+          ]
+        },
+        {
+          "entity": "Cloak of Flame",
+          "entity_kind": "unique",
+          "entry": "Cloak of Flame",
+          "entry_kind": "unique",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 33.33,
+          "lines": [
+            "Now grants 20% of Physical Damage from Hits taken as Fire Damage (previously 15%).",
+            "Now has 500 Armour (previously 400)."
+          ]
+        },
+        {
+          "entity": "Annihilation's Approach",
+          "entity_kind": "unique",
+          "entry": "Annihilation's Approach",
+          "entry_kind": "unique",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 33.33,
+          "lines": [
+            "Now grants 40% increased Movement Speed (previously 30%)."
+          ]
+        },
+        {
+          "entity": "Glancing Blows",
+          "entity_kind": "keystone",
+          "entry": "Glancing Blows",
+          "entry_kind": "keystone",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 20.0,
+          "lines": [
+            "Now has 60% chance to Block Attack Damage (previously 50%)."
+          ]
+        },
+        {
+          "entity": "Shield Charge",
+          "entity_kind": "secondary_skill",
+          "entry": "Shield Charge",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "Mana Cost reduced from 12 to 9."
+          ]
+        },
+        {
+          "entity": "Malevolence",
+          "entity_kind": "secondary_skill",
+          "entry": "Malevolence",
+          "entry_kind": "gem",
+          "direction": "mixed",
+          "severity": "minor",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "No longer grants 20% increased Skill Effect Duration.",
+            "Now grants 15% increased Damage over Time (previously 12%)."
+          ]
+        },
+        {
+          "entity": "Elemental Focus",
+          "entity_kind": "support",
+          "entry": "Elemental Focus Support",
+          "entry_kind": "support",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "Supported Skills now deal 25% more Elemental Damage (previously 20%)."
+          ]
+        },
+        {
+          "entity": "Lifetap",
+          "entity_kind": "support",
+          "entry": "Lifetap Support",
+          "entry_kind": "support",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 33.33,
+          "lines": [
+            "Supported Skills now cost 20% less Life (previously 15%)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tornado-inquisitor",
+      "name": "회오리바람 인퀴지터 (BalorMage 스타터)",
+      "verdict": "red",
+      "label": "🔴 핵심 너프 주의",
+      "headline": "주력 스킬 'Tornado of Elemental Turbulence' 혼합 조정 외 1건",
+      "class": "Templar",
+      "ascendancy": "Inquisitor",
+      "level": 94,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Tornado of Elemental Turbulence"
+      ],
+      "supports": [
+        "Intensify",
+        "Increased Critical Damage",
+        "Empower",
+        "Ice Bite",
+        "Enlighten",
+        "Cast when Damage Taken",
+        "Faster Attacks",
+        "Eternal Blessing"
+      ],
+      "uniques": [
+        "Kaom's Heart",
+        "Bottled Faith",
+        "Foulborn The Red Nightmare",
+        "Forbidden Flame",
+        "Forbidden Flesh",
+        "Oriath's End",
+        "Optional HH or Mageblood",
+        "Taste of Hate",
+        "Atziri's Promise",
+        "The Taming",
+        "Glorious Vanity 7106; 14.461; Mind Over Matter",
+        "Foulborn Tulborn",
+        "Gifts from Above",
+        "Replica Dragonfang's Flight",
+        "Doedre's Tenure",
+        "Replica Bitterdream",
+        "Grace of the Goddess",
+        "Nerfed Rathpith Globe Volatile Orbd",
+        "Nerfed Rathpith Globe",
+        "Crest of Desire",
+        "Immortal Flesh",
+        "Glorious Vanity",
+        "Natural Hierarchy"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Tornado of Elemental Turbulence",
+          "entity_kind": "main_skill",
+          "entry": "Tornado of Elemental Turbulence",
+          "entry_kind": "gem",
+          "direction": "mixed",
+          "severity": "critical",
+          "alias": "",
+          "score": 60.0,
+          "lines": [
+            "Now deals 25% less Damage (previously 15% less Damage).",
+            "Now has 40% increased Area of Effect (previously 25%)."
+          ]
+        },
+        {
+          "entity": "Righteous Fire",
+          "entity_kind": "secondary_skill",
+          "entry": "Righteous Fire",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Now deals 39.7 base Fire Damage per second at gem level 1 (previously 49.4).",
+            "Now deals 2447.9 base Fire Damage per second at gem level 20 (previously 3142.6).",
+            "Now grants 20% more Spell Damage (previously 30%)."
+          ]
+        },
+        {
+          "entity": "Shield Charge",
+          "entity_kind": "secondary_skill",
+          "entry": "Shield Charge",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "Mana Cost reduced from 12 to 9."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dominating-blow-guardian",
+      "name": "지배의 일격 가디언 (ArminYou 스타터)",
+      "verdict": "red",
+      "label": "🔴 핵심 너프 주의",
+      "headline": "주력 스킬 'Dominating Blow of Inspiring' 혼합 조정",
+      "class": "Templar",
+      "ascendancy": "Guardian",
+      "level": 95,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Dominating Blow of Inspiring"
+      ],
+      "supports": [
+        "Multistrike",
+        "Fortify",
+        "Ruthless",
+        "Trinity",
+        "Increased Critical Damage",
+        "Meat Shield",
+        "Minion Life",
+        "Mark On Hit",
+        "Cast when Stunned"
+      ],
+      "uniques": [
+        "Kingmaker",
+        "Leer Cast",
+        "Garb of the Ephemeral",
+        "Legacy of Fury",
+        "Bonemeld",
+        "Brutal Restraint",
+        "The Light of Meaning",
+        "Yoke of Suffering",
+        "Darkness Enthroned",
+        "Watcher's Eye",
+        "Fortress Covenant",
+        "Relentless Fury",
+        "Crown of the Tyrant"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Dominating Blow of Inspiring",
+          "entity_kind": "main_skill",
+          "entry": "Dominating Blow of Inspiring",
+          "entry_kind": "gem",
+          "direction": "mixed",
+          "severity": "critical",
+          "alias": "",
+          "score": 50.0,
+          "lines": [
+            "Now grants Sentinels 15% increased Attack Speed (previously 10%).",
+            "No longer grants Sentinels additional Physical Damage Reduction."
+          ]
+        },
+        {
+          "entity": "Summon Holy Relic",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Holy Relic of Conviction",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 20.0,
+          "lines": [
+            "Now has a base duration of 6 seconds (previously 5).",
+            "Tornado of Elemental Turbulence"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coc-forbidden-rite-assassin",
+      "name": "CoC 금단의 의식 어쌔신 (MrJim 저예산)",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "서포트 젬 'Void Manipulation' 너프 외 1건",
+      "class": "Shadow",
+      "ascendancy": "Assassin",
+      "level": 93,
+      "tree_version": "3_30",
+      "main_skills": [
+        "Forbidden Rite of Soul Sacrifice"
+      ],
+      "supports": [
+        "Increased Critical Strikes",
+        "Greater Volley",
+        "Cast On Critical Strike",
+        "Void Manipulation",
+        "Faster Attacks",
+        "Momentum",
+        "More Duration",
+        "Cooldown Recovery",
+        "Enlighten"
+      ],
+      "uniques": [
+        "Maloney's Mechanism",
+        "Viridi's Veil",
+        "The Stampede",
+        "Whispers of Infinity",
+        "Elegant Hubris",
+        "Watcher's Eye"
+      ],
+      "keystones": [
+        "Chaos Inoculation",
+        "Pain Attunement",
+        "Zealot's Oath"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Forbidden Rite of Soul Sacrifice",
+          "entity_kind": "main_skill",
+          "entry": "Forbidden Rite of Soul Sacrifice",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 100.0,
+          "lines": [
+            "Now deals 180% more Damage (previously 120%).",
+            "Now fires 2 additional Projectiles (previously 1).",
+            "Mana Cost reduced from 14 to 11."
+          ]
+        },
+        {
+          "entity": "Void Manipulation",
+          "entity_kind": "support",
+          "entry": "Void Manipulation Support",
+          "entry_kind": "support",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Supported Skills now deal 30% more Chaos Damage (previously 35%)."
+          ]
+        },
+        {
+          "entity": "Cast On Critical Strike",
+          "entity_kind": "support",
+          "entry": "Cast On Critical Strike Support",
+          "entry_kind": "support",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Now has 35% less Damage (previously 30% less Damage).",
+            "Now triggers Supported Skills every 0.15 seconds (previously 0.10 seconds)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poison-holy-relic-necro",
+      "name": "중독 신성한 유물 네크로맨서 (Bula)",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Malevolence' 혼합 조정 외 1건",
+      "class": "Witch",
+      "ascendancy": "Necromancer",
+      "level": 98,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Summon Holy Relic of Conviction",
+        "Lancing Steel of Spraying",
+        "Animate Guardian"
+      ],
+      "supports": [
+        "Empower",
+        "Minion Damage",
+        "Enhance",
+        "Unbound Ailments",
+        "Void Manipulation",
+        "Life Gain on Hit",
+        "Withering Touch",
+        "Returning Projectiles",
+        "Minion Life",
+        "Meat Shield",
+        "Feeding Frenzy",
+        "Generosity"
+      ],
+      "uniques": [
+        "Darkness Enthroned",
+        "Dialla's Malefaction",
+        "Geofri's Crest"
+      ],
+      "keystones": [
+        "Resolute Technique"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Summon Holy Relic of Conviction",
+          "entity_kind": "main_skill",
+          "entry": "Summon Holy Relic of Conviction",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 20.0,
+          "lines": [
+            "Now has a base duration of 6 seconds (previously 5).",
+            "Tornado of Elemental Turbulence"
+          ]
+        },
+        {
+          "entity": "Malevolence",
+          "entity_kind": "secondary_skill",
+          "entry": "Malevolence",
+          "entry_kind": "gem",
+          "direction": "mixed",
+          "severity": "minor",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "No longer grants 20% increased Skill Effect Duration.",
+            "Now grants 15% increased Damage over Time (previously 12%)."
+          ]
+        },
+        {
+          "entity": "Void Manipulation",
+          "entity_kind": "support",
+          "entry": "Void Manipulation Support",
+          "entry_kind": "support",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "Supported Skills now deal 30% more Chaos Damage (previously 35%)."
+          ]
+        },
+        {
+          "entity": "Minion Damage",
+          "entity_kind": "support",
+          "entry": "Minion Damage",
+          "entry_kind": "support",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "increased from 20% to 25%."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eviscerate-elementalist",
+      "name": "절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Malevolence' 혼합 조정",
+      "class": "Witch",
+      "ascendancy": "Elementalist",
+      "level": 100,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Eviscerate"
+      ],
+      "supports": [
+        "Elemental Damage with Attacks",
+        "Volatility",
+        "Burning Damage",
+        "Damage on Full Life",
+        "Unbound Ailments",
+        "Enlighten",
+        "Enhance"
+      ],
+      "uniques": [
+        "Watcher's Eye",
+        "Lethal Pride",
+        "The Light of Meaning",
+        "Thread of Hope",
+        "Polaric Devastation",
+        "Ephemeral Edge",
+        "Aegis Aurora",
+        "Ashes of the Stars",
+        "The Taming",
+        "Dyadian Dawn",
+        "Vaal Caress",
+        "Foulborn Tulborn",
+        "Rime Gaze",
+        "Incandescent Heart",
+        "March of the Legion",
+        "Forbidden Flame",
+        "Forbidden Flesh",
+        "Replica Allelopathy",
+        "Replica Reckless Defence"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Eviscerate",
+          "entity_kind": "main_skill",
+          "entry": "Eviscerate",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 33.33,
+          "lines": [
+            "Now deals 20% more Damage (previously 15%).",
+            "Now has 50% increased Effect of the Ignite."
+          ]
+        },
+        {
+          "entity": "Shield Charge",
+          "entity_kind": "secondary_skill",
+          "entry": "Shield Charge",
+          "entry_kind": "gem",
+          "direction": "buff",
+          "severity": "buff",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "Mana Cost reduced from 12 to 9."
+          ]
+        },
+        {
+          "entity": "Malevolence",
+          "entity_kind": "secondary_skill",
+          "entry": "Malevolence",
+          "entry_kind": "gem",
+          "direction": "mixed",
+          "severity": "minor",
+          "alias": "",
+          "score": 25.0,
+          "lines": [
+            "No longer grants 20% increased Skill Effect Duration.",
+            "Now grants 15% increased Damage over Time (previously 12%)."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dual-strike-gladiator",
+      "name": "쌍수 타격 글래디에이터 (Ephemeral Edge)",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Duelist",
+      "ascendancy": "Gladiator",
+      "level": 98,
+      "tree_version": "3_30",
+      "main_skills": [
+        "Dual Strike of Ambidexterity"
+      ],
+      "supports": [
+        "Damage on Full Life",
+        "Volatility",
+        "Elemental Damage with Attacks",
+        "Invert the Rules",
+        "Greater Multistrike",
+        "Faster Attacks",
+        "Momentum",
+        "Enlighten",
+        "Culling Strike",
+        "Cast when Damage Taken"
+      ],
+      "uniques": [
+        "Split Personality",
+        "Unnatural Instinct",
+        "Foulborn The Blue Nightmare",
+        "Megalomaniac",
+        "Stormshroud",
+        "Forbidden Flame",
+        "The Light of Meaning",
+        "Lethal Pride",
+        "Watcher's Eye",
+        "Forbidden Flesh",
+        "The Writhing Jar",
+        "Maloney's Mechanism",
+        "Essentia Sanguis",
+        "Zana's Ingenuity",
+        "Foulborn Shavronne's Revelation",
+        "Foulborn Le Heup of All",
+        "Ephemeral Edge",
+        "Screams of the Desiccated",
+        "The Balance of Terror"
+      ],
+      "keystones": [
+        "Chaos Inoculation",
+        "Precise Technique",
+        "Roiling Tempest",
+        "Versatile Combatant"
+      ],
+      "error": "",
+      "hits": []
+    }
+  ],
+  "buffs": [
+    {
+      "name": "Forbidden Rite of Soul Sacrifice",
+      "kind": "스킬",
+      "score": 100.0,
+      "total": 171.43,
+      "occurrences": 3,
+      "seeds": [
+        "CoC 금단의 의식 어쌔신 (MrJim 저예산)"
+      ],
+      "poedb": "https://poedb.tw/kr/Forbidden_Rite_of_Soul_Sacrifice",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Forbidden_Rite_of_Soul_Sacrifice",
+      "evidence": [
+        "projectile: 1 → 2 (+100.0%) · Now fires 2 additional Projectiles (previously 1).",
+        "damage: 120% → 180% (+50.0%) · Now deals 180% more Damage (previously 120%).",
+        "cost: 14 → 11 (+21.4%) · Mana Cost reduced from 14 to 11."
+      ]
+    },
+    {
+      "name": "Chieftain",
+      "kind": "전직",
+      "score": 100.0,
+      "total": 125.0,
+      "occurrences": 2,
+      "seeds": [
+        "작열 광선 RF 치프틴 (내 캐릭터)",
+        "RF 치프틴 (Pohx SRI)"
+      ],
+      "poedb": "https://poedb.tw/kr/Chieftain",
+      "poe_ninja": null,
+      "evidence": [
+        "chance: 5% → 10% (+100.0%) · Hinekora, Death's Fury now has a 10% chance to Cover Enemies in Ash on Hit (previously 5%).",
+        "damage: 40% → 50% (+25.0%) · Ramako, Sun's Light now grants 50% increased Fire Damage (previously 40%)."
+      ]
+    },
+    {
+      "name": "Tornado of Elemental Turbulence",
+      "kind": "스킬",
+      "score": 60.0,
+      "total": 60.0,
+      "occurrences": 1,
+      "seeds": [
+        "회오리바람 인퀴지터 (BalorMage 스타터)"
+      ],
+      "poedb": "https://poedb.tw/kr/Tornado_of_Elemental_Turbulence",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Tornado_of_Elemental_Turbulence",
+      "evidence": [
+        "area of effect: 25% → 40% (+60.0%) · Now has 40% increased Area of Effect (previously 25%)."
+      ]
+    },
+    {
+      "name": "Dominating Blow of Inspiring",
+      "kind": "스킬",
+      "score": 50.0,
+      "total": 50.0,
+      "occurrences": 1,
+      "seeds": [
+        "지배의 일격 가디언 (ArminYou 스타터)"
+      ],
+      "poedb": "https://poedb.tw/kr/Dominating_Blow_of_Inspiring",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Dominating_Blow_of_Inspiring",
+      "evidence": [
+        "speed: 10% → 15% (+50.0%) · Now grants Sentinels 15% increased Attack Speed (previously 10%)."
+      ]
+    },
+    {
+      "name": "Impending Doom Support",
+      "kind": "서포트",
+      "score": 33.33,
+      "total": 58.33,
+      "occurrences": 2,
+      "seeds": [],
+      "poedb": "https://poedb.tw/kr/Impending_Doom_Support",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Impending_Doom",
+      "evidence": [
+        "damage: 45% → 60% (+33.3%) · Supported Skills now deal 60% more Spell Damage (previously 45%).",
+        "cooldown: 0.40 → 0.30 (+25.0%) · Now has a cooldown of 0.3 seconds (previously 0.4 seconds)."
+      ]
+    },
+    {
+      "name": "Cloak of Flame",
+      "kind": "유니크",
+      "score": 33.33,
+      "total": 58.33,
+      "occurrences": 2,
+      "seeds": [
+        "작열 광선 RF 치프틴 (내 캐릭터)",
+        "RF 치프틴 (Pohx SRI)"
+      ],
+      "poedb": "https://poedb.tw/kr/Cloak_of_Flame",
+      "poe_ninja": null,
+      "evidence": [
+        "damage: 15% → 20% (+33.3%) · Now grants 20% of Physical Damage from Hits taken as Fire Damage (previously 15%).",
+        "armour: 400 → 500 (+25.0%) · Now has 500 Armour (previously 400)."
+      ]
+    },
+    {
+      "name": "Scorching Ray of Immolation",
+      "kind": "스킬",
+      "score": 33.33,
+      "total": 33.33,
+      "occurrences": 1,
+      "seeds": [
+        "작열 광선 RF 치프틴 (내 캐릭터)",
+        "RF 치프틴 (Pohx SRI)"
+      ],
+      "poedb": "https://poedb.tw/kr/Scorching_Ray_of_Immolation",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Scorching_Ray_of_Immolation",
+      "evidence": [
+        "damage: 15% → 20% (+33.3%) · Now deals 20% more Damage (previously 15%)."
+      ]
+    },
+    {
+      "name": "Eviscerate",
+      "kind": "스킬",
+      "score": 33.33,
+      "total": 33.33,
+      "occurrences": 1,
+      "seeds": [
+        "절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)"
+      ],
+      "poedb": "https://poedb.tw/kr/Eviscerate",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Eviscerate",
+      "evidence": [
+        "damage: 15% → 20% (+33.3%) · Now deals 20% more Damage (previously 15%)."
+      ]
+    },
+    {
+      "name": "Lifetap Support",
+      "kind": "서포트",
+      "score": 33.33,
+      "total": 33.33,
+      "occurrences": 1,
+      "seeds": [
+        "작열 광선 RF 치프틴 (내 캐릭터)",
+        "RF 치프틴 (Pohx SRI)"
+      ],
+      "poedb": "https://poedb.tw/kr/Lifetap_Support",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Lifetap",
+      "evidence": [
+        "cost: 15% → 20% (+33.3%) · Supported Skills now cost 20% less Life (previously 15%)."
+      ]
+    },
+    {
+      "name": "Annihilation's Approach",
+      "kind": "유니크",
+      "score": 33.33,
+      "total": 33.33,
+      "occurrences": 1,
+      "seeds": [
+        "작열 광선 RF 치프틴 (내 캐릭터)",
+        "RF 치프틴 (Pohx SRI)"
+      ],
+      "poedb": "https://poedb.tw/kr/Annihilation%27s_Approach",
+      "poe_ninja": null,
+      "evidence": [
+        "speed: 30% → 40% (+33.3%) · Now grants 40% increased Movement Speed (previously 30%)."
+      ]
+    },
+    {
+      "name": "Minion Damage",
+      "kind": "서포트",
+      "score": 25.0,
+      "total": 25.0,
+      "occurrences": 1,
+      "seeds": [
+        "중독 신성한 유물 네크로맨서 (Bula)"
+      ],
+      "poedb": "https://poedb.tw/kr/Minion_Damage",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Minion_Damage",
+      "evidence": [
+        "value: 20% → 25% (+25.0%) · increased from 20% to 25%."
+      ]
+    },
+    {
+      "name": "Shield Charge",
+      "kind": "스킬",
+      "score": 25.0,
+      "total": 25.0,
+      "occurrences": 1,
+      "seeds": [
+        "작열 광선 RF 치프틴 (내 캐릭터)",
+        "RF 치프틴 (Pohx SRI)",
+        "회오리바람 인퀴지터 (BalorMage 스타터)",
+        "절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)",
+        "독조 엘리멘탈리스트 (Doom Blast)"
+      ],
+      "poedb": "https://poedb.tw/kr/Shield_Charge",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Shield_Charge",
+      "evidence": [
+        "cost: 12 → 9 (+25.0%) · Mana Cost reduced from 12 to 9."
+      ]
+    },
+    {
+      "name": "Malevolence",
+      "kind": "스킬",
+      "score": 25.0,
+      "total": 25.0,
+      "occurrences": 1,
+      "seeds": [
+        "작열 광선 RF 치프틴 (내 캐릭터)",
+        "RF 치프틴 (Pohx SRI)",
+        "중독 신성한 유물 네크로맨서 (Bula)",
+        "절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)",
+        "독조 엘리멘탈리스트 (Doom Blast)"
+      ],
+      "poedb": "https://poedb.tw/kr/Malevolence",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Malevolence",
+      "evidence": [
+        "damage: 12% → 15% (+25.0%) · Now grants 15% increased Damage over Time (previously 12%)."
+      ]
+    },
+    {
+      "name": "Elemental Focus Support",
+      "kind": "서포트",
+      "score": 25.0,
+      "total": 25.0,
+      "occurrences": 1,
+      "seeds": [
+        "작열 광선 RF 치프틴 (내 캐릭터)",
+        "RF 치프틴 (Pohx SRI)"
+      ],
+      "poedb": "https://poedb.tw/kr/Elemental_Focus_Support",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Elemental_Focus",
+      "evidence": [
+        "damage: 20% → 25% (+25.0%) · Supported Skills now deal 25% more Elemental Damage (previously 20%)."
+      ]
+    },
+    {
+      "name": "Summon Holy Relic of Conviction",
+      "kind": "스킬",
+      "score": 20.0,
+      "total": 20.0,
+      "occurrences": 1,
+      "seeds": [
+        "중독 신성한 유물 네크로맨서 (Bula)",
+        "지배의 일격 가디언 (ArminYou 스타터)"
+      ],
+      "poedb": "https://poedb.tw/kr/Summon_Holy_Relic_of_Conviction",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Summon_Holy_Relic_of_Conviction",
+      "evidence": [
+        "duration: 5 → 6 (+20.0%) · Now has a base duration of 6 seconds (previously 5)."
+      ]
+    },
+    {
+      "name": "Glancing Blows",
+      "kind": "키스톤",
+      "score": 20.0,
+      "total": 20.0,
+      "occurrences": 1,
+      "seeds": [
+        "작열 광선 RF 치프틴 (내 캐릭터)",
+        "RF 치프틴 (Pohx SRI)"
+      ],
+      "poedb": "https://poedb.tw/kr/Glancing_Blows",
+      "poe_ninja": null,
+      "evidence": [
+        "chance: 50% → 60% (+20.0%) · Now has 60% chance to Block Attack Damage (previously 50%)."
+      ]
+    },
+    {
+      "name": "Herald of Purity",
+      "kind": "스킬",
+      "score": 0.0,
+      "total": 0,
+      "occurrences": 1,
+      "seeds": [],
+      "poedb": "https://poedb.tw/kr/Herald_of_Purity",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Herald_of_Purity",
+      "evidence": [
+        "Now also grants 20% increased Minion Damage."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+==============================================================================
+ PoE 패치노트 스타터 생존·버프 검증기 v1.0.0
+==============================================================================
+패치노트 : Announcements - Thread Difficulty and League Mechanic Changes · 패치 3.30
+출처     : https://www.pathofexile.com/forum/view-thread/4016267
+분석 시각: 2026-11-27 14:54
+항목 수  : 0개 (빌드 9개 검사)
+판정 요약: 🔴 0 · 🟡 0 · 🟢 9
+   ⚠ 패치노트에서 젬·유니크·전직 이름이 붙은 항목을 하나도 찾지 못했습니다. 일반 안내문이거나 형식이 다른 문서일 수 있으니, 0건을
+     '변경 없음'의 근거로 쓰지 마세요.
+
+[1] 스타터 생존 검증
+------------------------------------------------------------------------------
+🟢 무사통과  CoC 금단의 의식 어쌔신 (MrJim 저예산)  (Assassin · 93레벨)
+   주력: Forbidden Rite of Soul Sacrifice
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  RF 치프틴 (Pohx SRI)  (Chieftain · 90레벨)
+   주력: Scorching Ray of Immolation, Righteous Fire
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  독조 엘리멘탈리스트 (Doom Blast)  (Elementalist · 97레벨)
+   주력: Doom Blast, Tempest Shield
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  쌍수 타격 글래디에이터 (Ephemeral Edge)  (Gladiator · 98레벨)
+   주력: Dual Strike of Ambidexterity
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  작열 광선 RF 치프틴 (내 캐릭터)  (Chieftain · 95레벨)
+   주력: Scorching Ray of Immolation, Righteous Fire
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)  (Elementalist · 100레벨)
+   주력: Eviscerate
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  중독 신성한 유물 네크로맨서 (Bula)  (Necromancer · 98레벨)
+   주력: Summon Holy Relic of Conviction, Lancing Steel of Spraying
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  지배의 일격 가디언 (ArminYou 스타터)  (Guardian · 95레벨)
+   주력: Dominating Blow of Inspiring
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  회오리바람 인퀴지터 (BalorMage 스타터)  (Inquisitor · 94레벨)
+   주력: Tornado of Elemental Turbulence
+   → 패치노트에서 관련 변경 없음
+
+[2] 대폭 상향(버프) TOP 0
+------------------------------------------------------------------------------
+   기준치를 넘는 상향 항목이 없습니다.
+
+==============================================================================
+주의: 판정은 패치노트 문장과 빌드 구성 요소의 이름 매칭·수치 비교로 계산됩니다.
+      실제 체감은 젬 레벨·장비·플레이 방식에 따라 다를 수 있습니다.

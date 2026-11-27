@@ -1,0 +1,122 @@
+In Path of Exile 1: Covens of Umbra, we’re introducing two new gems and making changes to some of the existing ones.
+
+We’ve prepared the gem data at level 20 with 20% quality for all new and changed gems. Check them out!
+
+New Gems
+
+Updated Gems
+Show All DifferencesHide All Differences
+
+Flame Link
+
+Modified
+
+New: Linked target gains 219 to 329 Added Fire Damage
+
+Old: Linked target gains 169 to 254 Added Fire Damage
+
+New: Linked target gains Added Fire Damage equal to 3% of your Maximum Life
+
+Old: Linked target gains Added Fire Damage equal to 5% of your Maximum Life
+
+Show DifferencesHide Differences
+
+Summon Flame Golem
+
+Modified
+
+New: Golems grant 24% increased Damage
+
+Old: Golems grant 29% increased Damage
+
+New: Golems grant 15% increased Area of Effect
+
+Old: Golems grant 20% increased Area of Effect
+
+Show DifferencesHide Differences
+
+Summon Stone Golem
+
+Modified
+
+New: Golems grant 16% increased Defences
+
+Old: Golems grant 20% increased Defences
+
+Show DifferencesHide Differences
+
+Dark Bargain
+
+New: This spell removes some life from one of your Skeleton minions near you or the targeted location to deal chaos damage in an area around it. This effect will chain beams to your other nearby skeletons. If you have no skeletons near you or the targeted location, it will sacrifice your own life to deal damage instead.
+
+Old: This spell removes some life from one of your Skeleton minions near you or the targeted location to deal chaos damage in an area around it. This effect will chain to your other nearby skeletons. If you have no skeletons near you or the targeted location, it will sacrifice your own life to deal damage instead.
+
+Show DifferencesHide Differences
+
+Pact of Beidat
+
+Modified
+
+New: Beams from Empowered Skills Chain 4 additional times
+
+Old: Beams from Empowered Skills Chain 6 additional times
+
+New: Empowered Skills fire 4 additional Projectiles Empowered Skills fire Projectiles in a circle
+
+Old: Empowered Skills fire 6 additional Projectiles Empowered Skills fire Projectiles in a circle
+
+Show DifferencesHide Differences
+
+Summon Lightning Golem
+
+Modified
+
+New: Golems grant 8% increased Attack and Cast Speed
+
+Old: Golems grant 10% increased Attack and Cast Speed
+
+Show DifferencesHide Differences
+
+Winter Orb
+
+Modified
+
+New: Effectiveness of Added Damage 70%
+
+Old: Effectiveness of Added Damage 80%
+
+New: Deals 307 to 460 Cold Damage
+
+Old: Deals 360 to 539 Cold Damage
+
+New: Fires 2 Projectiles
+
+Old: Fires 3 Projectiles
+
+Show DifferencesHide Differences
+
+Transfusion Support
+
+Added
+
+A Minion within 6 metres gains a Power, Frenzy or Endurance Charge for every 400 Life you spend on Upfront Costs with Supported Spells
+
+Removed
+
+A nearby Minion gains a Soul for every 200 Life you spend on Upfront Costs with Supported Spells
+
+New: Supports spells. Does not support instant or blessing spells.
+
+Old: Supports non-blessing spells.
+
+Show DifferencesHide Differences
+
+Vaal Sacrifice Support
+
+Added
+
+Supported Skills Sacrifice all but 20% of your maximum Life and Energy Shield on Use
+
+Removed
+
+Supported Skills Sacrifice all but 1 of your Life and Energy Shield on Use

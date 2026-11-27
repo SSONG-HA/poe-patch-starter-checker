@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "updated": "2026-11-27",
+  "note": "PoE 1 3.30 (Covens of Umbra) 기준. code_file 은 poe_checker/data 기준 상대경로.",
+  "builds": [
+    {
+      "id": "rf-chieftain-330",
+      "name": "작열 광선 RF 치프틴 (내 캐릭터)",
+      "kind": "character",
+      "source": "https://pobb.in/5VPv477qQmkr",
+      "note": "정우 님 95레벨 캐릭터 PoB(2026-11-24 갱신). 제웅 4부위, 방패 Hate Ward, 제물의 작열 광선 토템.",
+      "code_file": "builds/rf-chieftain-330.txt"
+    },
+    {
+      "id": "rf-chieftain-pohx",
+      "name": "RF 치프틴 (Pohx SRI)",
+      "kind": "starter",
+      "source": "https://pobb.in/Y6jHZomP3qPi",
+      "note": "Pohx의 3.30 RF 로드아웃. 코드 저장 시점 트리 표기는 3_29.",
+      "code_file": "builds/rf-chieftain-pohx.txt"
+    },
+    {
+      "id": "poison-holy-relic-necro",
+      "name": "중독 신성한 유물 네크로맨서 (Bula)",
+      "kind": "starter",
+      "source": "https://pobb.in/Na035hGPLxLx",
+      "note": "Bula 3.30 쇼케이스 PoB(Summon Holy Relic of Conviction + Lancing Steel of Spraying). 트리 표기 3_29.",
+      "code_file": "builds/poison-holy-relic-necro.txt"
+    },
+    {
+      "id": "dominating-blow-guardian",
+      "name": "지배의 일격 가디언 (ArminYou 스타터)",
+      "kind": "starter",
+      "source": "https://pobb.in/1oDia2RSD4ku",
+      "note": "ArminYou 3.30 가디언 리그 스타터(Dominating Blow of Inspiring + 소환수). 트리 표기 3_29.",
+      "code_file": "builds/dominating-blow-guardian.txt"
+    },
+    {
+      "id": "tornado-inquisitor",
+      "name": "회오리바람 인퀴지터 (BalorMage 스타터)",
+      "kind": "starter",
+      "source": "https://pobb.in/GtWMZtty-7o2",
+      "note": "BalorMage/PoE Vault 3.30 리그 스타터(Tornado of Elemental Turbulence + Rathpith). 트리 표기 3_29.",
+      "code_file": "builds/tornado-inquisitor.txt"
+    },
+    {
+      "id": "eviscerate-elementalist",
+      "name": "절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)",
+      "kind": "starter",
+      "source": "https://pobb.in/EaARfgbK7QYl",
+      "note": "Desmo Saze 3.30 리그 스타터(Eviscerate 점화, Ephemeral Edge). 트리 표기 3_29.",
+      "code_file": "builds/eviscerate-elementalist.txt"
+    },
+    {
+      "id": "coc-forbidden-rite-assassin",
+      "name": "CoC 금단의 의식 어쌔신 (MrJim 저예산)",
+      "kind": "seed",
+      "source": "https://pobb.in/u/mrjimo%232244/ijdNRePRfWU8",
+      "note": "MrJim 3.30 CoC Forbidden Rite of Soul Sacrifice CHEAP 버전. 트리 3_30.",
+      "code_file": "builds/coc-forbidden-rite-assassin.txt"
+    },
+    {
+      "id": "impending-doom-elementalist",
+      "name": "독조 엘리멘탈리스트 (Doom Blast)",
+      "kind": "seed",
+      "source": "직접 제작 PoB (downloads/baekseol-custom-build/stage2_endgame.xml)",
+      "note": "Foulborn Doedre's Scorn + Impending Doom 30레벨로 저주 1회 폭발. 3_30 트리.",
+      "code_file": "builds/impending-doom-elementalist.xml"
+    },
+    {
+      "id": "dual-strike-gladiator",
+      "name": "쌍수 타격 글래디에이터 (Ephemeral Edge)",
+      "kind": "seed",
+      "source": "직접 제작 PoB (downloads/baekseol-uber-build/stage2_uber_skip.xml)",
+      "note": "Dual Strike of Ambidexterity + Ephemeral Edge 우버용. 3_30 트리.",
+      "code_file": "builds/dual-strike-gladiator.xml"
+    }
+  ]
+}

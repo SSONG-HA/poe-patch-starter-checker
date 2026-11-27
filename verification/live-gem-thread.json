@@ -1,0 +1,532 @@
+{
+  "tool": "PoE 패치노트 스타터 생존·버프 검증기",
+  "version": "1.0.0",
+  "generated_at": "2026-11-27T14:53:59",
+  "patch": {
+    "title": "Announcements - New and Changed Gems in Path of Exile 1: Covens of Umbra",
+    "source": "https://www.pathofexile.com/forum/view-thread/4013898",
+    "version_hint": "3.30",
+    "entry_count": 9
+  },
+  "summary": {
+    "red": 0,
+    "yellow": 3,
+    "green": 6
+  },
+  "builds": [
+    {
+      "id": "impending-doom-elementalist",
+      "name": "독조 엘리멘탈리스트 (Doom Blast)",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Summon Flame Golem' 너프 외 2건",
+      "class": "Witch",
+      "ascendancy": "Elementalist",
+      "level": 97,
+      "tree_version": "3_30",
+      "main_skills": [
+        "Doom Blast",
+        "Tempest Shield",
+        "Arctic Armour"
+      ],
+      "supports": [
+        "Enlighten",
+        "Void Manipulation",
+        "Unbound Ailments",
+        "Deadly Ailments",
+        "Faster Attacks",
+        "Momentum",
+        "Spell Cascade"
+      ],
+      "uniques": [
+        "Foulborn Doedre's Scorn",
+        "Vixen's Entrapment",
+        "Betrayal's Sting",
+        "Taste of Hate",
+        "The Balance of Terror"
+      ],
+      "keystones": [
+        "Eldritch Battery",
+        "Mind Over Matter",
+        "Zealot's Oath"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Summon Flame Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Flame Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 24% increased Damage",
+            "Old: Golems grant 29% increased Damage",
+            "New: Golems grant 15% increased Area of Effect",
+            "Old: Golems grant 20% increased Area of Effect"
+          ]
+        },
+        {
+          "entity": "Summon Stone Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Stone Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 16% increased Defences",
+            "Old: Golems grant 20% increased Defences"
+          ]
+        },
+        {
+          "entity": "Summon Lightning Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Lightning Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 8% increased Attack and Cast Speed",
+            "Old: Golems grant 10% increased Attack and Cast Speed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eviscerate-elementalist",
+      "name": "절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Summon Flame Golem' 너프 외 2건",
+      "class": "Witch",
+      "ascendancy": "Elementalist",
+      "level": 100,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Eviscerate"
+      ],
+      "supports": [
+        "Elemental Damage with Attacks",
+        "Volatility",
+        "Burning Damage",
+        "Damage on Full Life",
+        "Unbound Ailments",
+        "Enlighten",
+        "Enhance"
+      ],
+      "uniques": [
+        "Watcher's Eye",
+        "Lethal Pride",
+        "The Light of Meaning",
+        "Thread of Hope",
+        "Polaric Devastation",
+        "Ephemeral Edge",
+        "Aegis Aurora",
+        "Ashes of the Stars",
+        "The Taming",
+        "Dyadian Dawn",
+        "Vaal Caress",
+        "Foulborn Tulborn",
+        "Rime Gaze",
+        "Incandescent Heart",
+        "March of the Legion",
+        "Forbidden Flame",
+        "Forbidden Flesh",
+        "Replica Allelopathy",
+        "Replica Reckless Defence"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Summon Flame Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Flame Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 24% increased Damage",
+            "Old: Golems grant 29% increased Damage",
+            "New: Golems grant 15% increased Area of Effect",
+            "Old: Golems grant 20% increased Area of Effect"
+          ]
+        },
+        {
+          "entity": "Summon Stone Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Stone Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 16% increased Defences",
+            "Old: Golems grant 20% increased Defences"
+          ]
+        },
+        {
+          "entity": "Summon Lightning Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Lightning Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 8% increased Attack and Cast Speed",
+            "Old: Golems grant 10% increased Attack and Cast Speed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "poison-holy-relic-necro",
+      "name": "중독 신성한 유물 네크로맨서 (Bula)",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Summon Stone Golem' 너프",
+      "class": "Witch",
+      "ascendancy": "Necromancer",
+      "level": 98,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Summon Holy Relic of Conviction",
+        "Lancing Steel of Spraying",
+        "Animate Guardian"
+      ],
+      "supports": [
+        "Empower",
+        "Minion Damage",
+        "Enhance",
+        "Unbound Ailments",
+        "Void Manipulation",
+        "Life Gain on Hit",
+        "Withering Touch",
+        "Returning Projectiles",
+        "Minion Life",
+        "Meat Shield",
+        "Feeding Frenzy",
+        "Generosity"
+      ],
+      "uniques": [
+        "Darkness Enthroned",
+        "Dialla's Malefaction",
+        "Geofri's Crest"
+      ],
+      "keystones": [
+        "Resolute Technique"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Summon Stone Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Stone Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 16% increased Defences",
+            "Old: Golems grant 20% increased Defences"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "coc-forbidden-rite-assassin",
+      "name": "CoC 금단의 의식 어쌔신 (MrJim 저예산)",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Shadow",
+      "ascendancy": "Assassin",
+      "level": 93,
+      "tree_version": "3_30",
+      "main_skills": [
+        "Forbidden Rite of Soul Sacrifice"
+      ],
+      "supports": [
+        "Increased Critical Strikes",
+        "Greater Volley",
+        "Cast On Critical Strike",
+        "Void Manipulation",
+        "Faster Attacks",
+        "Momentum",
+        "More Duration",
+        "Cooldown Recovery",
+        "Enlighten"
+      ],
+      "uniques": [
+        "Maloney's Mechanism",
+        "Viridi's Veil",
+        "The Stampede",
+        "Whispers of Infinity",
+        "Elegant Hubris",
+        "Watcher's Eye"
+      ],
+      "keystones": [
+        "Chaos Inoculation",
+        "Pain Attunement",
+        "Zealot's Oath"
+      ],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "rf-chieftain-pohx",
+      "name": "RF 치프틴 (Pohx SRI)",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Marauder",
+      "ascendancy": "Chieftain",
+      "level": 90,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Scorching Ray of Immolation",
+        "Righteous Fire"
+      ],
+      "supports": [
+        "Multiple Totems",
+        "Spell Totem",
+        "Lifetap",
+        "Efficacy",
+        "Controlled Destruction",
+        "Swift Affliction",
+        "Elemental Focus",
+        "Faster Attacks"
+      ],
+      "uniques": [
+        "Nebulis",
+        "Cloak of Flame",
+        "Annihilation's Approach",
+        "Kalandra's Touch",
+        "Immortal Flesh",
+        "Rational Doctrine",
+        "Watcher's Eye"
+      ],
+      "keystones": [
+        "Glancing Blows"
+      ],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "dual-strike-gladiator",
+      "name": "쌍수 타격 글래디에이터 (Ephemeral Edge)",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Duelist",
+      "ascendancy": "Gladiator",
+      "level": 98,
+      "tree_version": "3_30",
+      "main_skills": [
+        "Dual Strike of Ambidexterity"
+      ],
+      "supports": [
+        "Damage on Full Life",
+        "Volatility",
+        "Elemental Damage with Attacks",
+        "Invert the Rules",
+        "Greater Multistrike",
+        "Faster Attacks",
+        "Momentum",
+        "Enlighten",
+        "Culling Strike",
+        "Cast when Damage Taken"
+      ],
+      "uniques": [
+        "Split Personality",
+        "Unnatural Instinct",
+        "Foulborn The Blue Nightmare",
+        "Megalomaniac",
+        "Stormshroud",
+        "Forbidden Flame",
+        "The Light of Meaning",
+        "Lethal Pride",
+        "Watcher's Eye",
+        "Forbidden Flesh",
+        "The Writhing Jar",
+        "Maloney's Mechanism",
+        "Essentia Sanguis",
+        "Zana's Ingenuity",
+        "Foulborn Shavronne's Revelation",
+        "Foulborn Le Heup of All",
+        "Ephemeral Edge",
+        "Screams of the Desiccated",
+        "The Balance of Terror"
+      ],
+      "keystones": [
+        "Chaos Inoculation",
+        "Precise Technique",
+        "Roiling Tempest",
+        "Versatile Combatant"
+      ],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "rf-chieftain-330",
+      "name": "작열 광선 RF 치프틴 (내 캐릭터)",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Marauder",
+      "ascendancy": "Chieftain",
+      "level": 95,
+      "tree_version": "3_30",
+      "main_skills": [
+        "Scorching Ray of Immolation",
+        "Righteous Fire"
+      ],
+      "supports": [
+        "Efficacy",
+        "Spell Totem",
+        "Multiple Totems",
+        "Lifetap",
+        "Controlled Destruction",
+        "Swift Affliction",
+        "Elemental Focus",
+        "Enlighten",
+        "Faster Attacks"
+      ],
+      "uniques": [
+        "Annihilation's Approach",
+        "Nebulis",
+        "Cloak of Flame",
+        "Immortal Flesh",
+        "Dawnbreaker",
+        "Watcher's Eye"
+      ],
+      "keystones": [
+        "Glancing Blows"
+      ],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "dominating-blow-guardian",
+      "name": "지배의 일격 가디언 (ArminYou 스타터)",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Templar",
+      "ascendancy": "Guardian",
+      "level": 95,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Dominating Blow of Inspiring"
+      ],
+      "supports": [
+        "Multistrike",
+        "Fortify",
+        "Ruthless",
+        "Trinity",
+        "Increased Critical Damage",
+        "Meat Shield",
+        "Minion Life",
+        "Mark On Hit",
+        "Cast when Stunned"
+      ],
+      "uniques": [
+        "Kingmaker",
+        "Leer Cast",
+        "Garb of the Ephemeral",
+        "Legacy of Fury",
+        "Bonemeld",
+        "Brutal Restraint",
+        "The Light of Meaning",
+        "Yoke of Suffering",
+        "Darkness Enthroned",
+        "Watcher's Eye",
+        "Fortress Covenant",
+        "Relentless Fury",
+        "Crown of the Tyrant"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "tornado-inquisitor",
+      "name": "회오리바람 인퀴지터 (BalorMage 스타터)",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Templar",
+      "ascendancy": "Inquisitor",
+      "level": 94,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Tornado of Elemental Turbulence"
+      ],
+      "supports": [
+        "Intensify",
+        "Increased Critical Damage",
+        "Empower",
+        "Ice Bite",
+        "Enlighten",
+        "Cast when Damage Taken",
+        "Faster Attacks",
+        "Eternal Blessing"
+      ],
+      "uniques": [
+        "Kaom's Heart",
+        "Bottled Faith",
+        "Foulborn The Red Nightmare",
+        "Forbidden Flame",
+        "Forbidden Flesh",
+        "Oriath's End",
+        "Optional HH or Mageblood",
+        "Taste of Hate",
+        "Atziri's Promise",
+        "The Taming",
+        "Glorious Vanity 7106; 14.461; Mind Over Matter",
+        "Foulborn Tulborn",
+        "Gifts from Above",
+        "Replica Dragonfang's Flight",
+        "Doedre's Tenure",
+        "Replica Bitterdream",
+        "Grace of the Goddess",
+        "Nerfed Rathpith Globe Volatile Orbd",
+        "Nerfed Rathpith Globe",
+        "Crest of Desire",
+        "Immortal Flesh",
+        "Glorious Vanity",
+        "Natural Hierarchy"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": []
+    }
+  ],
+  "buffs": [
+    {
+      "name": "Flame Link",
+      "kind": "스킬",
+      "score": 29.55,
+      "total": 29.55,
+      "occurrences": 1,
+      "seeds": [],
+      "poedb": "https://poedb.tw/kr/Flame_Link",
+      "poe_ninja": "https://poe.ninja/poe1/builds?skill=Flame_Link",
+      "evidence": [
+        "damage: 211.50 → 274 (+29.6%) · Linked target gains 219 to 329 Added Fire Damage"
+      ]
+    }
+  ]
+}

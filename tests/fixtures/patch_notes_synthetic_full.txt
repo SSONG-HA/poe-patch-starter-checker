@@ -1,0 +1,97 @@
+Content Update 3.30.0 Patch Notes
+=================================
+
+These are the patch notes for Path of Exile 1: Covens of Umbra.
+
+General
+- Scarabs have been removed from the game. Threads have been added in their place.
+- The Atlas Passive Tree now has 150 points available (previously 138).
+
+Skills
+Righteous Fire
+- Now deals 39.7 base Fire Damage per second at gem level 1 (previously 49.4).
+- Now deals 2447.9 base Fire Damage per second at gem level 20 (previously 3142.6).
+- Now grants 20% more Spell Damage (previously 30%).
+
+Scorching Ray of Immolation
+- Now deals 20% more Damage (previously 15%).
+- Now has 10% increased Area of Effect.
+
+Forbidden Rite of Soul Sacrifice
+- Now deals 180% more Damage (previously 120%).
+- Now fires 2 additional Projectiles (previously 1).
+- Mana Cost reduced from 14 to 11.
+
+Dominating Blow of Inspiring
+- Now grants Sentinels 15% increased Attack Speed (previously 10%).
+- No longer grants Sentinels additional Physical Damage Reduction.
+
+Tornado of Elemental Turbulence
+- Now deals 25% less Damage (previously 15% less Damage).
+- Now has 40% increased Area of Effect (previously 25%).
+
+Summon Holy Relic of Conviction
+- Now has a base duration of 6 seconds (previously 5).
+- Minion Damage increased from 20% to 25%.
+
+Winter Orb
+- Now deals 307 to 460 Cold Damage (previously 360 to 539).
+- Now fires 2 Projectiles (previously 3).
+
+Eviscerate
+- Now deals 20% more Damage (previously 15%).
+- Now has 50% increased Effect of the Ignite.
+
+Shield Charge
+- Mana Cost reduced from 12 to 9.
+
+Malevolence
+- No longer grants 20% increased Skill Effect Duration.
+- Now grants 15% increased Damage over Time (previously 12%).
+
+Herald of Purity
+- Now also grants 20% increased Minion Damage.
+
+Impending Doom Support
+- Supported Skills now deal 60% more Spell Damage (previously 45%).
+- Now has a cooldown of 0.3 seconds (previously 0.4 seconds).
+
+Support Gems
+Elemental Focus Support
+- Supported Skills now deal 25% more Elemental Damage (previously 20%).
+
+Lifetap Support
+- Supported Skills now cost 20% less Life (previously 15%).
+
+Void Manipulation Support
+- Supported Skills now deal 30% more Chaos Damage (previously 35%).
+
+Cast On Critical Strike Support
+- Now has 35% less Damage (previously 30% less Damage).
+- Now triggers Supported Skills every 0.15 seconds (previously 0.10 seconds).
+
+Unique Items
+Nebulis
+- Now grants 6% increased Elemental Damage per 100 Intelligence (previously 10%).
+
+Cloak of Flame
+- Now grants 20% of Physical Damage from Hits taken as Fire Damage (previously 15%).
+- Now has 500 Armour (previously 400).
+
+Annihilation's Approach
+- Now grants 40% increased Movement Speed (previously 30%).
+
+Chieftain
+- Ramako, Sun's Light now grants 50% increased Fire Damage (previously 40%).
+- Hinekora, Death's Fury now has a 10% chance to Cover Enemies in Ash on Hit (previously 5%).
+
+Passive Tree
+Mind Over Matter
+- Now causes 30% of Damage to be taken from Mana before Life (previously 40%).
+
+Glancing Blows
+- Now has 60% chance to Block Attack Damage (previously 50%).
+
+New Gems
+- Summon Holy Relic of Conviction
+- Tornado of Elemental Turbulence

@@ -1,0 +1,37 @@
+{
+ "Scion": [
+  "Ascendant",
+  "Reliquarian",
+  "Luminary"
+ ],
+ "Marauder": [
+  "Juggernaut",
+  "Berserker",
+  "Chieftain"
+ ],
+ "Ranger": [
+  "Raider",
+  "Deadeye",
+  "Pathfinder"
+ ],
+ "Witch": [
+  "Occultist",
+  "Elementalist",
+  "Necromancer"
+ ],
+ "Duelist": [
+  "Slayer",
+  "Gladiator",
+  "Champion"
+ ],
+ "Templar": [
+  "Inquisitor",
+  "Hierophant",
+  "Guardian"
+ ],
+ "Shadow": [
+  "Assassin",
+  "Trickster",
+  "Saboteur"
+ ]
+}
