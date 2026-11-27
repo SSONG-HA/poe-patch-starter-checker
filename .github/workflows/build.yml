@@ -39,8 +39,10 @@ jobs:
       - name: Smoke test (CLI mode)
         shell: pwsh
         run: |
-          .\dist\PoE-Patch-Starter-Checker.exe --version
-          .\dist\PoE-Patch-Starter-Checker.exe --patch-file tests/fixtures/patch_notes_synthetic_full.txt --quiet --json out.json
+          $p1 = Start-Process ".\dist\PoE-Patch-Starter-Checker.exe" -Wait -PassThru -ArgumentList "--version"
+          if ($p1.ExitCode -ne 0) { exit $p1.ExitCode }
+          $p2 = Start-Process ".\dist\PoE-Patch-Starter-Checker.exe" -Wait -PassThru -ArgumentList "--patch-file tests/fixtures/patch_notes_synthetic_full.txt --quiet --json out.json"
+          if ($p2.ExitCode -ne 0) { exit $p2.ExitCode }
           Get-Content out.json | Select-Object -First 5
       - name: Upload artifact
         uses: actions/upload-artifact@v4
