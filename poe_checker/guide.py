@@ -1538,6 +1538,10 @@ def render_html(guide: Guide) -> str:
   <a href="#notes">메모</a><a href="#code">PoB 코드</a>
 </nav>
 <main>
+<section class="card" id="patch">
+  <h2>이번 패치노트 영향</h2>
+  {_patch_html(guide.patch)}
+</section>
 <section class="card" id="overview">
   <h2>개요</h2>
   <div class="grid">{stats_html}</div>
@@ -1547,10 +1551,6 @@ def render_html(guide: Guide) -> str:
   <h3>출처</h3>
   <p>{_e(guide.origin) or '—'}{(' · <a href="' + _e(guide.source_url) + '" target="_blank" rel="noopener">' + _e(guide.source_url) + '</a>') if guide.source_url else ''}</p>
   {f'<h3>메모</h3><p>{_e(guide.note)}</p>' if guide.note else ''}
-</section>
-<section class="card" id="patch">
-  <h2>이번 패치노트 영향</h2>
-  {_patch_html(guide.patch)}
 </section>
 {fit_block}
 <section class="card" id="skills">

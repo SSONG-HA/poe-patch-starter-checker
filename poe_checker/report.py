@@ -144,6 +144,12 @@ def render_text(result: AnalysisResult, *, show_details: bool = True) -> str:
                 out.append(head)
                 for wrapped in _wrap(entry.reason_for(category), indent="         "):
                     out.append(wrapped)
+                fit = entry.fit
+                stars = " · ".join(
+                    f"{label} {fit.stars(key)}{fit.score(key)}" for key, label in recommend.FIELDS
+                )
+                for wrapped in _wrap(f"적합도: {stars}", indent="         "):
+                    out.append(wrapped)
     out.append("")
     out.append(_rule())
     out.append("주의: 판정은 패치노트 문장과 빌드 구성 요소의 이름 매칭·수치 비교로 계산됩니다.")
@@ -282,14 +288,16 @@ def render_markdown(result: AnalysisResult) -> str:
         for category in recommend.CATEGORY_ORDER:
             out.append(f"### {recommend.CATEGORY_LABELS[category]}")
             out.append("")
-            out.append("| # | 빌드 | 판정 | 점수 | 맵핑 | 보스 | 탱킹 | 저자본 | 편한 | 추천 사유 |")
-            out.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
+            out.append("| # | 빌드 | 판정 | 점수 | 적합도(맵·보·탱·저·편) | 추천 사유 |")
+            out.append("| --- | --- | --- | --- | --- | --- |")
             for index, entry in enumerate(board.top(category, 5), start=1):
                 fit = entry.fit
+                stars = " · ".join(
+                    f"{fit.stars(key)}{fit.score(key)}" for key, _label in recommend.FIELDS
+                )
                 out.append(
                     f"| {index} | {entry.build_name} | {entry.verdict_label} | "
-                    f"{entry.score_for(category):.2f} | {fit.mapping} | {fit.bossing} | "
-                    f"{fit.tankiness} | {fit.budget} | {fit.ease} | {entry.reason_for(category)} |"
+                    f"{entry.score_for(category):.2f} | {stars} | {entry.reason_for(category)} |"
                 )
             out.append("")
     return "\n".join(out)

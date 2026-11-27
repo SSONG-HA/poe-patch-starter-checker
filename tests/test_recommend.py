@@ -210,10 +210,13 @@ def test_report_contains_recommendation_sections(tmp_path):
     assert recommend.CATEGORY_LABELS["budget"] in text
     markdown = report.render_markdown(result)
     assert "## 3. 이번 패치 추천 스타터" in markdown
+    assert "적합도(맵·보·탱·저·편)" in markdown and "★" in markdown
+    assert "적합도:" in text and "★" in text
     payload = json.loads(report.render_json(result))
     assert set(payload["recommendations"]["categories"]) == set(recommend.CATEGORY_ORDER)
     first = payload["recommendations"]["categories"]["allrounder"]["rows"][0]
     assert first["fit"]["mapping"] >= 1
+    assert len(first["fit"]["stars"]["mapping"]) == 5
     assert first["reasons"]["allrounder"]
 
 

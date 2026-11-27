@@ -70,7 +70,14 @@ class ContentFit:
 
     def as_dict(self) -> dict:
         out = {key: self.score(key) for key in FIELD_KEYS}
-        out.update({"tags": list(self.tags), "note": self.note, "auto": self.auto})
+        out.update(
+            {
+                "stars": {key: self.stars(key) for key in FIELD_KEYS},
+                "tags": list(self.tags),
+                "note": self.note,
+                "auto": self.auto,
+            }
+        )
         return out
 
     def as_guide_fit(self):
