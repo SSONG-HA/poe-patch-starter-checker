@@ -254,3 +254,24 @@ def test_cli_sync_starters_bad_catalog(tmp_path, capsys):
     assert cli.main(["--library", str(lib_path), "--sync-starters",
                      "--catalog-url", str(tmp_path / "nope.json")]) == 3
     assert "실패" in capsys.readouterr().out
+
+
+def test_remote_sync_is_not_reverted_by_bundled_copy(tmp_path, monkeypatch):
+    """기본 라이브러리 경로: 최신화 뒤 앱을 다시 열어도 동봉본이 되돌리지 않는다."""
+    monkeypatch.setenv("POE_CHECKER_HOME", str(tmp_path))
+    lib = library.BuildLibrary.load()
+    assert lib.get("rf-chieftain-330") is not None
+
+    code_path = _write_build_file(tmp_path, "remote.txt", make_pob_xml(main="Comet"))
+    catalog_path = _write_catalog(
+        tmp_path,
+        [{"id": "rf-chieftain-330", "name": "원격 갱신 빌드", "kind": "character",
+          "pob_code_url": code_path}],
+    )
+    report = catalog.sync_library(lib, url=str(catalog_path))
+    assert report.updated == ["rf-chieftain-330"]
+
+    again = library.BuildLibrary.load()  # 앱 재시작과 같은 경로
+    entry = again.get("rf-chieftain-330")
+    assert entry.name == "원격 갱신 빌드"
+    assert again.profile(entry).main_skill_names == ["Comet"]

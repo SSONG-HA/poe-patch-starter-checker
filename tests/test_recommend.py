@@ -225,10 +225,24 @@ def test_guide_contains_fit_scores_and_reason(tmp_path):
     assert made.fit.mapping == 4 and made.fit.tankiness == 5
     text = guide.render_text(made)
     assert "[콘텐츠 적합도]" in text
+    assert "추천 사유" in text
     assert "탱커" in text
     html = guide.render_html(made)
     assert "콘텐츠 적합도" in html
+    assert "추천 사유" in html
     assert "탱킹" in html
+
+
+def test_gui_recommend_detail_text(tmp_path):
+    from poe_checker import gui
+
+    lib, result = _board(tmp_path)
+    entry = result.recommendations.entries[0]
+    text = gui.recommend_detail_text(entry, "mapping")
+    assert "[콘텐츠 적합도]" in text
+    assert "[추천 사유]" in text
+    assert "맵핑" in text
+    assert gui.recommend_detail_text(entry, "bossing") != text
 
 
 def test_custom_build_guide_marks_auto_fit(tmp_path):

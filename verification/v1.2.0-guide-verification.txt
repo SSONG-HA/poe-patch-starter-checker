@@ -78,9 +78,14 @@ HTML: 카드 Guide · PoB 코드 블록 포함 · 외부 리소스 없음
 카탈로그 빌드 36개 · 기준일 2026-11-27 · base_url https://raw.githubusercontent.com/SSONG-HA/poe-patch-starter-checker/main/poe_checker/data/
 sha256 불일치: 0건 []
 병합 규칙: 카탈로그 빌드 갱신/추가 · kind=custom 절대 보존 · 카탈로그에 없는 로컬 빌드 보존 · 파싱 실패 시 기존 유지
-오프라인 테스트(tests/test_sync.py): 추가·갱신·커스텀 보존·sha 스킵·pobb_in·pob_code·pob_xml·깨진 본문·dry-run·네트워크 오류 — 11건 통과
+오프라인 테스트(tests/test_sync.py): 추가·갱신·커스텀 보존·sha 스킵·pobb_in·pob_code·pob_xml·깨진 본문·dry-run·네트워크 오류·재시작 지속성 — 12건 통과
 
 [5] 테스트
 ------------------------------------------------------------------------------
-pytest -q : 122 passed (기존 84 + test_guide 12 + test_sync 11 + test_recommend 15)
+pytest -q : 124 passed (기존 84 + test_guide 12 + test_sync 12 + test_recommend 16)
 sys.stdout=None 스모크: --version / --export-guide / --list-builds 모두 종료코드 0
+
+[6] 최신화 지속성
+------------------------------------------------------------------------------
+기본 라이브러리 경로에서 최신화 → 앱 재시작(기본 경로 다시 로드) 후에도 원격에서 받은
+이름·PoB 코드가 유지된다(동봉본이 되돌리지 않음). tests/test_sync.py::test_remote_sync_is_not_reverted_by_bundled_copy

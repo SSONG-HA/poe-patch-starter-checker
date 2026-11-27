@@ -859,9 +859,17 @@ class App:  # pragma: no cover - GUI
             except (pob.PobError, library_mod.LibraryError) as exc:
                 status.configure(text=f"추가 실패: {exc}")
                 return
+            game = datafiles.normalize_game(entry.game)
+            if game != self.game:
+                self.game_var.set(game)
+                self.game = game
+                self.refresh_patch_list()
             self.refresh_builds()
             self.status_var.set(f"추가됨: {entry.name}")
             dialog.destroy()
+            # 추가한 빌드의 가이드를 바로 만들어 준다(파싱→저장→가이드).
+            self.refresh_guide_choices(select_id=entry.id)
+            self.generate_guide()
 
         buttons = ttk.Frame(dialog)
         buttons.pack(fill="x", padx=12, pady=10)
@@ -1024,6 +1032,8 @@ class App:  # pragma: no cover - GUI
             message = report_.summary()
             if report_.errors:
                 message += "  ⚠ " + report_.errors[0]
+            if report_.changed:
+                message += " · 다시 검사하면 새 스타터가 반영됩니다."
             self._set_busy(False, message)
             return
         if kind == "sync_error":

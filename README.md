@@ -238,7 +238,7 @@ GUI 탭 1 의 **스타터 최신화** 버튼(또는 `--sync-starters`)이
 ## 10. 검증
 
 ```bash
-python -m pytest -q      # 122 tests
+python -m pytest -q      # 124 tests
 ```
 
 * `tests/fixtures/patch_notes_synthetic_full.txt` — GGG 문체를 따른 합성 패치노트.
@@ -246,7 +246,7 @@ python -m pytest -q      # 122 tests
 * `tests/fixtures/patch_notes_poe2_055h.txt` — 실제 PoE2 `0.5.5h Patch Notes` 본문 픽스처.
 * `tests/fixtures/news_rss_poe1.xml`, `forum_patch_notes_poe1.html`, `forum_patch_notes_poe2.html` —
   실제 응답을 3건으로 줄인 목록 픽스처(오프라인/CI 테스트).
-* `pyproject.toml`·`__version__` = **1.2.0**, `pytest -q` **122 tests**, `sys.stdout=None` 스모크 통과.
+* `pyproject.toml`·`__version__` = **1.2.0**, `pytest -q` **124 tests**, `sys.stdout=None` 스모크 통과.
 * 실제 네트워크 실행 결과는 `verification/v1.1.0-live-verification.txt`(와 `.json`)에 있다.
   * 2026-11-27 16:45 KST 기준 목록: **PoE1 59건 · PoE2 30건**, 실패한 출처 없음.
   * PoE1 최신 `3.30.0d Hotfix 3`: 항목 0개(핫픽스 문장) → ⚠ 경고와 함께 빌드 24개 전부 🟢.

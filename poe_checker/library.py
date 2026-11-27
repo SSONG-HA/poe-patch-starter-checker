@@ -146,8 +146,21 @@ class BuildLibrary:
 
     @staticmethod
     def _needs_sync(data: dict, bundled: dict) -> bool:
-        """앱에 동봉된 스타터 목록이 갱신됐으면 사용자 라이브러리에 반영한다."""
-        if data.get("bundled_updated") != bundled.get("updated"):
+        """앱에 동봉된 스타터 목록이 갱신됐으면 사용자 라이브러리에 반영한다.
+
+        동봉본에 갱신 표기(`updated`/`bundled_updated`)가 없으면 병합하지 않는다.
+        그래야 「스타터 최신화」로 받은 원격 카탈로그 내용을 앱 재시작 시
+        동봉본(더 오래된 사본)이 되돌리지 않는다.
+        """
+        target = bundled.get("updated") or bundled.get("bundled_updated") or ""
+        current = data.get("bundled_updated") or ""
+        if not target:
+            # 동봉본에 갱신 표기가 없는 경우: 예전 표기(bundled_updated)만 남은
+            # 라이브러리는 한 번 동봉본으로 맞추고, 이미 맞춰진("" 또는 없음)
+            # 라이브러리는 건드리지 않는다(원격 최신화 내용을 되돌리지 않기 위해).
+            if current:
+                return True
+        elif current != target:
             return True
         if int(data.get("schema", 1)) < int(bundled.get("schema", 1)):
             return True
