@@ -54,6 +54,7 @@ class Gem:
 @dataclass
 class BuildProfile:
     name: str = ""
+    game: str = datafiles.GAME_POE1
     class_name: str = ""
     ascendancy: str = ""
     level: int | None = None
@@ -166,8 +167,8 @@ def resolve_source(source: str) -> str:
 # XML 해석
 # ---------------------------------------------------------------------------
 
-def _gem_tags(name: str) -> tuple[str, ...]:
-    for key, tags in datafiles.active_gems().items():
+def _gem_tags(name: str, game: str = datafiles.GAME_POE1) -> tuple[str, ...]:
+    for key, tags in datafiles.active_gems(game).items():
         if naming.norm(key) == naming.norm(name):
             return tuple(tags)
     return ()
@@ -179,7 +180,7 @@ def _is_support_gem(name: str, gem_id: str = "") -> bool:
     return "SupportGem" in (gem_id or "") or (gem_id or "").endswith("Support")
 
 
-def _build_gem(element: ET.Element) -> Gem:
+def _build_gem(element: ET.Element, game: str = datafiles.GAME_POE1) -> Gem:
     name = (element.get("nameSpec") or "").strip()
     levels = element.get("level")
     qualities = element.get("quality")
@@ -189,7 +190,7 @@ def _build_gem(element: ET.Element) -> Gem:
         support=_is_support_gem(name, element.get("gemId", "")),
         level=int(levels) if levels and levels.isdigit() else None,
         quality=int(qualities) if qualities and qualities.isdigit() else None,
-        tags=_gem_tags(name),
+        tags=_gem_tags(name, game),
     )
 
 
@@ -222,7 +223,16 @@ def _score_group(gems: list[Gem], is_main_group: bool) -> float:
     return score
 
 
-def parse_pob_xml(xml: str, *, name: str = "", source: str = "", notes: str = "") -> BuildProfile:
+def detect_game(xml: str) -> str:
+    """PoB XML 루트 태그로 게임을 판별한다(PathOfBuilding2 = PoE2)."""
+    head = xml.lstrip()[:400].lower()
+    if "pathofbuilding2" in head:
+        return datafiles.GAME_POE2
+    return datafiles.GAME_POE1
+
+
+def parse_pob_xml(xml: str, *, name: str = "", source: str = "", notes: str = "",
+                  game: str | None = None) -> BuildProfile:
     try:
         root = ET.fromstring(xml)
     except ET.ParseError as exc:
@@ -232,8 +242,10 @@ def parse_pob_xml(xml: str, *, name: str = "", source: str = "", notes: str = ""
     if build is None:
         raise PobError("PoB XML 에 <Build> 가 없습니다.")
 
+    resolved_game = datafiles.normalize_game(game) if game else detect_game(xml)
     profile = BuildProfile(
         name=name,
+        game=resolved_game,
         class_name=build.get("className", ""),
         ascendancy=build.get("ascendClassName", ""),
         level=int(build.get("level")) if (build.get("level") or "").isdigit() else None,
@@ -253,7 +265,7 @@ def parse_pob_xml(xml: str, *, name: str = "", source: str = "", notes: str = ""
         if chosen is not None:
             profile.tree_version = chosen.get("treeVersion", "")
             nodes = [n for n in (chosen.get("nodes") or "").split(",") if n.strip()]
-            keymap = datafiles.keystones()
+            keymap = datafiles.keystones(resolved_game)
             profile.keystones = sorted({keymap[n.strip()] for n in nodes if n.strip() in keymap})
 
     skill_set = _active_skill_set(root)
@@ -265,7 +277,7 @@ def parse_pob_xml(xml: str, *, name: str = "", source: str = "", notes: str = ""
         for index, skill in enumerate(skill_set.findall("Skill")):
             if skill.get("enabled", "true").lower() == "false":
                 continue
-            gems = [_build_gem(g) for g in skill.findall("Gem")]
+            gems = [_build_gem(g, resolved_game) for g in skill.findall("Gem")]
             if gems:
                 groups.append((index, gems))
 
@@ -349,10 +361,12 @@ def parse_pob_xml(xml: str, *, name: str = "", source: str = "", notes: str = ""
     return profile
 
 
-def load_build(source: str, *, name: str = "", notes: str = "") -> BuildProfile:
+def load_build(source: str, *, name: str = "", notes: str = "",
+               game: str | None = None) -> BuildProfile:
     """코드/URL/파일 → BuildProfile."""
     xml = resolve_source(source)
-    return parse_pob_xml(xml, name=name, source=source if "\n" not in source else "붙여넣은 코드", notes=notes)
+    return parse_pob_xml(xml, name=name, source=source if "\n" not in source else "붙여넣은 코드",
+                         notes=notes, game=game)
 
 
 def encode_pob_code(xml: str) -> str:

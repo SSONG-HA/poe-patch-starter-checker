@@ -1,0 +1,79 @@
+==============================================================================
+ PoE 패치노트 스타터 생존·버프 검증기 v1.1.0
+==============================================================================
+게임     : PoE2 0.5
+패치노트 : Early Access Patch Notes - 0.5.5h Patch Notes
+출처     : https://www.pathofexile.com/forum/view-thread/4016665
+분석 시각: 2026-11-27 16:46
+항목 수  : 1개 (빌드 12개 검사)
+판정 요약: 🔴 0 · 🟡 0 · 🟢 12
+
+[1] 스타터 생존 검증
+------------------------------------------------------------------------------
+🟢 무사통과  낙뢰 무술가 몽크 (Spraahz)  (Martial Artist · 95레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · Spraahz · 트리 0_5
+   주력: Falling Thunder, Ice Strike
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  무술가 몽크 레벨링 (Ghost Activity)  (Martial Artist · 62레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · Ghost Activity · 트리 0_5
+   주력: Whirling Assault, Falling Thunder
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  번개 창 택티션 (Snap)  (Tactician · 97레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · Snap · 트리 0_4
+   주력: Lightning Spear(번개 창)
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  소환수 인퍼널리스트 (Thyworm SSF)  (Infernalist · 90레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · Thyworm · 트리 0_4
+   주력: Spectre: Powered Zealot, Summon Infernal Hound
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  얼음 타격 아마존 (Taaki)  (Amazon · 95레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · Taaki · 트리 0_5
+   주력: Ice Strike, Tempest Bell
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  영구 동토 탄환 위치헌터 (Chem)  (Witchhunter · 90레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · Chem · 트리 0_4
+   주력: Fragmentation Rounds, Permafrost Bolts
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  전기불꽃 스톰위버 (animeprincess)  (Stormweaver · 98레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · animeprincess · 트리 0_4
+   주력: Comet(혜성), Spark(전기불꽃)
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  전기불꽃 패스파인더 (0.5)  (Pathfinder · 96레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · PoE2 0.5 패스파인더 스파크 · 트리 0_5
+   주력: Comet(혜성), Spark(전기불꽃)
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  폭발 수류탄 위치헌터 (0.5)  (Witchhunter · 94레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · Hayura / 0.5 수류탄 스타터 · 트리 0_5
+   주력: Explosive Grenade, Explosive Shot
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  혼돈 섬광 아콜라이트 (0.5)  (Acolyte of Chayula · 96레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · PoE2 0.5 차율라 몽크 · 트리 0_4
+   주력: Flicker Strike, Tempest Bell
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  회오리 보석병 (mwExile)  (Gemling Legionnaire · 95레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · mwExile · 트리 0_5
+   주력: Twister(돌개바람), Barrage(연발 사격)
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  회오리 보석병 (snoobae85)  (Gemling Legionnaire · 92레벨)
+   출처: PoE2 0.5 · PoE2 스타터 · snoobae85 · 트리 0_5
+   주력: Twister(돌개바람), Spear Stab
+   → 패치노트에서 관련 변경 없음
+
+[2] 대폭 상향(버프) TOP 0
+------------------------------------------------------------------------------
+   기준치를 넘는 상향 항목이 없습니다.
+
+==============================================================================
+주의: 판정은 패치노트 문장과 빌드 구성 요소의 이름 매칭·수치 비교로 계산됩니다.
+      실제 체감은 젬 레벨·장비·플레이 방식에 따라 다를 수 있습니다.

@@ -1,55 +1,66 @@
-# 검증 기록 (2026-11-27)
+# 검증 기록 — v1.1.0 (2026-11-27)
 
-모든 결과는 `python3 main.py ...` 실행으로 생성된 실제 출력이다.
+모든 결과는 실제 실행 출력이다. 요약본은 `v1.1.0-live-verification.txt` / `.json` 에 있다.
 
-## 1. 실제 GGG 스레드 — New and Changed Gems (view-thread/4013898)
-
-```bash
-python3 main.py --patch-url "https://www.pathofexile.com/forum/view-thread/4013898" \
-  --top 10 --out verification/live-gem-thread-report.txt --json verification/live-gem-thread.json
-```
-
-* 항목 9개 파싱 (Flame Link, Summon Flame/Stone/Lightning Golem, Dark Bargain, Pact of Beidat, Winter Orb, Transfusion Support, Vaal Sacrifice Support)
-* 판정: 🔴 0 · 🟡 3 · 🟢 6
-  * 🟡 독조 엘리멘탈리스트 — Summon Flame/Stone/Lightning Golem 너프(-25%/-20%/-20%)
-  * 🟡 절개 점화 엘리멘탈리스트 — 같은 골렘 너프
-  * 🟡 중독 신성한 유물 네크로맨서 — Summon Stone Golem 너프
-  * 나머지 6개(RF 2종, CoC 금단의 의식, 회오리바람, 지배의 일격, 쌍수 타격)는 관련 항목 없음
-* 상향 TOP 1: Flame Link +29.6% (추가 화염 피해 169–254 → 219–329, 혼합)
-
-## 2. 실제 GGG 스레드 — Thread Difficulty and League Mechanic Changes (view-thread/4016267)
+## 1. 공식 패치노트 자동 수집 (실제 네트워크)
 
 ```bash
-python3 main.py --patch-url "https://www.pathofexile.com/forum/view-thread/4016267" --top 5 \
-  --out verification/live-league-mechanics-report.txt
+python3 main.py --list-patch-notes --limit 12
 ```
 
-* 젬·유니크 이름이 붙은 항목이 없는 안내문 → 항목 0개
-* 결과 상단에 ⚠ 경고 출력(0건을 "변경 없음" 근거로 쓰지 말라는 안내)
+* 출처 3곳 모두 성공, 실패 없음.
+  * PoE1 패치노트 포럼 `view-forum/patch-notes` → 30건
+  * PoE1 뉴스 RSS `news/rss` → 29건
+  * PoE2 얼리 액세스 패치노트 포럼 `view-forum/2212` → 30건
+* 중복 스레드 제거 후 **PoE1 59건 · PoE2 30건**.
+* 최신 5건: `3.30.0d Hotfix 3`(2026-11-23) · `3.30.0d Hotfix 2` · `3.30.0d Hotfix` ·
+  `3.30.0d Patch Notes`(2026-11-20) · `3.30.0c Patch Notes`(2026-11-19), 그 사이에
+  `[PoE2] 0.5.5h Patch Notes`(2026-11-18)가 날짜순으로 섞여 나온다.
+* 포럼 표기(UTC-8)를 KST 로 옮겨 날짜를 계산한다(`Nov 22, 2026, 3:44:19 PM` → `2026-11-23`).
 
-## 3. 합성 패치노트(Skills / Support Gems / Unique Items / Passive Tree)
+## 2. 게임별 검사 (최신 패치노트)
 
 ```bash
-python3 main.py --patch-file tests/fixtures/patch_notes_synthetic_full.txt --top 8 \
-  --out verification/synthetic-full-report.txt --json verification/synthetic-full.json
+python3 main.py --patch-latest --game poe1 --out verification/poe1-latest-report.txt
+python3 main.py --patch-latest --game poe2 --out verification/poe2-latest-report.txt
 ```
 
-* 항목 23개 · 🔴 5 · 🟡 3 · 🟢 1
-  * 🔴 RF 치프틴 2종 — 주력 Righteous Fire 너프 + Nebulis 너프
-  * 🔴 독조 엘리 — 키스톤 Mind Over Matter 너프
-  * 🔴 회오리바람 — 주력 혼합 조정(피해 -66.7% / 범위 +60%)
-  * 🔴 지배의 일격 — 주력 혼합 조정(공격 속도 +50% / "No longer grants ...")
-  * 🟡 CoC, 신성한 유물, 절개 — 서포트/보조 스킬 너프
-  * 🟢 쌍수 타격 — 관련 변경 없음
-* 상향 TOP 17: Forbidden Rite of Soul Sacrifice +100%, Chieftain +100%, Tornado +60%, Dominating Blow +50% …
+| 게임 | 패치노트 | 항목 | 검사 빌드 | 판정 |
+| --- | --- | --- | --- | --- |
+| PoE1 | 3.30.0d Hotfix 3 | 0 (핫픽스 문장) | 24 | 🔴0 🟡0 🟢24 |
+| PoE2 | 0.5.5h Patch Notes | 1 | 12 | 🔴0 🟡0 🟢12 |
 
-## 4. 라이브러리
+* PoE1 검사에는 PoE1 스타터 24개만, PoE2 검사에는 PoE2 스타터 12개만 들어간다(게임 탭 분리 확인).
+* 항목 0건 문서는 ⚠ 경고를 함께 표시한다.
 
-* 동봉 9개 빌드 전부 파싱 성공(`library.errors == {}`), 전직/레벨/주력 스킬/유니크/키스톤 추출 확인
-* `--add-build https://pobb.in/EaARfgbK7QYl` 로 네트워크 추가 성공 → `--list-builds` 에 반영
+## 3. 젬 변경 스레드 매칭 (view-thread/4013898)
+
+```bash
+python3 main.py --patch-url "https://www.pathofexile.com/forum/view-thread/4013898" --game poe1 \
+  --out verification/live-gem-thread-report.txt --json verification/live-gem-thread.json
+```
+
+* 항목 8개 (Flame Link, Summon Flame/Stone/Lightning Golem, Dark Bargain, Pact of Beidat,
+  Winter Orb, Transfusion Support)
+* 판정: 🔴 0 · 🟡 9 · 🟢 15 · 상향 TOP 1 **Flame Link +29.6%**
+* 🟡 예: 냉기 도트 엘리(Summon Flame Golem 너프 외 2건), 루미너리 2종(Flame Link 혼합),
+  연쇄 번개 렐리퀘리안(Summon Lightning Golem), 중독 신성한 유물(Summon Stone Golem).
+
+## 4. 동봉 스타터 36종
+
+* PoE1 24종(내 빌드 2 · 리그 스타터 19 · 시드 3), PoE2 12종 — 전부 파싱 성공(`rows()` 오류 0).
+* 구성 요소 이름 929개 중 917개(98.7%)가 게임 데이터의 젬 목록과 일치. 나머지 12개는 전직·패시브·
+  아이템이 부여하는 스킬(`Summon Elemental Relic`, `Doom Blast`, `Approaching Flames` 등)이다.
+* 한국어 이름표: PoE1 젬 852 · 유니크 1,242, PoE2 젬 786 · 유니크 432, 키스톤·전직 포함.
 
 ## 5. 테스트
 
 ```bash
-python3 -m pytest -q   # 57 passed
+python3 -m pytest -q   # 82 passed
 ```
+
+* 목록 파싱 픽스처: `tests/fixtures/news_rss_poe1.xml`, `forum_patch_notes_poe1.html`,
+  `forum_patch_notes_poe2.html`
+* PoE2 본문 픽스처: `tests/fixtures/patch_notes_poe2_055h.txt`
+* 게임 분리 테스트: `tests/test_games.py` (PoE2 XML 감지, 라이브러리 game 필터, 게임별 분석)
+* `sys.stdout=None` 스모크: `tests/test_cli.py` 의 `test_cli_survives_missing_stdout`

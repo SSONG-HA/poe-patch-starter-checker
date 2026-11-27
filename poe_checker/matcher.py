@@ -86,6 +86,8 @@ class BuildVerdict:
     profile: pob.BuildProfile
     hits: list[Hit] = field(default_factory=list)
     error: str = ""
+    kind_label: str = ""
+    origin: str = ""
 
     @property
     def verdict(self) -> str:
@@ -195,14 +197,17 @@ def check_build(entry, profile: pob.BuildProfile, notes: patchnotes.PatchNotes) 
         build_id=getattr(entry, "id", ""),
         build_name=getattr(entry, "name", profile.name),
         profile=profile,
+        kind_label=getattr(entry, "kind_label", ""),
+        origin=getattr(entry, "origin", ""),
     )
     verdict.hits = _match_entries(profile, notes)
     return verdict
 
 
-def check_library(library, notes: patchnotes.PatchNotes) -> list[BuildVerdict]:
+def check_library(library, notes: patchnotes.PatchNotes,
+                  game: str | None = None) -> list[BuildVerdict]:
     results: list[BuildVerdict] = []
-    for build, profile in library.profiles():
+    for build, profile in library.profiles(game):
         results.append(check_build(build, profile, notes))
     for build_id, message in library.errors.items():
         build = library.get(build_id)
@@ -212,8 +217,10 @@ def check_library(library, notes: patchnotes.PatchNotes) -> list[BuildVerdict]:
             BuildVerdict(
                 build_id=build.id,
                 build_name=build.name,
-                profile=pob.BuildProfile(name=build.name),
+                profile=pob.BuildProfile(name=build.name, game=build.game),
                 error=message,
+                kind_label=build.kind_label,
+                origin=build.origin,
             )
         )
     order = {VERDICT_RED: 0, VERDICT_YELLOW: 1, VERDICT_GREEN: 2}

@@ -47,7 +47,8 @@ def test_verdict_rows_shape(tmp_path):
     assert len(rows) == 1
     assert rows[0][1] == "🟢 무사통과"
     assert rows[0][2] == "RF 빌드"
-    assert rows[0][5]
+    assert len(rows[0]) == 7          # #, 판정, 빌드, 출처/버전, 전직, 레벨, 요약
+    assert rows[0][6]
 
 
 def test_verdict_detail_text_contains_evidence(tmp_path):
@@ -58,6 +59,8 @@ def test_verdict_detail_text_contains_evidence(tmp_path):
     assert "🔴" in text
     assert "주력 스킬" in text
     assert "Righteous Fire" in text
+    # 한국어 이름이 있으면 병기한다
+    assert "정의의 화염" in text
     assert "Now deals 20% less Damage" in text
 
 

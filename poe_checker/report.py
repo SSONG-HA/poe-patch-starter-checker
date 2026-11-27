@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from datetime import datetime
 
-from . import APP_TITLE, __version__, matcher
+from . import APP_TITLE, __version__, datafiles, matcher
 from .analysis import AnalysisResult
 
 WIDTH = 78
@@ -32,6 +32,25 @@ def _time_label(moment: datetime) -> str:
     return moment.strftime("%Y-%m-%d %H:%M")
 
 
+def _korean(game: str, section: str, name: str) -> str:
+    korean = datafiles.korean_name(game, section, name)
+    return f"{name}({korean})" if korean and korean != name else name
+
+
+def _source_line(game: str, kind_label: str, origin: str, tree: str) -> str:
+    bits = [datafiles.GAME_VERSION_LABELS.get(datafiles.normalize_game(game), ""), kind_label]
+    if origin:
+        bits.append(origin)
+    if tree:
+        bits.append(f"트리 {tree}")
+    seen: list[str] = []
+    for bit in bits:
+        for token in [part.strip() for part in bit.split("·")]:
+            if token and token not in seen:
+                seen.append(token)
+    return " · ".join(seen)
+
+
 def render_text(result: AnalysisResult, *, show_details: bool = True) -> str:
     notes = result.notes
     out: list[str] = []
@@ -40,6 +59,7 @@ def render_text(result: AnalysisResult, *, show_details: bool = True) -> str:
     out.append(_rule())
     title = notes.title or "(제목 없음)"
     version = f" · 패치 {result.version_hint}" if result.version_hint else ""
+    out.append(f"게임     : {result.game_label}")
     out.append(f"패치노트 : {title}{version}")
     if result.source_label:
         out.append(f"출처     : {result.source_label}")
@@ -64,8 +84,16 @@ def render_text(result: AnalysisResult, *, show_details: bool = True) -> str:
             x for x in (profile.ascendancy or profile.class_name, f"{profile.level}레벨" if profile.level else "") if x
         )
         out.append(f"{verdict.label}  {verdict.build_name}" + (f"  ({who})" if who else ""))
+        source = _source_line(
+            profile.game,
+            getattr(verdict, "kind_label", ""),
+            getattr(verdict, "origin", ""),
+            profile.tree_version,
+        )
+        if source:
+            out.append(f"   출처: {source}")
         if profile.main_skill_names:
-            mains = ", ".join(profile.main_skill_names[:2])
+            mains = ", ".join(_korean(profile.game, "gems", n) for n in profile.main_skill_names[:2])
             out.append(f"   주력: {mains}")
         out.append(f"   → {verdict.headline()}")
         if verdict.error:
@@ -107,6 +135,8 @@ def render_json(result: AnalysisResult) -> str:
         "tool": APP_TITLE,
         "version": __version__,
         "generated_at": result.generated_at.isoformat(timespec="seconds"),
+        "game": result.game,
+        "game_label": result.game_label,
         "patch": {
             "title": result.notes.title,
             "source": result.source_label,
@@ -127,6 +157,9 @@ def render_json(result: AnalysisResult) -> str:
             {
                 "id": verdict.build_id,
                 "name": verdict.build_name,
+                "game": profile.game,
+                "kind": getattr(verdict, "kind_label", ""),
+                "origin": getattr(verdict, "origin", ""),
                 "verdict": verdict.verdict,
                 "label": verdict.label,
                 "headline": verdict.headline(),
@@ -175,6 +208,7 @@ def render_json(result: AnalysisResult) -> str:
 def render_markdown(result: AnalysisResult) -> str:
     notes = result.notes
     out = [f"# {APP_TITLE} 결과", ""]
+    out.append(f"- 게임: {result.game_label}")
     out.append(f"- 패치노트: {notes.title or '(제목 없음)'}")
     if result.source_label:
         out.append(f"- 출처: {result.source_label}")

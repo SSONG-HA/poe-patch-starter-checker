@@ -1,20 +1,32 @@
 {
-  "schema": 1,
-  "updated": "2026-11-27",
-  "note": "PoE 1 3.30 (Covens of Umbra) 기준. code_file 은 poe_checker/data 기준 상대경로.",
+  "schema": 2,
   "builds": [
     {
-      "id": "rf-chieftain-330",
-      "name": "작열 광선 RF 치프틴 (내 캐릭터)",
+      "id": "rf-chieftain-current",
+      "name": "작열 광선 RF 치프틴 (내 캐릭터 · 최신)",
       "kind": "character",
+      "game": "poe1",
+      "origin": "내 빌드 · 2026-11-27",
+      "source": "https://pobb.in/OWo-55L1tWbA",
+      "note": "정우 님 95레벨 치프틴 최신 PoB(2026-11-27 15:27 점검본). 제물의 작열 광선 토템 + RF.",
+      "code_file": "builds/rf-chieftain-current.txt"
+    },
+    {
+      "id": "rf-chieftain-330",
+      "name": "작열 광선 RF 치프틴 (내 캐릭터 · 11-24)",
+      "kind": "character",
+      "game": "poe1",
+      "origin": "내 빌드 · 2026-11-24",
       "source": "https://pobb.in/5VPv477qQmkr",
-      "note": "정우 님 95레벨 캐릭터 PoB(2026-11-24 갱신). 제웅 4부위, 방패 Hate Ward, 제물의 작열 광선 토템.",
+      "note": "2026-11-24 갱신본. 제웅 4부위, 방패 Hate Ward, 3.30 트리.",
       "code_file": "builds/rf-chieftain-330.txt"
     },
     {
       "id": "rf-chieftain-pohx",
       "name": "RF 치프틴 (Pohx SRI)",
       "kind": "starter",
+      "game": "poe1",
+      "origin": "Pohx · 3.30",
       "source": "https://pobb.in/Y6jHZomP3qPi",
       "note": "Pohx의 3.30 RF 로드아웃. 코드 저장 시점 트리 표기는 3_29.",
       "code_file": "builds/rf-chieftain-pohx.txt"
@@ -23,57 +35,332 @@
       "id": "poison-holy-relic-necro",
       "name": "중독 신성한 유물 네크로맨서 (Bula)",
       "kind": "starter",
+      "game": "poe1",
+      "origin": "Bula · 3.30",
       "source": "https://pobb.in/Na035hGPLxLx",
-      "note": "Bula 3.30 쇼케이스 PoB(Summon Holy Relic of Conviction + Lancing Steel of Spraying). 트리 표기 3_29.",
+      "note": "중독 신성한 유물 + 강철의 창. 트리 표기 3_29.",
       "code_file": "builds/poison-holy-relic-necro.txt"
     },
     {
       "id": "dominating-blow-guardian",
-      "name": "지배의 일격 가디언 (ArminYou 스타터)",
+      "name": "지배의 일격 가디언 (ArminYou)",
       "kind": "starter",
+      "game": "poe1",
+      "origin": "ArminYou · 3.30",
       "source": "https://pobb.in/1oDia2RSD4ku",
-      "note": "ArminYou 3.30 가디언 리그 스타터(Dominating Blow of Inspiring + 소환수). 트리 표기 3_29.",
+      "note": "Dominating Blow of Inspiring + 소환수. 트리 표기 3_29.",
       "code_file": "builds/dominating-blow-guardian.txt"
     },
     {
       "id": "tornado-inquisitor",
-      "name": "회오리바람 인퀴지터 (BalorMage 스타터)",
+      "name": "회오리바람 인퀴지터 (BalorMage)",
       "kind": "starter",
+      "game": "poe1",
+      "origin": "BalorMage · 3.30",
       "source": "https://pobb.in/GtWMZtty-7o2",
-      "note": "BalorMage/PoE Vault 3.30 리그 스타터(Tornado of Elemental Turbulence + Rathpith). 트리 표기 3_29.",
+      "note": "Tornado of Elemental Turbulence + Rathpith. 트리 표기 3_29.",
       "code_file": "builds/tornado-inquisitor.txt"
     },
     {
       "id": "eviscerate-elementalist",
-      "name": "절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)",
+      "name": "절개 점화 엘리멘탈리스트 (Desmo Saze)",
       "kind": "starter",
+      "game": "poe1",
+      "origin": "Desmo Saze · 3.30",
       "source": "https://pobb.in/EaARfgbK7QYl",
-      "note": "Desmo Saze 3.30 리그 스타터(Eviscerate 점화, Ephemeral Edge). 트리 표기 3_29.",
+      "note": "Eviscerate 점화, Ephemeral Edge. 트리 표기 3_29.",
       "code_file": "builds/eviscerate-elementalist.txt"
+    },
+    {
+      "id": "static-strike-guardian",
+      "name": "정전기 타격 가디언 (Alohaa)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "Alohaa · 3.30",
+      "source": "https://pobb.in/0rKXrao_8pGM",
+      "note": "Static Strike + Shockwave 가디언. 3.29 트리로 저장된 3.30 가이드 PoB.",
+      "code_file": "builds/static-strike-guardian.txt"
+    },
+    {
+      "id": "poison-concoction-pathfinder",
+      "name": "독성 혼합물 패스파인더 (DapperDD)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "DapperDD · 3.30",
+      "source": "https://pobb.in/Pb1QziUGW5SQ",
+      "note": "Poisonous Concoction of Bouncing 리그 스타터.",
+      "code_file": "builds/poison-concoction-pathfinder.txt"
+    },
+    {
+      "id": "bladefall-impaling-pathfinder",
+      "name": "칼날 낙하 관통 패스파인더 (DapperDD 교체)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "DapperDD · 3.30",
+      "source": "https://pobb.in/Vt2dSIJuurwn",
+      "note": "Bladefall of Impaling 우버 보스용 교체 로드아웃.",
+      "code_file": "builds/bladefall-impaling-pathfinder.txt"
+    },
+    {
+      "id": "cold-dot-spellslinger-elementalist",
+      "name": "냉기 도트 스펠슬링어 엘리멘탈리스트 (Jungroan)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "Jungroan · 3.30",
+      "source": "https://pobb.in/AadCGMhml9fa",
+      "note": "Creeping Frost of Floes + Vortex 냉기 도트. 트리 표기 3_28.",
+      "code_file": "builds/cold-dot-spellslinger-elementalist.txt"
+    },
+    {
+      "id": "stormburst-totem-hierophant",
+      "name": "폭풍 파열 토템 히에로판트 (aer0)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "aer0 / Palsteron · 3.30",
+      "source": "https://pobb.in/4SpZG4IzZogq",
+      "note": "Storm Burst 토템 + Singularity. 트리 표기 3_29.",
+      "code_file": "builds/stormburst-totem-hierophant.txt"
+    },
+    {
+      "id": "incinerate-venting-elementalist",
+      "name": "소각 분출 엘리멘탈리스트 (smokie_777)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "smokie_777 · 3.30",
+      "source": "https://pobb.in/WBamNpUW03yL",
+      "note": "Incinerate of Venting SSF 우버 대응 빌드. 트리 표기 3_29.",
+      "code_file": "builds/incinerate-venting-elementalist.txt"
+    },
+    {
+      "id": "animate-weapon-ranged-necromancer",
+      "name": "무기 소환 원거리 네크로맨서 (3.30)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "3.30 인기 스타터 · poe.ninja 5위",
+      "source": "https://pobb.in/rtTLjTEh1ky0",
+      "note": "Animate Weapon of Ranged Arms + Feeding Frenzy.",
+      "code_file": "builds/animate-weapon-ranged-necromancer.txt"
+    },
+    {
+      "id": "generals-cry-lacerate-champion",
+      "name": "장군의 함성 절단 챔피언 (3.30)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "3.30 검증 스타터",
+      "source": "https://pobb.in/1TONbRrNbM-w",
+      "note": "General's Cry + Lacerate of Butchering 챔피언.",
+      "code_file": "builds/generals-cry-lacerate-champion.txt"
+    },
+    {
+      "id": "static-strike-slayer",
+      "name": "정전기 타격 슬레이어 (3.30)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "3.30 가이드 (트리 3_28)",
+      "source": "https://pobb.in/OJJy1ScEuDhH",
+      "note": "Static Strike 슬레이어 리그 스타터.",
+      "code_file": "builds/static-strike-slayer.txt"
+    },
+    {
+      "id": "smite-armor-stacker-luminary",
+      "name": "강타 방어구 중첩 루미너리 (3.30)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "3.30 검증 스타터",
+      "source": "https://pobb.in/dx239avt6A-O",
+      "note": "Smite + 방어구 중첩 루미너리(Scion).",
+      "code_file": "builds/smite-armor-stacker-luminary.txt"
+    },
+    {
+      "id": "arc-crab-totems-reliquarian",
+      "name": "연쇄 번개 게 토템 렐리퀘리안 (3.30)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "3.30 신 전직 스타터",
+      "source": "https://pobb.in/ZBb8nQQsiT7O",
+      "note": "Reliquarian + Arc 토템(3.30 신규 전직).",
+      "code_file": "builds/arc-crab-totems-reliquarian.txt"
+    },
+    {
+      "id": "explosive-arrow-ballista-hierophant",
+      "name": "폭발 화살 발리스타 히에로판트 (3.30)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "POEGuy · 3.30",
+      "source": "https://pobb.in/zY5__MKcIUfb",
+      "note": "Explosive Arrow + Ballista Totem.",
+      "code_file": "builds/explosive-arrow-ballista-hierophant.txt"
+    },
+    {
+      "id": "boneshatter-juggernaut",
+      "name": "뼈 분쇄 저거너트 (Zizaran)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "Zizaran · 3.30",
+      "source": "https://pobb.in/qRFk_VlQJyRx",
+      "note": "Boneshatter of Complex Trauma 저거너트. 트리 표기 3_29.",
+      "code_file": "builds/boneshatter-juggernaut.txt"
+    },
+    {
+      "id": "luminary-merc-aurabit",
+      "name": "루미너리 오라봇 (3.30)",
+      "kind": "starter",
+      "game": "poe1",
+      "origin": "3.30 검증 스타터",
+      "source": "https://pobb.in/ebkcWV8iQUgW",
+      "note": "Luminary(Scion) 오라봇 + Flame Link.",
+      "code_file": "builds/luminary-merc-aurabit.txt"
     },
     {
       "id": "coc-forbidden-rite-assassin",
       "name": "CoC 금단의 의식 어쌔신 (MrJim 저예산)",
       "kind": "seed",
-      "source": "https://pobb.in/u/mrjimo%232244/ijdNRePRfWU8",
-      "note": "MrJim 3.30 CoC Forbidden Rite of Soul Sacrifice CHEAP 버전. 트리 3_30.",
+      "game": "poe1",
+      "origin": "MrJim · 3.30",
+      "source": "builds/coc-forbidden-rite-assassin.txt",
+      "note": "CoC Forbidden Rite of Soul Sacrifice CHEAP. 트리 3_30.",
       "code_file": "builds/coc-forbidden-rite-assassin.txt"
     },
     {
       "id": "impending-doom-elementalist",
       "name": "독조 엘리멘탈리스트 (Doom Blast)",
       "kind": "seed",
-      "source": "직접 제작 PoB (downloads/baekseol-custom-build/stage2_endgame.xml)",
-      "note": "Foulborn Doedre's Scorn + Impending Doom 30레벨로 저주 1회 폭발. 3_30 트리.",
+      "game": "poe1",
+      "origin": "직접 제작 PoB",
+      "source": "builds/impending-doom-elementalist.xml",
+      "note": "Foulborn Doedre's Scorn + Impending Doom 30레벨.",
       "code_file": "builds/impending-doom-elementalist.xml"
     },
     {
       "id": "dual-strike-gladiator",
       "name": "쌍수 타격 글래디에이터 (Ephemeral Edge)",
       "kind": "seed",
-      "source": "직접 제작 PoB (downloads/baekseol-uber-build/stage2_uber_skip.xml)",
-      "note": "Dual Strike of Ambidexterity + Ephemeral Edge 우버용. 3_30 트리.",
+      "game": "poe1",
+      "origin": "직접 제작 PoB",
+      "source": "builds/dual-strike-gladiator.xml",
+      "note": "Dual Strike of Ambidexterity + Ephemeral Edge.",
       "code_file": "builds/dual-strike-gladiator.xml"
+    },
+    {
+      "id": "poe2-spark-stormweaver",
+      "name": "전기불꽃 스톰위버 (animeprincess)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "animeprincess · PoE2 0.5",
+      "source": "https://pobb.in/lvfQVOByE12P",
+      "note": "Spark + Orb of Storms + CoC Comet 스톰위버 리그 스타터.",
+      "code_file": "builds/poe2-spark-stormweaver.txt"
+    },
+    {
+      "id": "poe2-permafrost-witchhunter",
+      "name": "영구 동토 탄환 위치헌터 (Chem)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "Chem · PoE2 0.5",
+      "source": "https://pobb.in/0jY6QStgCiF7",
+      "note": "Permafrost Bolts + Fragmentation Rounds 위치헌터(석궁).",
+      "code_file": "builds/poe2-permafrost-witchhunter.txt"
+    },
+    {
+      "id": "poe2-explosive-grenade-witchhunter",
+      "name": "폭발 수류탄 위치헌터 (0.5)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "Hayura / 0.5 수류탄 스타터",
+      "source": "https://pobb.in/_ZU_HFdera9X",
+      "note": "Explosive Grenade + Explosive Shot 수류탄 위치헌터.",
+      "code_file": "builds/poe2-explosive-grenade-witchhunter.txt"
+    },
+    {
+      "id": "poe2-martial-artist-monk",
+      "name": "무술가 몽크 레벨링 (Ghost Activity)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "Ghost Activity · PoE2 0.5",
+      "source": "https://pobb.in/ttCJAV3WX9bn",
+      "note": "Whirling Assault → Falling Thunder 무술가 몽크 레벨링 플랜.",
+      "code_file": "builds/poe2-martial-artist-monk.txt"
+    },
+    {
+      "id": "poe2-falling-thunder-monk",
+      "name": "낙뢰 무술가 몽크 (Spraahz)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "Spraahz · PoE2 0.5",
+      "source": "https://pobb.in/pKT6y4260FdA",
+      "note": "Ice Strike + Falling Thunder 하이브리드 크리 무술가.",
+      "code_file": "builds/poe2-falling-thunder-monk.txt"
+    },
+    {
+      "id": "poe2-ice-strike-amazon",
+      "name": "얼음 타격 아마존 (Taaki)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "Taaki · PoE2 0.5",
+      "source": "https://pobb.in/OKQOruaZYWcX",
+      "note": "Ice Strike + Shattering Palm 아마존 리그 스타터.",
+      "code_file": "builds/poe2-ice-strike-amazon.txt"
+    },
+    {
+      "id": "poe2-chaos-flicker-chayula",
+      "name": "혼돈 섬광 아콜라이트 (0.5)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "PoE2 0.5 차율라 몽크",
+      "source": "https://pobb.in/atwLUF9Q_GEo",
+      "note": "Flicker Strike + Tempest Bell 혼돈 전환 아콜라이트 오브 차율라.",
+      "code_file": "builds/poe2-chaos-flicker-chayula.txt"
+    },
+    {
+      "id": "poe2-pathfinder-spark",
+      "name": "전기불꽃 패스파인더 (0.5)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "PoE2 0.5 패스파인더 스파크",
+      "source": "https://pobb.in/k1_vEjHL-zZO",
+      "note": "Spark + CoC Comet + Spellslinger 패스파인더.",
+      "code_file": "builds/poe2-pathfinder-spark.txt"
+    },
+    {
+      "id": "poe2-twister-gemling",
+      "name": "회오리 보석병 (snoobae85)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "snoobae85 · PoE2 0.5",
+      "source": "https://pobb.in/e-WNTOnCq5EC",
+      "note": "Twister + Whirling Slash 보석병 군단병.",
+      "code_file": "builds/poe2-twister-gemling.txt"
+    },
+    {
+      "id": "poe2-gemling-twister",
+      "name": "회오리 보석병 (mwExile)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "mwExile · PoE2 0.5",
+      "source": "https://pobb.in/rPuAWBzQfEgX",
+      "note": "Twister 보석병 군단병 두 번째 로드아웃.",
+      "code_file": "builds/poe2-gemling-twister.txt"
+    },
+    {
+      "id": "poe2-minion-infernalist",
+      "name": "소환수 인퍼널리스트 (Thyworm SSF)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "Thyworm · PoE2 0.5",
+      "source": "https://pobb.in/_hUlac12nFNX",
+      "note": "Summon Infernal Hound + Skeletal Warrior 소환수 SSF 스타터.",
+      "code_file": "builds/poe2-minion-infernalist.txt"
+    },
+    {
+      "id": "poe2-lightning-spear-tactician",
+      "name": "번개 창 택티션 (Snap)",
+      "kind": "poe2",
+      "game": "poe2",
+      "origin": "Snap · PoE2 0.5",
+      "source": "https://pobb.in/PbvuVbm_kQdL",
+      "note": "Lightning Spear + Armour Break 택티션.",
+      "code_file": "builds/poe2-lightning-spear-tactician.txt"
     }
-  ]
+  ],
+  "bundled_updated": ""
 }

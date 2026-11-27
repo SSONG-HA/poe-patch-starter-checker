@@ -10,3 +10,11 @@ venv/
 .vscode/
 *.log
 reports/
+
+# 개발용 수집 캐시·중간 산출물(배포물 아님)
+work/
+work/page_*.html
+work/poedb_*.html
+work/*.json
+work/*.lua
+work/libtest/

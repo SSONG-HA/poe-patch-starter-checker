@@ -1,16 +1,18 @@
 ==============================================================================
- PoE 패치노트 스타터 생존·버프 검증기 v1.0.0
+ PoE 패치노트 스타터 생존·버프 검증기 v1.1.0
 ==============================================================================
+게임     : PoE1 3.30
 패치노트 : patch_notes_synthetic_full.txt · 패치 3.30.0
 출처     : tests/fixtures/patch_notes_synthetic_full.txt
-분석 시각: 2026-11-27 14:54
-항목 수  : 23개 (빌드 9개 검사)
-판정 요약: 🔴 5 · 🟡 3 · 🟢 1
+분석 시각: 2026-11-27 16:46
+항목 수  : 28개 (빌드 24개 검사)
+판정 요약: 🔴 5 · 🟡 7 · 🟢 12
 
 [1] 스타터 생존 검증
 ------------------------------------------------------------------------------
 🔴 핵심 너프 주의  RF 치프틴 (Pohx SRI)  (Chieftain · 90레벨)
-   주력: Scorching Ray of Immolation, Righteous Fire
+   출처: PoE1 3.30 · 리그 스타터 · Pohx · 3.30 · 트리 3_29
+   주력: Scorching Ray of Immolation(제물의 작열 광선), Righteous Fire(정의의 화염)
    → 주력 스킬 'Righteous Fire' 너프 외 2건
    · 주력 스킬 'Righteous Fire' — 너프 -33.3% ← Righteous Fire
        Now deals 39.7 base Fire Damage per second at gem level 1 (previously
@@ -21,11 +23,9 @@
    · 주력 스킬 'Scorching Ray of Immolation' — 상향 +33.3% ← Scorching Ray of Immolation
        Now deals 20% more Damage (previously 15%).
        Now has 10% increased Area of Effect.
-   · 전직 'Chieftain' — 상향 +100.0% ← Chieftain
+   · 전직 'Chieftain' — 상향 +25.0% ← Chieftain
        Ramako, Sun's Light now grants 50% increased Fire Damage (previously
          40%).
-       Hinekora, Death's Fury now has a 10% chance to Cover Enemies in Ash on
-         Hit (previously 5%).
    · 유니크 'Nebulis' — 너프 -40.0% ← Nebulis
        Now grants 6% increased Elemental Damage per 100 Intelligence
          (previously 10%).
@@ -48,7 +48,8 @@
        Supported Skills now cost 20% less Life (previously 15%).
 
 🔴 핵심 너프 주의  독조 엘리멘탈리스트 (Doom Blast)  (Elementalist · 97레벨)
-   주력: Doom Blast, Tempest Shield
+   출처: PoE1 3.30 · 시드/엔드게임 · 직접 제작 PoB · 트리 3_30
+   주력: Doom Blast, Tempest Shield(폭풍의 방패)
    → 키스톤 'Mind Over Matter' 너프 외 2건
    · 키스톤 'Mind Over Matter' — 너프 -25.0% ← Mind Over Matter
        Now causes 30% of Damage to be taken from Mana before Life (previously
@@ -61,8 +62,9 @@
    · 서포트 젬 'Void Manipulation' — 너프 -14.3% ← Void Manipulation Support
        Supported Skills now deal 30% more Chaos Damage (previously 35%).
 
-🔴 핵심 너프 주의  작열 광선 RF 치프틴 (내 캐릭터)  (Chieftain · 95레벨)
-   주력: Scorching Ray of Immolation, Righteous Fire
+🔴 핵심 너프 주의  작열 광선 RF 치프틴 (내 캐릭터 · 11-24)  (Chieftain · 95레벨)
+   출처: PoE1 3.30 · 내 캐릭터 · 내 빌드 · 2026-11-24 · 트리 3_30
+   주력: Scorching Ray of Immolation(제물의 작열 광선), Righteous Fire(정의의 화염)
    → 주력 스킬 'Righteous Fire' 너프 외 2건
    · 주력 스킬 'Righteous Fire' — 너프 -33.3% ← Righteous Fire
        Now deals 39.7 base Fire Damage per second at gem level 1 (previously
@@ -73,11 +75,9 @@
    · 주력 스킬 'Scorching Ray of Immolation' — 상향 +33.3% ← Scorching Ray of Immolation
        Now deals 20% more Damage (previously 15%).
        Now has 10% increased Area of Effect.
-   · 전직 'Chieftain' — 상향 +100.0% ← Chieftain
+   · 전직 'Chieftain' — 상향 +25.0% ← Chieftain
        Ramako, Sun's Light now grants 50% increased Fire Damage (previously
          40%).
-       Hinekora, Death's Fury now has a 10% chance to Cover Enemies in Ash on
-         Hit (previously 5%).
    · 유니크 'Nebulis' — 너프 -40.0% ← Nebulis
        Now grants 6% increased Elemental Damage per 100 Intelligence
          (previously 10%).
@@ -99,8 +99,46 @@
    · 서포트 젬 'Lifetap' — 상향 +33.3% ← Lifetap Support
        Supported Skills now cost 20% less Life (previously 15%).
 
-🔴 핵심 너프 주의  회오리바람 인퀴지터 (BalorMage 스타터)  (Inquisitor · 94레벨)
-   주력: Tornado of Elemental Turbulence
+🔴 핵심 너프 주의  작열 광선 RF 치프틴 (내 캐릭터 · 최신)  (Chieftain · 95레벨)
+   출처: PoE1 3.30 · 내 캐릭터 · 내 빌드 · 2026-11-27 · 트리 3_30
+   주력: Scorching Ray of Immolation(제물의 작열 광선), Righteous Fire(정의의 화염)
+   → 주력 스킬 'Righteous Fire' 너프 외 2건
+   · 주력 스킬 'Righteous Fire' — 너프 -33.3% ← Righteous Fire
+       Now deals 39.7 base Fire Damage per second at gem level 1 (previously
+         49.4).
+       Now deals 2447.9 base Fire Damage per second at gem level 20
+         (previously 3142.6).
+       Now grants 20% more Spell Damage (previously 30%).
+   · 주력 스킬 'Scorching Ray of Immolation' — 상향 +33.3% ← Scorching Ray of Immolation
+       Now deals 20% more Damage (previously 15%).
+       Now has 10% increased Area of Effect.
+   · 전직 'Chieftain' — 상향 +25.0% ← Chieftain
+       Ramako, Sun's Light now grants 50% increased Fire Damage (previously
+         40%).
+   · 유니크 'Nebulis' — 너프 -40.0% ← Nebulis
+       Now grants 6% increased Elemental Damage per 100 Intelligence
+         (previously 10%).
+   · 유니크 'Cloak of Flame' — 상향 +33.3% ← Cloak of Flame
+       Now grants 20% of Physical Damage from Hits taken as Fire Damage
+         (previously 15%).
+       Now has 500 Armour (previously 400).
+   · 유니크 'Annihilation's Approach' — 상향 +33.3% ← Annihilation's Approach
+       Now grants 40% increased Movement Speed (previously 30%).
+   · 키스톤 'Glancing Blows' — 상향 +20.0% ← Glancing Blows
+       Now has 60% chance to Block Attack Damage (previously 50%).
+   · 보조 스킬 'Shield Charge' — 상향 +25.0% ← Shield Charge
+       Mana Cost reduced from 12 to 9.
+   · 보조 스킬 'Malevolence' — 혼합 조정 +25.0% ← Malevolence
+       No longer grants 20% increased Skill Effect Duration.
+       Now grants 15% increased Damage over Time (previously 12%).
+   · 서포트 젬 'Elemental Focus' — 상향 +25.0% ← Elemental Focus Support
+       Supported Skills now deal 25% more Elemental Damage (previously 20%).
+   · 서포트 젬 'Lifetap' — 상향 +33.3% ← Lifetap Support
+       Supported Skills now cost 20% less Life (previously 15%).
+
+🔴 핵심 너프 주의  회오리바람 인퀴지터 (BalorMage)  (Inquisitor · 94레벨)
+   출처: PoE1 3.30 · 리그 스타터 · BalorMage · 3.30 · 트리 3_29
+   주력: Tornado of Elemental Turbulence(격동하는 원소의 회오리)
    → 주력 스킬 'Tornado of Elemental Turbulence' 혼합 조정 외 1건
    · 주력 스킬 'Tornado of Elemental Turbulence' — 혼합 조정 -66.7% ← Tornado of Elemental Turbulence
        Now deals 25% less Damage (previously 15% less Damage).
@@ -114,23 +152,29 @@
    · 보조 스킬 'Shield Charge' — 상향 +25.0% ← Shield Charge
        Mana Cost reduced from 12 to 9.
 
-🔴 핵심 너프 주의  지배의 일격 가디언 (ArminYou 스타터)  (Guardian · 95레벨)
-   주력: Dominating Blow of Inspiring
-   → 주력 스킬 'Dominating Blow of Inspiring' 혼합 조정
-   · 주력 스킬 'Dominating Blow of Inspiring' — 혼합 조정 +50.0% ← Dominating Blow of Inspiring
-       Now grants Sentinels 15% increased Attack Speed (previously 10%).
-       No longer grants Sentinels additional Physical Damage Reduction.
-   · 보조 스킬 'Summon Holy Relic' — 상향 +20.0% ← Summon Holy Relic of Conviction
-       Now has a base duration of 6 seconds (previously 5).
-       Tornado of Elemental Turbulence
+🟡 일부 조정  칼날 낙하 관통 패스파인더 (DapperDD 교체)  (Pathfinder · 85레벨)
+   출처: PoE1 3.30 · 리그 스타터 · DapperDD · 3.30 · 트리 3_29
+   주력: Bladefall of Impaling(꿰뚫기의 칼날비)
+   → 보조 스킬 'Righteous Fire of Arcane Devotion' 너프 외 2건
+   · 보조 스킬 'Righteous Fire of Arcane Devotion' (기본 이름 일치) — 너프 -33.3% ← Righteous Fire
+       Now deals 39.7 base Fire Damage per second at gem level 1 (previously
+         49.4).
+       Now deals 2447.9 base Fire Damage per second at gem level 20
+         (previously 3142.6).
+       Now grants 20% more Spell Damage (previously 30%).
+   · 보조 스킬 'Malevolence' — 혼합 조정 +25.0% ← Malevolence
+       No longer grants 20% increased Skill Effect Duration.
+       Now grants 15% increased Damage over Time (previously 12%).
+   · 서포트 젬 'Void Manipulation' — 너프 -14.3% ← Void Manipulation Support
+       Supported Skills now deal 30% more Chaos Damage (previously 35%).
 
 🟡 일부 조정  CoC 금단의 의식 어쌔신 (MrJim 저예산)  (Assassin · 93레벨)
-   주력: Forbidden Rite of Soul Sacrifice
+   출처: PoE1 3.30 · 시드/엔드게임 · MrJim · 3.30 · 트리 3_30
+   주력: Forbidden Rite of Soul Sacrifice(영혼 희생의 금단의 의식)
    → 서포트 젬 'Void Manipulation' 너프 외 1건
    · 주력 스킬 'Forbidden Rite of Soul Sacrifice' — 상향 +100.0% ← Forbidden Rite of Soul Sacrifice
        Now deals 180% more Damage (previously 120%).
        Now fires 2 additional Projectiles (previously 1).
-       Mana Cost reduced from 14 to 11.
    · 서포트 젬 'Void Manipulation' — 너프 -14.3% ← Void Manipulation Support
        Supported Skills now deal 30% more Chaos Damage (previously 35%).
    · 서포트 젬 'Cast On Critical Strike' — 너프 -50.0% ← Cast On Critical Strike Support
@@ -139,7 +183,8 @@
          seconds).
 
 🟡 일부 조정  중독 신성한 유물 네크로맨서 (Bula)  (Necromancer · 98레벨)
-   주력: Summon Holy Relic of Conviction, Lancing Steel of Spraying
+   출처: PoE1 3.30 · 리그 스타터 · Bula · 3.30 · 트리 3_29
+   주력: Summon Holy Relic of Conviction(신념의 신성한 유물 소환), Lancing Steel of Spraying(분사의 강철 관통)
    → 보조 스킬 'Malevolence' 혼합 조정 외 1건
    · 주력 스킬 'Summon Holy Relic of Conviction' — 상향 +20.0% ← Summon Holy Relic of Conviction
        Now has a base duration of 6 seconds (previously 5).
@@ -152,8 +197,35 @@
    · 서포트 젬 'Minion Damage' — 상향 +25.0% ← Minion Damage
        increased from 20% to 25%.
 
-🟡 일부 조정  절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)  (Elementalist · 100레벨)
-   주력: Eviscerate
+🟡 일부 조정  독성 혼합물 패스파인더 (DapperDD)  (Pathfinder · 70레벨)
+   출처: PoE1 3.30 · 리그 스타터 · DapperDD · 3.30 · 트리 3_29
+   주력: Poisonous Concoction(독성 혼합물)
+   → 서포트 젬 'Void Manipulation' 너프
+   · 보조 스킬 'Shield Charge' — 상향 +25.0% ← Shield Charge
+       Mana Cost reduced from 12 to 9.
+   · 서포트 젬 'Void Manipulation' — 너프 -14.3% ← Void Manipulation Support
+       Supported Skills now deal 30% more Chaos Damage (previously 35%).
+
+🟡 일부 조정  소각 분출 엘리멘탈리스트 (smokie_777)  (Elementalist · 99레벨)
+   출처: PoE1 3.30 · 리그 스타터 · smokie_777 · 3.30 · 트리 3_29
+   주력: Incinerate of Venting(환기의 소각)
+   → 보조 스킬 'Righteous Fire of Arcane Devotion' 너프
+   · 유니크 'Cloak of Flame' — 상향 +33.3% ← Cloak of Flame
+       Now grants 20% of Physical Damage from Hits taken as Fire Damage
+         (previously 15%).
+       Now has 500 Armour (previously 400).
+   · 보조 스킬 'Righteous Fire of Arcane Devotion' (기본 이름 일치) — 너프 -33.3% ← Righteous Fire
+       Now deals 39.7 base Fire Damage per second at gem level 1 (previously
+         49.4).
+       Now deals 2447.9 base Fire Damage per second at gem level 20
+         (previously 3142.6).
+       Now grants 20% more Spell Damage (previously 30%).
+   · 서포트 젬 'Lifetap' — 상향 +33.3% ← Lifetap Support
+       Supported Skills now cost 20% less Life (previously 15%).
+
+🟡 일부 조정  절개 점화 엘리멘탈리스트 (Desmo Saze)  (Elementalist · 100레벨)
+   출처: PoE1 3.30 · 리그 스타터 · Desmo Saze · 3.30 · 트리 3_29
+   주력: Eviscerate(내장 적출)
    → 보조 스킬 'Malevolence' 혼합 조정
    · 주력 스킬 'Eviscerate' — 상향 +33.3% ← Eviscerate
        Now deals 20% more Damage (previously 15%).
@@ -164,30 +236,127 @@
        No longer grants 20% increased Skill Effect Duration.
        Now grants 15% increased Damage over Time (previously 12%).
 
-🟢 무사통과  쌍수 타격 글래디에이터 (Ephemeral Edge)  (Gladiator · 98레벨)
-   주력: Dual Strike of Ambidexterity
+🟡 일부 조정  폭발 화살 발리스타 히에로판트 (3.30)  (Hierophant · 78레벨)
+   출처: PoE1 3.30 · 리그 스타터 · POEGuy · 3.30 · 트리 3_29
+   주력: Explosive Arrow(폭발 화살), Frenzy(격분)
+   → 서포트 젬 'Cast On Critical Strike' 너프
+   · 서포트 젬 'Cast On Critical Strike' — 너프 -50.0% ← Cast On Critical Strike Support
+       Now has 35% less Damage (previously 30% less Damage).
+       Now triggers Supported Skills every 0.15 seconds (previously 0.10
+         seconds).
+   · 서포트 젬 'Lifetap' — 상향 +33.3% ← Lifetap Support
+       Supported Skills now cost 20% less Life (previously 15%).
+
+🟢 무사통과  강타 방어구 중첩 루미너리 (3.30)  (Luminary · 86레벨)
+   출처: PoE1 3.30 · 리그 스타터 · 3.30 검증 스타터 · 트리 3_29
+   주력: Raise Spectre(망령 소환)
    → 패치노트에서 관련 변경 없음
 
-[2] 대폭 상향(버프) TOP 17
+🟢 무사통과  냉기 도트 스펠슬링어 엘리멘탈리스트 (Jungroan)  (Elementalist · 100레벨)
+   출처: PoE1 3.30 · 리그 스타터 · Jungroan · 3.30 · 트리 3_28
+   주력: Creeping Frost of Floes(부빙의 엄습하는 서리), Vortex(소용돌이)
+   → 너프 없음 · 상향 2건
+   · 보조 스킬 'Shield Charge' — 상향 +25.0% ← Shield Charge
+       Mana Cost reduced from 12 to 9.
+   · 서포트 젬 'Elemental Focus' — 상향 +25.0% ← Elemental Focus Support
+       Supported Skills now deal 25% more Elemental Damage (previously 20%).
+
+🟢 무사통과  루미너리 오라봇 (3.30)  (Luminary · 100레벨)
+   출처: PoE1 3.30 · 리그 스타터 · 3.30 검증 스타터 · 트리 3_29
+   주력: Animate Guardian(수호자 기동), Raise Spectre(망령 소환)
+   → 너프 없음 · 상향 1건
+   · 보조 스킬 'Shield Charge' — 상향 +25.0% ← Shield Charge
+       Mana Cost reduced from 12 to 9.
+
+🟢 무사통과  무기 소환 원거리 네크로맨서 (3.30)  (Necromancer · 97레벨)
+   출처: PoE1 3.30 · 리그 스타터 · 3.30 인기 스타터 · poe.ninja 5위 · 트리 3_29
+   주력: Animate Weapon of Ranged Arms(원거리 병기의 무기 기동)
+   → 너프 없음 · 상향 3건
+   · 보조 스킬 'Forbidden Rite of Soul Sacrifice' — 상향 +100.0% ← Forbidden Rite of Soul Sacrifice
+       Now deals 180% more Damage (previously 120%).
+       Now fires 2 additional Projectiles (previously 1).
+   · 보조 스킬 'Shield Charge' — 상향 +25.0% ← Shield Charge
+       Mana Cost reduced from 12 to 9.
+   · 서포트 젬 'Minion Damage' — 상향 +25.0% ← Minion Damage
+       increased from 20% to 25%.
+
+🟢 무사통과  뼈 분쇄 저거너트 (Zizaran)  (Juggernaut · 99레벨)
+   출처: PoE1 3.30 · 리그 스타터 · Zizaran · 3.30 · 트리 3_29
+   주력: Boneshatter of Complex Trauma(복합 외상의 뼈 박살)
+   → 너프 없음 · 상향 2건
+   · 보조 스킬 'Forbidden Rite' — 상향 +100.0% ← Forbidden Rite of Soul Sacrifice
+       Now deals 180% more Damage (previously 120%).
+       Now fires 2 additional Projectiles (previously 1).
+   · 서포트 젬 'Lifetap' — 상향 +33.3% ← Lifetap Support
+       Supported Skills now cost 20% less Life (previously 15%).
+
+🟢 무사통과  쌍수 타격 글래디에이터 (Ephemeral Edge)  (Gladiator · 98레벨)
+   출처: PoE1 3.30 · 시드/엔드게임 · 직접 제작 PoB · 트리 3_30
+   주력: Dual Strike of Ambidexterity(양손잡이의 쌍수 타격)
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  연쇄 번개 게 토템 렐리퀘리안 (3.30)  (Reliquarian · 67레벨)
+   출처: PoE1 3.30 · 리그 스타터 · 3.30 신 전직 스타터 · 트리 3_29
+   주력: Arc(연쇄 번개)
+   → 패치노트에서 관련 변경 없음
+
+🟢 무사통과  장군의 함성 절단 챔피언 (3.30)  (Champion · 100레벨)
+   출처: PoE1 3.30 · 리그 스타터 · 3.30 검증 스타터 · 트리 3_29
+   주력: Lacerate of Butchering(도살의 피부 찢기)
+   → 너프 없음 · 상향 2건
+   · 보조 스킬 'Herald of Purity' — 상향 ← Herald of Purity
+       Now also grants 20% increased Minion Damage.
+   · 서포트 젬 'Lifetap' — 상향 +33.3% ← Lifetap Support
+       Supported Skills now cost 20% less Life (previously 15%).
+
+🟢 무사통과  정전기 타격 가디언 (Alohaa)  (Guardian · 100레벨)
+   출처: PoE1 3.30 · 리그 스타터 · Alohaa · 3.30 · 트리 3_29
+   주력: Static Strike(정전기 타격)
+   → 너프 없음 · 상향 1건
+   · 보조 스킬 'Herald of Purity' — 상향 ← Herald of Purity
+       Now also grants 20% increased Minion Damage.
+
+🟢 무사통과  정전기 타격 슬레이어 (3.30)  (Slayer · 100레벨)
+   출처: PoE1 3.30 · 리그 스타터 · 3.30 가이드 (트리 3_28) · 트리 3_28
+   주력: Static Strike(정전기 타격)
+   → 너프 없음 · 상향 1건
+   · 서포트 젬 'Lifetap' — 상향 +33.3% ← Lifetap Support
+       Supported Skills now cost 20% less Life (previously 15%).
+
+🟢 무사통과  지배의 일격 가디언 (ArminYou)  (Guardian · 95레벨)
+   출처: PoE1 3.30 · 리그 스타터 · ArminYou · 3.30 · 트리 3_29
+   주력: Dominating Blow of Inspiring(격려의 지배의 맹타)
+   → 너프 없음 · 상향 2건
+   · 주력 스킬 'Dominating Blow of Inspiring' — 상향 +50.0% ← Dominating Blow of Inspiring
+       Now grants Sentinels 15% increased Attack Speed (previously 10%).
+   · 보조 스킬 'Summon Holy Relic' — 상향 +20.0% ← Summon Holy Relic of Conviction
+       Now has a base duration of 6 seconds (previously 5).
+       Tornado of Elemental Turbulence
+
+🟢 무사통과  폭풍 파열 토템 히에로판트 (aer0)  (Hierophant · 93레벨)
+   출처: PoE1 3.30 · 리그 스타터 · aer0 / Palsteron · 3.30 · 트리 3_29
+   주력: Storm Burst(폭풍 점사)
+   → 너프 없음 · 상향 1건
+   · 보조 스킬 'Shield Charge' — 상향 +25.0% ← Shield Charge
+       Mana Cost reduced from 12 to 9.
+
+[2] 대폭 상향(버프) TOP 8
 ------------------------------------------------------------------------------
- 1. Forbidden Rite of Soul Sacrifice — 스킬 +100.0% (3건)  ↔ 시드: CoC 금단의 의식 어쌔신 (MrJim 저예산)
+ 1. Forbidden Rite of Soul Sacrifice — 스킬 +100.0% (2건)  ↔ 시드: 무기 소환 원거리 네크로맨서 (3.30), 뼈 분쇄 저거너트 (Zizaran), CoC 금단의 의식 어쌔신 (MrJim 저예산)
      projectile: 1 → 2 (+100.0%) · Now fires 2 additional Projectiles
        (previously 1).
      damage: 120% → 180% (+50.0%) · Now deals 180% more Damage (previously
        120%).
-     cost: 14 → 11 (+21.4%) · Mana Cost reduced from 14 to 11.
      링크: https://poedb.tw/kr/Forbidden_Rite_of_Soul_Sacrifice | https://poe.ninja/poe1/builds?skill=Forbidden_Rite_of_Soul_Sacrifice
- 2. Chieftain — 전직 +100.0% (2건)  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터), RF 치프틴 (Pohx SRI)
+ 2. Hinekora, Death's Fury — 유니크 +100.0%
      chance: 5% → 10% (+100.0%) · Hinekora, Death's Fury now has a 10% chance
        to Cover Enemies in Ash on Hit (previously 5%).
-     damage: 40% → 50% (+25.0%) · Ramako, Sun's Light now grants 50%
-       increased Fire Damage (previously 40%).
-     링크: https://poedb.tw/kr/Chieftain
- 3. Tornado of Elemental Turbulence — 스킬 +60.0% · 혼합  ↔ 시드: 회오리바람 인퀴지터 (BalorMage 스타터)
+     링크: https://poedb.tw/kr/Hinekora%2C_Death%27s_Fury
+ 3. Tornado of Elemental Turbulence — 스킬 +60.0% · 혼합  ↔ 시드: 회오리바람 인퀴지터 (BalorMage)
      area of effect: 25% → 40% (+60.0%) · Now has 40% increased Area of
        Effect (previously 25%).
      링크: https://poedb.tw/kr/Tornado_of_Elemental_Turbulence | https://poe.ninja/poe1/builds?skill=Tornado_of_Elemental_Turbulence
- 4. Dominating Blow of Inspiring — 스킬 +50.0% · 혼합  ↔ 시드: 지배의 일격 가디언 (ArminYou 스타터)
+ 4. Dominating Blow of Inspiring — 스킬 +50.0%  ↔ 시드: 지배의 일격 가디언 (ArminYou)
      speed: 10% → 15% (+50.0%) · Now grants Sentinels 15% increased Attack
        Speed (previously 10%).
      링크: https://poedb.tw/kr/Dominating_Blow_of_Inspiring | https://poe.ninja/poe1/builds?skill=Dominating_Blow_of_Inspiring
@@ -197,50 +366,17 @@
      cooldown: 0.40 → 0.30 (+25.0%) · Now has a cooldown of 0.3 seconds
        (previously 0.4 seconds).
      링크: https://poedb.tw/kr/Impending_Doom_Support | https://poe.ninja/poe1/builds?skill=Impending_Doom
- 6. Cloak of Flame — 유니크 +33.3% (2건)  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터), RF 치프틴 (Pohx SRI)
+ 6. Cloak of Flame — 유니크 +33.3% (2건)  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터 · 최신), 작열 광선 RF 치프틴 (내 캐릭터 · 11-24), RF 치프틴 (Pohx SRI), 소각 분출 엘리멘탈리스트 (smokie_777)
      damage: 15% → 20% (+33.3%) · Now grants 20% of Physical Damage from Hits
        taken as Fire Damage (previously 15%).
      armour: 400 → 500 (+25.0%) · Now has 500 Armour (previously 400).
      링크: https://poedb.tw/kr/Cloak_of_Flame
- 7. Scorching Ray of Immolation — 스킬 +33.3%  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터), RF 치프틴 (Pohx SRI)
+ 7. Scorching Ray of Immolation — 스킬 +33.3%  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터 · 최신), 작열 광선 RF 치프틴 (내 캐릭터 · 11-24), RF 치프틴 (Pohx SRI)
      damage: 15% → 20% (+33.3%) · Now deals 20% more Damage (previously 15%).
      링크: https://poedb.tw/kr/Scorching_Ray_of_Immolation | https://poe.ninja/poe1/builds?skill=Scorching_Ray_of_Immolation
- 8. Eviscerate — 스킬 +33.3%  ↔ 시드: 절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)
+ 8. Eviscerate — 스킬 +33.3%  ↔ 시드: 절개 점화 엘리멘탈리스트 (Desmo Saze)
      damage: 15% → 20% (+33.3%) · Now deals 20% more Damage (previously 15%).
      링크: https://poedb.tw/kr/Eviscerate | https://poe.ninja/poe1/builds?skill=Eviscerate
- 9. Lifetap Support — 서포트 +33.3%  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터), RF 치프틴 (Pohx SRI)
-     cost: 15% → 20% (+33.3%) · Supported Skills now cost 20% less Life
-       (previously 15%).
-     링크: https://poedb.tw/kr/Lifetap_Support | https://poe.ninja/poe1/builds?skill=Lifetap
-10. Annihilation's Approach — 유니크 +33.3%  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터), RF 치프틴 (Pohx SRI)
-     speed: 30% → 40% (+33.3%) · Now grants 40% increased Movement Speed
-       (previously 30%).
-     링크: https://poedb.tw/kr/Annihilation%27s_Approach
-11. Minion Damage — 서포트 +25.0%  ↔ 시드: 중독 신성한 유물 네크로맨서 (Bula)
-     value: 20% → 25% (+25.0%) · increased from 20% to 25%.
-     링크: https://poedb.tw/kr/Minion_Damage | https://poe.ninja/poe1/builds?skill=Minion_Damage
-12. Shield Charge — 스킬 +25.0%  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터), RF 치프틴 (Pohx SRI), 회오리바람 인퀴지터 (BalorMage 스타터), 절개 점화 엘리멘탈리스트 (Desmo Saze 스타터), 독조 엘리멘탈리스트 (Doom Blast)
-     cost: 12 → 9 (+25.0%) · Mana Cost reduced from 12 to 9.
-     링크: https://poedb.tw/kr/Shield_Charge | https://poe.ninja/poe1/builds?skill=Shield_Charge
-13. Malevolence — 스킬 +25.0% · 혼합  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터), RF 치프틴 (Pohx SRI), 중독 신성한 유물 네크로맨서 (Bula), 절개 점화 엘리멘탈리스트 (Desmo Saze 스타터), 독조 엘리멘탈리스트 (Doom Blast)
-     damage: 12% → 15% (+25.0%) · Now grants 15% increased Damage over Time
-       (previously 12%).
-     링크: https://poedb.tw/kr/Malevolence | https://poe.ninja/poe1/builds?skill=Malevolence
-14. Elemental Focus Support — 서포트 +25.0%  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터), RF 치프틴 (Pohx SRI)
-     damage: 20% → 25% (+25.0%) · Supported Skills now deal 25% more
-       Elemental Damage (previously 20%).
-     링크: https://poedb.tw/kr/Elemental_Focus_Support | https://poe.ninja/poe1/builds?skill=Elemental_Focus
-15. Summon Holy Relic of Conviction — 스킬 +20.0%  ↔ 시드: 중독 신성한 유물 네크로맨서 (Bula), 지배의 일격 가디언 (ArminYou 스타터)
-     duration: 5 → 6 (+20.0%) · Now has a base duration of 6 seconds
-       (previously 5).
-     링크: https://poedb.tw/kr/Summon_Holy_Relic_of_Conviction | https://poe.ninja/poe1/builds?skill=Summon_Holy_Relic_of_Conviction
-16. Glancing Blows — 키스톤 +20.0%  ↔ 시드: 작열 광선 RF 치프틴 (내 캐릭터), RF 치프틴 (Pohx SRI)
-     chance: 50% → 60% (+20.0%) · Now has 60% chance to Block Attack Damage
-       (previously 50%).
-     링크: https://poedb.tw/kr/Glancing_Blows
-17. Herald of Purity — 스킬 정성 상향
-     Now also grants 20% increased Minion Damage.
-     링크: https://poedb.tw/kr/Herald_of_Purity | https://poe.ninja/poe1/builds?skill=Herald_of_Purity
 
 ==============================================================================
 주의: 판정은 패치노트 문장과 빌드 구성 요소의 이름 매칭·수치 비교로 계산됩니다.

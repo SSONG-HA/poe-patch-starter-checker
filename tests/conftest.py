@@ -67,6 +67,12 @@ def make_pob_code(**kwargs) -> str:
 
 
 @pytest.fixture
+def make_pob():
+    """테스트용 최소 PoB XML 생성기."""
+    return make_pob_xml
+
+
+@pytest.fixture
 def fixture_dir() -> Path:
     return FIXTURES
 

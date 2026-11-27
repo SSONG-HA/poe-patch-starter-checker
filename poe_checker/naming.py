@@ -18,6 +18,9 @@ _NON_WORD = re.compile(r"[^0-9a-z가-힣' ]+")
 # PoB 안에서만 쓰이는 접두어(게임에는 없는 이름) 또는 3.30 변형 접두어
 _STRIP_PREFIXES = ("foulborn ", "nerfed ")
 
+# PoE2 보조 젬은 등급이 이름에 붙는다(PoB `Rapid Attacks II` ↔ 패치노트 `Rapid Attacks`)
+_TIER_RE = re.compile(r"\s+(i|ii|iii|iv|v)$")
+
 
 def norm(text: str) -> str:
     """비교용 정규화: 소문자, 아포스트로피 통일, 구두점 제거, 공백 축약."""
@@ -30,7 +33,8 @@ def norm(text: str) -> str:
 
 @lru_cache(maxsize=1)
 def gem_key_set() -> frozenset:
-    return datafiles.active_gem_keys() | datafiles.support_gem_keys()
+    """PoE1·PoE2 두 게임의 젬 이름 키 합집합."""
+    return datafiles.all_active_gem_keys() | datafiles.all_support_gem_keys()
 
 
 @lru_cache(maxsize=8192)
@@ -40,7 +44,7 @@ def is_gem_name(name: str) -> bool:
 
 @lru_cache(maxsize=8192)
 def is_support_name(name: str) -> bool:
-    return norm(name) in datafiles.support_gem_keys()
+    return norm(name) in datafiles.all_support_gem_keys()
 
 
 def name_keys(name: str, *, gem: bool | None = None) -> frozenset:
@@ -79,6 +83,9 @@ def name_keys(name: str, *, gem: bool | None = None) -> frozenset:
                 base = value.split(" of ", 1)[0]
                 if base in gem_keys:
                     add(base)
+            tier = _TIER_RE.search(value)
+            if tier:
+                add(value[: tier.start()].strip())
     return frozenset(keys)
 
 
@@ -94,14 +101,16 @@ def keys_intersect(a: frozenset, b: frozenset) -> bool:
 def known_entity_index() -> dict:
     """norm 이름 → (표시 이름, 종류). 긴 이름부터 매칭할 수 있게 정렬해서 쓴다."""
     index: dict[str, tuple[str, str]] = {}
-    for name in datafiles.active_gems():
+    for name in datafiles.all_active_gems():
         index.setdefault(norm(name), (name, "gem"))
-    for name in datafiles.support_gems():
+    for name in datafiles.all_support_gems():
         index.setdefault(norm(name), (name, "support"))
-    for name in datafiles.keystone_names():
+    for name in datafiles.all_keystone_names():
         index.setdefault(norm(name), (name, "keystone"))
-    for name in datafiles.ascendancy_names():
+    for name in datafiles.all_ascendancy_names():
         index.setdefault(norm(name), (name, "ascendancy"))
+    for name in datafiles.all_unique_names():
+        index.setdefault(norm(name), (name, "unique"))
     return index
 
 

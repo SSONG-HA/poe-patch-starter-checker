@@ -72,13 +72,13 @@ class BuffCandidate:
 
 def _kind_label(entry: patchnotes.PatchEntry, library_uniques: set[str]) -> str:
     key = naming.norm(entry.name)
-    if key in datafiles.support_gem_keys():
+    if key in datafiles.all_support_gem_keys():
         return "서포트"
-    if key in datafiles.active_gem_keys():
+    if key in datafiles.all_active_gem_keys():
         return "스킬"
-    if key in datafiles.ascendancy_keys():
+    if key in datafiles.all_ascendancy_keys():
         return "전직"
-    if key in datafiles.keystone_keys():
+    if key in datafiles.all_keystone_keys():
         return "키스톤"
     if entry.kind == "unique" or key in library_uniques:
         return "유니크"

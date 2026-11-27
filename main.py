@@ -8,6 +8,11 @@ import sys
 
 
 def main() -> int:
+    import os
+
+    for name in ("stdout", "stderr"):
+        if getattr(sys, name) is None:
+            setattr(sys, name, open(os.devnull, "w", encoding="utf-8"))
     argv = sys.argv[1:]
     if not argv:
         from poe_checker.gui import launch

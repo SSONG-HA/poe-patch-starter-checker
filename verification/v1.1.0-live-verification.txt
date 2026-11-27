@@ -1,0 +1,55 @@
+PoE 패치노트 스타터 검증기 v1.1.0 — 실시간 검증 기록
+실행 시각: 2026-11-27 16:45 KST
+출처: PoE1 패치노트 포럼 — https://www.pathofexile.com/forum/view-forum/patch-notes
+출처: PoE2 얼리 액세스 패치노트 — https://www.pathofexile.com/forum/view-forum/2212
+출처: PoE1 뉴스 — https://www.pathofexile.com/news/rss
+목록: PoE1 59건 · PoE2 30건 · 오류: 없음
+
+[최신 패치노트 목록 — 상위 12건]
+  [PoE1] 3.30.0d Hotfix 3 (2026-11-23)  [패치]  https://www.pathofexile.com/forum/view-thread/4019056
+  [PoE1] 3.30.0d Hotfix 2 (2026-11-20)  [패치]  https://www.pathofexile.com/forum/view-thread/4017887
+  [PoE1] 3.30.0d Hotfix (2026-11-20)  [패치]  https://www.pathofexile.com/forum/view-thread/4017837
+  [PoE1] 3.30.0d Patch Notes (2026-11-20)  [패치]  https://www.pathofexile.com/forum/view-thread/4017726
+  [PoE1] 3.30.0c Patch Notes (2026-11-19)  [패치]  https://www.pathofexile.com/forum/view-thread/4017172
+  [PoE1] Improvements to Core Item Drops (2026-11-18)  [뉴스]  https://www.pathofexile.com/forum/view-thread/4016748
+  [PoE2] 0.5.5h Patch Notes (2026-11-18)  [패치]  https://www.pathofexile.com/forum/view-thread/4016665
+  [PoE1] Thread Difficulty and League Mechanic Changes (2026-11-17)  [뉴스]  https://www.pathofexile.com/forum/view-thread/4016267
+  [PoE1] 3.30.0b Hotfix 4 (2026-11-17)  [패치]  https://www.pathofexile.com/forum/view-thread/4016174
+  [PoE1] What We’re Working On: Endgame (2026-11-16)  [뉴스]  https://www.pathofexile.com/forum/view-thread/4015729
+  [PoE1] 3.30.0b Hotfix 3 (2026-11-16)  [패치]  https://www.pathofexile.com/forum/view-thread/4015683
+  [PoE1] 3.30.0b Hotfix 2 (2026-11-16)  [패치]  https://www.pathofexile.com/forum/view-thread/4015564
+
+[POE1] 최신 패치노트 검사: [PoE1] 3.30.0d Hotfix 3 (2026-11-23)
+  https://www.pathofexile.com/forum/view-thread/4019056
+  항목 0개 · 빌드 24개 · 🔴0 🟡0 🟢24 · 상향 0
+  ⚠ 패치노트에서 젬·유니크·전직 이름이 붙은 항목을 하나도 찾지 못했습니다. 일반 안내문이거나 형식이 다른 문서일 수 있으니, 0건을 '변경 없음'의 근거로 쓰지 마세요.
+    🟢 무사통과 CoC 금단의 의식 어쌔신 (MrJim 저예산) (시드/엔드게임 · MrJim · 3.30) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 RF 치프틴 (Pohx SRI) (리그 스타터 · Pohx · 3.30) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 강타 방어구 중첩 루미너리 (3.30) (리그 스타터 · 3.30 검증 스타터) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 냉기 도트 스펠슬링어 엘리멘탈리스트 (Jungroan) (리그 스타터 · Jungroan · 3.30) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 독성 혼합물 패스파인더 (DapperDD) (리그 스타터 · DapperDD · 3.30) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 독조 엘리멘탈리스트 (Doom Blast) (시드/엔드게임 · 직접 제작 PoB) → 패치노트에서 관련 변경 없음
+
+[POE2] 최신 패치노트 검사: [PoE2] 0.5.5h Patch Notes (2026-11-18)
+  https://www.pathofexile.com/forum/view-thread/4016665
+  항목 1개 · 빌드 12개 · 🔴0 🟡0 🟢12 · 상향 0
+    🟢 무사통과 낙뢰 무술가 몽크 (Spraahz) (PoE2 스타터 · Spraahz · PoE2 0.5) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 무술가 몽크 레벨링 (Ghost Activity) (PoE2 스타터 · Ghost Activity · PoE2 0.5) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 번개 창 택티션 (Snap) (PoE2 스타터 · Snap · PoE2 0.5) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 소환수 인퍼널리스트 (Thyworm SSF) (PoE2 스타터 · Thyworm · PoE2 0.5) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 얼음 타격 아마존 (Taaki) (PoE2 스타터 · Taaki · PoE2 0.5) → 패치노트에서 관련 변경 없음
+    🟢 무사통과 영구 동토 탄환 위치헌터 (Chem) (PoE2 스타터 · Chem · PoE2 0.5) → 패치노트에서 관련 변경 없음
+
+[매칭 검증] New and Changed Gems in Path of Exile 1: Covens of Umbra
+  https://www.pathofexile.com/forum/view-thread/4013898
+  항목 8개 · 🔴0 🟡9 🟢15 · 상향 1
+    상향: Flame Link — 스킬 +29.6% · 혼합
+    🟡 일부 조정 냉기 도트 스펠슬링어 엘리멘탈리스트 (Jungroan) → 보조 스킬 'Summon Flame Golem' 너프 외 2건
+    🟡 일부 조정 독조 엘리멘탈리스트 (Doom Blast) → 보조 스킬 'Summon Flame Golem' 너프 외 2건
+    🟡 일부 조정 절개 점화 엘리멘탈리스트 (Desmo Saze) → 보조 스킬 'Summon Flame Golem' 너프 외 2건
+    🟡 일부 조정 강타 방어구 중첩 루미너리 (3.30) → 보조 스킬 'Flame Link' 혼합 조정
+    🟡 일부 조정 루미너리 오라봇 (3.30) → 보조 스킬 'Flame Link' 혼합 조정
+    🟡 일부 조정 무기 소환 원거리 네크로맨서 (3.30) → 보조 스킬 'Summon Stone Golem of Safeguarding' 너프
+    🟡 일부 조정 연쇄 번개 게 토템 렐리퀘리안 (3.30) → 보조 스킬 'Summon Lightning Golem' 너프
+    🟡 일부 조정 중독 신성한 유물 네크로맨서 (Bula) → 보조 스킬 'Summon Stone Golem' 너프
+    🟡 일부 조정 칼날 낙하 관통 패스파인더 (DapperDD 교체) → 보조 스킬 'Pact of Beidat' 너프

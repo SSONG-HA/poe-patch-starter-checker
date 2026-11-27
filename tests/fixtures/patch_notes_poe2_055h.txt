@@ -1,0 +1,7 @@
+0.5.5h Patch Notes
+
+- Fixed a bug where you could not progress in the Atlas Delirium quest.
+
+- Fixed a bug where some Expedition Runeforging Recipe Unlocks could be lost when migrating from Hardcore to Softcore or Solo Self-Found to non-Solo Self-Found outside of the Runes of Aldur leagues.
+
+- Fixed Cinder Spider's leap not dealing damage

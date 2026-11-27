@@ -1,22 +1,115 @@
 {
   "tool": "PoE 패치노트 스타터 생존·버프 검증기",
-  "version": "1.0.0",
-  "generated_at": "2026-11-27T14:53:59",
+  "version": "1.1.0",
+  "generated_at": "2026-11-27T16:46:06",
+  "game": "poe1",
+  "game_label": "PoE1 3.30",
   "patch": {
     "title": "Announcements - New and Changed Gems in Path of Exile 1: Covens of Umbra",
     "source": "https://www.pathofexile.com/forum/view-thread/4013898",
     "version_hint": "3.30",
-    "entry_count": 9
+    "entry_count": 8
   },
   "summary": {
     "red": 0,
-    "yellow": 3,
-    "green": 6
+    "yellow": 9,
+    "green": 15
   },
   "builds": [
     {
+      "id": "cold-dot-spellslinger-elementalist",
+      "name": "냉기 도트 스펠슬링어 엘리멘탈리스트 (Jungroan)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "Jungroan · 3.30",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Summon Flame Golem' 너프 외 2건",
+      "class": "Witch",
+      "ascendancy": "Elementalist",
+      "level": 100,
+      "tree_version": "3_28",
+      "main_skills": [
+        "Creeping Frost of Floes",
+        "Vortex",
+        "Vaal Cold Snap"
+      ],
+      "supports": [
+        "Controlled Destruction",
+        "Swift Affliction",
+        "Elemental Focus",
+        "Efficacy",
+        "Hypothermia",
+        "Faster Attacks"
+      ],
+      "uniques": [
+        "Foulborn Tulborn",
+        "Eye of Malice",
+        "Rime Gaze",
+        "Vaal Caress",
+        "Replica Allelopathy",
+        "Anathema",
+        "Primordial Eminence",
+        "Immutable Force"
+      ],
+      "keystones": [
+        "Ghost Dance",
+        "Wicked Ward"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Summon Flame Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Flame Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 24% increased Damage",
+            "Old: Golems grant 29% increased Damage",
+            "New: Golems grant 15% increased Area of Effect",
+            "Old: Golems grant 20% increased Area of Effect"
+          ]
+        },
+        {
+          "entity": "Summon Stone Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Stone Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 16% increased Defences",
+            "Old: Golems grant 20% increased Defences"
+          ]
+        },
+        {
+          "entity": "Summon Lightning Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Lightning Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 8% increased Attack and Cast Speed",
+            "Old: Golems grant 10% increased Attack and Cast Speed"
+          ]
+        }
+      ]
+    },
+    {
       "id": "impending-doom-elementalist",
       "name": "독조 엘리멘탈리스트 (Doom Blast)",
+      "game": "poe1",
+      "kind": "시드/엔드게임",
+      "origin": "직접 제작 PoB",
       "verdict": "yellow",
       "label": "🟡 일부 조정",
       "headline": "보조 스킬 'Summon Flame Golem' 너프 외 2건",
@@ -100,7 +193,10 @@
     },
     {
       "id": "eviscerate-elementalist",
-      "name": "절개 점화 엘리멘탈리스트 (Desmo Saze 스타터)",
+      "name": "절개 점화 엘리멘탈리스트 (Desmo Saze)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "Desmo Saze · 3.30",
       "verdict": "yellow",
       "label": "🟡 일부 조정",
       "headline": "보조 스킬 'Summon Flame Golem' 너프 외 2건",
@@ -191,8 +287,269 @@
       ]
     },
     {
+      "id": "smite-armor-stacker-luminary",
+      "name": "강타 방어구 중첩 루미너리 (3.30)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "3.30 검증 스타터",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Flame Link' 혼합 조정",
+      "class": "Scion",
+      "ascendancy": "Luminary",
+      "level": 86,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Raise Spectre"
+      ],
+      "supports": [
+        "Meat Shield",
+        "Minion Life",
+        "Elemental Army",
+        "More Duration",
+        "Swift Assembly",
+        "Minefield",
+        "Eternal Blessing",
+        "Cast when Damage Taken"
+      ],
+      "uniques": [
+        "Hyaon's Fury",
+        "Prismweave",
+        "Devoto's Devotion",
+        "Belly of the Beast",
+        "Nycta's Lantern",
+        "Replica Atziri's Foible",
+        "Dream Fragments",
+        "Warped Timepiece",
+        "Perepiteia",
+        "Karui Ward",
+        "Advancing Fortress",
+        "Replica Advancing Fortress"
+      ],
+      "keystones": [
+        "Precise Technique"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Flame Link",
+          "entity_kind": "secondary_skill",
+          "entry": "Flame Link",
+          "entry_kind": "gem",
+          "direction": "mixed",
+          "severity": "minor",
+          "alias": "",
+          "score": 29.55,
+          "lines": [
+            "New: Linked target gains 219 to 329 Added Fire Damage",
+            "Old: Linked target gains 169 to 254 Added Fire Damage",
+            "New: Linked target gains Added Fire Damage equal to 3% of your Maximum Life",
+            "Old: Linked target gains Added Fire Damage equal to 5% of your Maximum Life"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "luminary-merc-aurabit",
+      "name": "루미너리 오라봇 (3.30)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "3.30 검증 스타터",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Flame Link' 혼합 조정",
+      "class": "Scion",
+      "ascendancy": "Luminary",
+      "level": 100,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Animate Guardian",
+        "Raise Spectre",
+        "Tempest Shield"
+      ],
+      "supports": [
+        "Meat Shield",
+        "Minion Life",
+        "Enlighten",
+        "Empower"
+      ],
+      "uniques": [
+        "The Hand of Phrecia",
+        "The Jinxed Juju",
+        "Lori's Lantern",
+        "Ceinture of Benevolence",
+        "Quill Rain",
+        "Drillneck",
+        "Soulthirst",
+        "Dying Breath",
+        "Leer Cast",
+        "Southbound",
+        "Alpha's Howl",
+        "Intuitive Leap",
+        "The Untouched Soul",
+        "Enmity's Embrace",
+        "The Hallowed Monarch",
+        "Bubonic Trail",
+        "Vivinsect",
+        "Tecrod's Gaze",
+        "The Dark Seer",
+        "Dawnbreaker",
+        "Ralakesh's Impatience",
+        "Watcher's Eye",
+        "Lioneye's Glare",
+        "Garb of the Ephemeral",
+        "Legacy of Fury",
+        "Gravebind",
+        "Zana's Ingenuity",
+        "Bottled Faith",
+        "Rational Doctrine",
+        "Elegant Hubris 148920; 2; The Agnostic",
+        "Impossible Escape",
+        "Foulborn The Red Dream",
+        "Kingmaker",
+        "Crown of the Tyrant",
+        "Headhunter",
+        "Aegis Aurora",
+        "Militant Faith",
+        "Natural Affinity",
+        "Voices",
+        "The Eternal Struggle",
+        "Mageblood"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Flame Link",
+          "entity_kind": "secondary_skill",
+          "entry": "Flame Link",
+          "entry_kind": "gem",
+          "direction": "mixed",
+          "severity": "minor",
+          "alias": "",
+          "score": 29.55,
+          "lines": [
+            "New: Linked target gains 219 to 329 Added Fire Damage",
+            "Old: Linked target gains 169 to 254 Added Fire Damage",
+            "New: Linked target gains Added Fire Damage equal to 3% of your Maximum Life",
+            "Old: Linked target gains Added Fire Damage equal to 5% of your Maximum Life"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "animate-weapon-ranged-necromancer",
+      "name": "무기 소환 원거리 네크로맨서 (3.30)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "3.30 인기 스타터 · poe.ninja 5위",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Summon Stone Golem of Safeguarding' 너프",
+      "class": "Witch",
+      "ascendancy": "Necromancer",
+      "level": 97,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Animate Weapon of Ranged Arms"
+      ],
+      "supports": [
+        "Pierce",
+        "Greater Multiple Projectiles",
+        "Unleash",
+        "Unbound Ailments",
+        "Minion Damage",
+        "Minion Life",
+        "Feeding Frenzy",
+        "Eternal Blessing"
+      ],
+      "uniques": [
+        "Foulborn The Green Nightmare",
+        "Darkness Enthroned",
+        "Ashes of the Stars",
+        "The Covenant",
+        "Leer Cast",
+        "Windscream",
+        "Zahndethus' Cassock",
+        "Dying Breath",
+        "Asenath's Gentle Touch"
+      ],
+      "keystones": [
+        "Blood Magic",
+        "Divine Shield",
+        "Magebane"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Summon Stone Golem of Safeguarding",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Stone Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "기본 이름 일치",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 16% increased Defences",
+            "Old: Golems grant 20% increased Defences"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arc-crab-totems-reliquarian",
+      "name": "연쇄 번개 게 토템 렐리퀘리안 (3.30)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "3.30 신 전직 스타터",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Summon Lightning Golem' 너프",
+      "class": "Scion",
+      "ascendancy": "Reliquarian",
+      "level": 67,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Arc"
+      ],
+      "supports": [
+        "Multiple Totems",
+        "Increased Critical Damage",
+        "Increased Critical Strikes",
+        "Chain",
+        "Empower"
+      ],
+      "uniques": [
+        "The Crustacean's Call"
+      ],
+      "keystones": [
+        "Ancestral Bond"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Summon Lightning Golem",
+          "entity_kind": "secondary_skill",
+          "entry": "Summon Lightning Golem",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Golems grant 8% increased Attack and Cast Speed",
+            "Old: Golems grant 10% increased Attack and Cast Speed"
+          ]
+        }
+      ]
+    },
+    {
       "id": "poison-holy-relic-necro",
       "name": "중독 신성한 유물 네크로맨서 (Bula)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "Bula · 3.30",
       "verdict": "yellow",
       "label": "🟡 일부 조정",
       "headline": "보조 스킬 'Summon Stone Golem' 너프",
@@ -246,8 +603,74 @@
       ]
     },
     {
+      "id": "bladefall-impaling-pathfinder",
+      "name": "칼날 낙하 관통 패스파인더 (DapperDD 교체)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "DapperDD · 3.30",
+      "verdict": "yellow",
+      "label": "🟡 일부 조정",
+      "headline": "보조 스킬 'Pact of Beidat' 너프",
+      "class": "Ranger",
+      "ascendancy": "Pathfinder",
+      "level": 85,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Bladefall of Impaling"
+      ],
+      "supports": [
+        "Unbound Ailments",
+        "Void Manipulation",
+        "Deadly Ailments",
+        "Increased Critical Damage",
+        "Spell Echo",
+        "Faster Casting",
+        "Cast when Damage Taken",
+        "Faster Attacks"
+      ],
+      "uniques": [
+        "Ancestral Vision",
+        "Replica Reckless Defence",
+        "Watcher's Eye",
+        "Saffell's Frame",
+        "Dendrobate",
+        "Betrayal's Sting",
+        "Ming's Heart",
+        "Replica Sorrow of the Divine",
+        "Cold Iron Point",
+        "Widowhail",
+        "Steelworm",
+        "Replica Dragonfang's Flight"
+      ],
+      "keystones": [
+        "Perfect Agony"
+      ],
+      "error": "",
+      "hits": [
+        {
+          "entity": "Pact of Beidat",
+          "entity_kind": "secondary_skill",
+          "entry": "Pact of Beidat",
+          "entry_kind": "gem",
+          "direction": "nerf",
+          "severity": "minor",
+          "alias": "",
+          "score": 0.0,
+          "lines": [
+            "New: Beams from Empowered Skills Chain 4 additional times",
+            "Old: Beams from Empowered Skills Chain 6 additional times",
+            "New: Empowered Skills fire 4 additional Projectiles Empowered Skills fire Projectiles in a circle",
+            "Old: Empowered Skills fire 6 additional Projectiles Empowered Skills fire Projectiles in a circle"
+          ]
+        }
+      ]
+    },
+    {
       "id": "coc-forbidden-rite-assassin",
       "name": "CoC 금단의 의식 어쌔신 (MrJim 저예산)",
+      "game": "poe1",
+      "kind": "시드/엔드게임",
+      "origin": "MrJim · 3.30",
       "verdict": "green",
       "label": "🟢 무사통과",
       "headline": "패치노트에서 관련 변경 없음",
@@ -288,6 +711,9 @@
     {
       "id": "rf-chieftain-pohx",
       "name": "RF 치프틴 (Pohx SRI)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "Pohx · 3.30",
       "verdict": "green",
       "label": "🟢 무사통과",
       "headline": "패치노트에서 관련 변경 없음",
@@ -325,8 +751,122 @@
       "hits": []
     },
     {
+      "id": "poison-concoction-pathfinder",
+      "name": "독성 혼합물 패스파인더 (DapperDD)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "DapperDD · 3.30",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Ranger",
+      "ascendancy": "Pathfinder",
+      "level": 70,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Poisonous Concoction"
+      ],
+      "supports": [
+        "Void Manipulation",
+        "Vicious Projectiles",
+        "Greater Volley",
+        "Faster Attacks",
+        "Mark On Hit"
+      ],
+      "uniques": [],
+      "keystones": [],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "boneshatter-juggernaut",
+      "name": "뼈 분쇄 저거너트 (Zizaran)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "Zizaran · 3.30",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Marauder",
+      "ascendancy": "Juggernaut",
+      "level": 99,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Boneshatter of Complex Trauma"
+      ],
+      "supports": [
+        "Volatility",
+        "Melee Physical Damage",
+        "Brutality",
+        "Ruthless",
+        "Endurance Charge on Melee Stun",
+        "Cast when Damage Taken",
+        "Lifetap",
+        "More Duration",
+        "Faster Attacks",
+        "Momentum"
+      ],
+      "uniques": [
+        "Glorious Vanity",
+        "Ryslatha's Coil",
+        "The Light of Meaning",
+        "Corrupted Kaom's Sign #1",
+        "Corrupted Kaom's Sign #2",
+        "Kaom's Sign",
+        "Corrupted Ryslatha's Coil",
+        "+2 Endurance Kaom's Sign"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "incinerate-venting-elementalist",
+      "name": "소각 분출 엘리멘탈리스트 (smokie_777)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "smokie_777 · 3.30",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Witch",
+      "ascendancy": "Elementalist",
+      "level": 99,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Incinerate of Venting"
+      ],
+      "supports": [
+        "Focused Channelling",
+        "Infused Channelling",
+        "Increased Critical Damage",
+        "Faster Attacks",
+        "Momentum",
+        "Lifetap",
+        "Arrogance",
+        "Arcane Surge",
+        "Cast when Damage Taken"
+      ],
+      "uniques": [
+        "Brutal Restraint",
+        "Foulborn Berek's Respite",
+        "Inpulsa's Broken Heart",
+        "Cloak of Flame",
+        "Doedre's Damning",
+        "Anathema",
+        "Mageblood",
+        "Watcher's Eye"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": []
+    },
+    {
       "id": "dual-strike-gladiator",
       "name": "쌍수 타격 글래디에이터 (Ephemeral Edge)",
+      "game": "poe1",
+      "kind": "시드/엔드게임",
+      "origin": "직접 제작 PoB",
       "verdict": "green",
       "label": "🟢 무사통과",
       "headline": "패치노트에서 관련 변경 없음",
@@ -381,7 +921,10 @@
     },
     {
       "id": "rf-chieftain-330",
-      "name": "작열 광선 RF 치프틴 (내 캐릭터)",
+      "name": "작열 광선 RF 치프틴 (내 캐릭터 · 11-24)",
+      "game": "poe1",
+      "kind": "내 캐릭터",
+      "origin": "내 빌드 · 2026-11-24",
       "verdict": "green",
       "label": "🟢 무사통과",
       "headline": "패치노트에서 관련 변경 없음",
@@ -419,8 +962,178 @@
       "hits": []
     },
     {
+      "id": "rf-chieftain-current",
+      "name": "작열 광선 RF 치프틴 (내 캐릭터 · 최신)",
+      "game": "poe1",
+      "kind": "내 캐릭터",
+      "origin": "내 빌드 · 2026-11-27",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Marauder",
+      "ascendancy": "Chieftain",
+      "level": 95,
+      "tree_version": "3_30",
+      "main_skills": [
+        "Scorching Ray of Immolation",
+        "Righteous Fire"
+      ],
+      "supports": [
+        "Efficacy",
+        "Spell Totem",
+        "Multiple Totems",
+        "Lifetap",
+        "Controlled Destruction",
+        "Swift Affliction",
+        "Elemental Focus",
+        "Faster Attacks",
+        "Enlighten"
+      ],
+      "uniques": [
+        "Watcher's Eye",
+        "Annihilation's Approach",
+        "Nebulis",
+        "Cloak of Flame",
+        "Dawnbreaker",
+        "Immortal Flesh"
+      ],
+      "keystones": [
+        "Glancing Blows"
+      ],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "generals-cry-lacerate-champion",
+      "name": "장군의 함성 절단 챔피언 (3.30)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "3.30 검증 스타터",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Duelist",
+      "ascendancy": "Champion",
+      "level": 100,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Lacerate of Butchering"
+      ],
+      "supports": [
+        "Pulverise",
+        "Brutality",
+        "Melee Physical Damage",
+        "Cast when Damage Taken",
+        "Lifetap",
+        "Cast while Channelling",
+        "Infused Channelling",
+        "Fortify"
+      ],
+      "uniques": [
+        "Ancestral Vision",
+        "Abyssus",
+        "Lion's Roar",
+        "Foulborn Uul-Netol's Kiss",
+        "Circle of Guilt",
+        "The Magnate"
+      ],
+      "keystones": [
+        "Iron Reflexes",
+        "Unwavering Stance",
+        "Versatile Combatant"
+      ],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "static-strike-guardian",
+      "name": "정전기 타격 가디언 (Alohaa)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "Alohaa · 3.30",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Templar",
+      "ascendancy": "Guardian",
+      "level": 100,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Static Strike"
+      ],
+      "supports": [
+        "Melee Physical Damage",
+        "Ruthless",
+        "Shockwave",
+        "Fortify",
+        "Elemental Damage with Attacks",
+        "Minion Life",
+        "Meat Shield",
+        "Faster Attacks"
+      ],
+      "uniques": [
+        "The Light of Meaning",
+        "Brutal Restraint",
+        "Brutal Restraint 6965; 3; Eternal Youth",
+        "The Yielding Mortality",
+        "The Taming",
+        "Cinderswallow Urn",
+        "Watcher's Eye",
+        "Bottled Faith",
+        "Rational Doctrine",
+        "Oriath's End",
+        "Brutal Restraint 6700; 3; Eternal Youth",
+        "Stormshroud",
+        "Glorious Vanity 2219; 183; Eternal Youth",
+        "Glorious Vanity 1505; 134; Eternal Youth"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "static-strike-slayer",
+      "name": "정전기 타격 슬레이어 (3.30)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "3.30 가이드 (트리 3_28)",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Duelist",
+      "ascendancy": "Slayer",
+      "level": 100,
+      "tree_version": "3_28",
+      "main_skills": [
+        "Static Strike"
+      ],
+      "supports": [
+        "Elemental Damage with Attacks",
+        "Ruthless",
+        "Close Combat",
+        "Increased Critical Damage",
+        "Trinity",
+        "Lifetap",
+        "Faster Attacks",
+        "Greater Multistrike",
+        "Mark On Hit"
+      ],
+      "uniques": [
+        "The Taming",
+        "Headhunter",
+        "Bottled Faith",
+        "Oriath's End"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": []
+    },
+    {
       "id": "dominating-blow-guardian",
-      "name": "지배의 일격 가디언 (ArminYou 스타터)",
+      "name": "지배의 일격 가디언 (ArminYou)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "ArminYou · 3.30",
       "verdict": "green",
       "label": "🟢 무사통과",
       "headline": "패치노트에서 관련 변경 없음",
@@ -462,8 +1175,108 @@
       "hits": []
     },
     {
+      "id": "explosive-arrow-ballista-hierophant",
+      "name": "폭발 화살 발리스타 히에로판트 (3.30)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "POEGuy · 3.30",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Templar",
+      "ascendancy": "Hierophant",
+      "level": 78,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Explosive Arrow",
+        "Frenzy",
+        "Blood Rage"
+      ],
+      "supports": [
+        "Ballista Totem",
+        "Elemental Damage with Attacks",
+        "Lifetap",
+        "Combustion",
+        "Cruelty",
+        "Cast On Critical Strike",
+        "Cursed Ground",
+        "Companionship",
+        "Second Wind"
+      ],
+      "uniques": [
+        "Daresso's Defiance",
+        "Breathstealer",
+        "Quill Rain",
+        "Skirmish",
+        "LETHAL PRIDE TIMELESS JEWEL with \"10% chance to Intimidate\" (check the guide if you don't know how to buy one)",
+        "WATCHER's EYE with \"Chaos Resistance while Affected by Purity of Elements\"",
+        "Light Of Meaning (with 6% Increased Fire Damage)",
+        "Dawnstrider",
+        "Viridi's Veil",
+        "Replica Dragonfang's Flight",
+        "Headhunter",
+        "Progenesis"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": []
+    },
+    {
+      "id": "stormburst-totem-hierophant",
+      "name": "폭풍 파열 토템 히에로판트 (aer0)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "aer0 / Palsteron · 3.30",
+      "verdict": "green",
+      "label": "🟢 무사통과",
+      "headline": "패치노트에서 관련 변경 없음",
+      "class": "Templar",
+      "ascendancy": "Hierophant",
+      "level": 93,
+      "tree_version": "3_29",
+      "main_skills": [
+        "Storm Burst"
+      ],
+      "supports": [
+        "More Duration",
+        "Lightning Penetration",
+        "Increased Critical Damage",
+        "Infused Channelling",
+        "Inspiration",
+        "Faster Attacks",
+        "Multiple Totems",
+        "Efficacy",
+        "Eternal Blessing"
+      ],
+      "uniques": [
+        "Singularity",
+        "The Black Cane",
+        "Soul Mantle",
+        "Foulborn Kikazaru",
+        "Self-Flagellation",
+        "Anathema",
+        "The Light of Meaning",
+        "Careful Planning",
+        "Unnatural Instinct",
+        "Mageblood",
+        "Ashes of the Stars",
+        "Stormshroud",
+        "Militant Faith",
+        "Watcher's Eye",
+        "Crown of the Inward Eye",
+        "Replica Dragonfang's Flight",
+        "Ravenous Passion"
+      ],
+      "keystones": [],
+      "error": "",
+      "hits": []
+    },
+    {
       "id": "tornado-inquisitor",
-      "name": "회오리바람 인퀴지터 (BalorMage 스타터)",
+      "name": "회오리바람 인퀴지터 (BalorMage)",
+      "game": "poe1",
+      "kind": "리그 스타터",
+      "origin": "BalorMage · 3.30",
       "verdict": "green",
       "label": "🟢 무사통과",
       "headline": "패치노트에서 관련 변경 없음",
@@ -521,7 +1334,10 @@
       "score": 29.55,
       "total": 29.55,
       "occurrences": 1,
-      "seeds": [],
+      "seeds": [
+        "강타 방어구 중첩 루미너리 (3.30)",
+        "루미너리 오라봇 (3.30)"
+      ],
       "poedb": "https://poedb.tw/kr/Flame_Link",
       "poe_ninja": "https://poe.ninja/poe1/builds?skill=Flame_Link",
       "evidence": [

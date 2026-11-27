@@ -1,0 +1,41 @@
+{
+ "Ranger": [
+  "Deadeye",
+  "Pathfinder"
+ ],
+ "Huntress": [
+  "Amazon",
+  "Spirit Walker",
+  "Ritualist"
+ ],
+ "Warrior": [
+  "Titan",
+  "Warbringer",
+  "Smith of Kitava"
+ ],
+ "Mercenary": [
+  "Tactician",
+  "Witchhunter",
+  "Gemling Legionnaire"
+ ],
+ "Druid": [
+  "Oracle",
+  "Shaman"
+ ],
+ "Witch": [
+  "Infernalist",
+  "Blood Mage",
+  "Lich",
+  "Abyssal Lich"
+ ],
+ "Sorceress": [
+  "Stormweaver",
+  "Chronomancer",
+  "Disciple of Varashta"
+ ],
+ "Monk": [
+  "Martial Artist",
+  "Invoker",
+  "Acolyte of Chayula"
+ ]
+}

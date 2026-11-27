@@ -78,8 +78,11 @@ class _ForumTextExtractor(HTMLParser):
 
     # -- helpers
     def _is_post_div(self, attrs) -> bool:
-        classes = (dict(attrs).get("class") or "").lower()
-        return "box-content" in classes and "m-pad" in classes
+        classes = (dict(attrs).get("class") or "").lower().split()
+        if "content-container" in classes:
+            return False
+        # 2025년 이전 포럼: div.box-content.m-pad / 현재 포럼: td.content-container > div.content
+        return ("box-content" in classes and "m-pad" in classes) or "content" in classes
 
     def handle_starttag(self, tag, attrs):
         if tag in ("script", "style"):
@@ -88,7 +91,9 @@ class _ForumTextExtractor(HTMLParser):
         if self._capture_depth:
             if tag == "div":
                 self._capture_depth += 1
-            if tag in _BLOCK_TAGS:
+            if tag == "li":
+                self.chunks.append("\n- ")
+            elif tag in _BLOCK_TAGS:
                 self.chunks.append("\n")
             if tag in ("td", "th"):
                 self.chunks.append(" | ")
@@ -147,15 +152,114 @@ def _strip_tags(html: str) -> str:
     return "".join(parser.out)
 
 
+_POST_TD_RE = re.compile(r'<td[^>]*class="[^"]*content-container[^"]*"[^>]*>(.*?)</td>', re.S)
+_POST_BOX_RE = re.compile(r'<div[^>]*class="[^"]*box-content[^"]*"[^>]*>(.*)', re.S)
+
+
+def _post_fragment(html: str) -> str | None:
+    """본문 부분만 잘라낸다. 포럼에는 content-container td 가 여러 개(서명 등) 있으므로 가장 긴 것을 쓴다."""
+    candidates = _POST_TD_RE.findall(html)
+    if candidates:
+        return max(candidates, key=lambda chunk: len(_strip_tags(chunk).strip()))
+    match = _POST_BOX_RE.search(html)
+    if match:
+        return match.group(0)
+    return None
+
+
+class _AllTextExtractor(HTMLParser):
+    """본문 조각 전체를 텍스트로. 불릿(li)은 '- ' 로 살려 패치노트 항목 분해가 되게 한다."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.out: list[str] = []
+        self.skip = 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style"):
+            self.skip += 1
+        elif tag == "li":
+            self.out.append("\n- ")
+        elif tag in _BLOCK_TAGS:
+            self.out.append("\n")
+        elif tag in ("td", "th"):
+            self.out.append(" | ")
+
+    def handle_endtag(self, tag):
+        if tag in ("script", "style"):
+            self.skip = max(0, self.skip - 1)
+        elif tag in _BLOCK_TAGS:
+            self.out.append("\n")
+
+    def handle_data(self, data):
+        if not self.skip:
+            self.out.append(data)
+
+
+class _BoxContentExtractor(HTMLParser):
+    """뉴스형 글의 box-content 블록 여러 개를 이어 붙인다."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.out: list[str] = []
+        self.depth = 0
+        self.skip = 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style"):
+            self.skip += 1
+            return
+        classes = (dict(attrs).get("class") or "").lower().split()
+        if "box-content" in classes and self.depth == 0:
+            self.depth = 1
+            self.out.append("\n")
+            return
+        if self.depth:
+            if tag == "div":
+                self.depth += 1
+            if tag == "li":
+                self.out.append("\n- ")
+            elif tag in _BLOCK_TAGS:
+                self.out.append("\n")
+            elif tag in ("td", "th"):
+                self.out.append(" | ")
+
+    def handle_endtag(self, tag):
+        if tag in ("script", "style"):
+            self.skip = max(0, self.skip - 1)
+            return
+        if self.depth:
+            if tag == "div":
+                self.depth -= 1
+            elif tag in _BLOCK_TAGS:
+                self.out.append("\n")
+
+    def handle_data(self, data):
+        if self.depth and not self.skip:
+            self.out.append(data)
+
+
 def html_to_text(html: str) -> str:
-    parser = _ForumTextExtractor()
-    try:
-        parser.feed(html)
-        text = parser.text()
-    except Exception:  # pragma: no cover - 방어적
-        text = ""
-    if not parser._found_post or len(text.strip()) < 40:
-        text = _strip_tags(html)
+    if "box-content" in html:
+        parser = _BoxContentExtractor()
+        try:
+            parser.feed(html)
+            text = "".join(parser.out)
+        except Exception:  # pragma: no cover - 방어적
+            text = ""
+        if len(text.strip()) >= 40:
+            return normalize_text(text)
+    fragment = _post_fragment(html)
+    if fragment is not None:
+        parser = _AllTextExtractor()
+        try:
+            parser.feed(fragment)
+            text = "".join(parser.out)
+        except Exception:  # pragma: no cover - 방어적
+            text = _strip_tags(fragment)
+        if len(text.strip()) >= 20:
+            return normalize_text(text)
+    text = _strip_tags(html)
     return normalize_text(text)
 
 
@@ -267,6 +371,7 @@ class PatchNotes:
     entries: list[PatchEntry] = field(default_factory=list)
     title: str = ""
     source: str = ""
+    game: str = ""
 
     @property
     def gem_entries(self) -> list[PatchEntry]:
@@ -302,6 +407,42 @@ def _looks_like_change(rest: str) -> bool:
     return any(char.isdigit() for char in low)
 
 
+_CLAUSE_SPLIT_RE = re.compile(
+    r"\s(?:now|no longer|has been|have been|will now|can now|is now|are now|"
+    r"has |have |grants |deals |added |removed |reduced |increased )",
+    re.I,
+)
+
+
+_CLAUSE_STOPWORDS = {
+    "now", "no", "not", "this", "it", "they", "there", "when", "while", "if", "we",
+    "you", "the", "a", "an", "and", "or", "but", "also", "additionally", "monsters",
+}
+
+
+def _leading_clause(text: str) -> str:
+    """알려진 이름이 없는 불릿에서 대상 이름으로 쓸 앞부분을 뽑는다."""
+    body = _BULLET_RE.sub("", text).strip()
+    if not body or body.startswith(("For ", "Fixed ", "We ", "This ", "If ")):
+        return ""
+    match = _CLAUSE_SPLIT_RE.search(body)
+    if not match or match.start() < 6:
+        return ""
+    clause = body[: match.start()].strip(" ,.:;")
+    if not (4 <= len(clause) <= 70):
+        return ""
+    words = clause.split()
+    if len(words) > 9:
+        return ""
+    if clause.lower() in _CLAUSE_STOPWORDS:
+        return ""
+    if not (clause[0].isupper() or clause[0].isdigit()):
+        return ""
+    if words[-1].lower() in {"and", "or", "will", "would", "can", "have", "has", "is", "are", "be"}:
+        return ""
+    return clause
+
+
 def _is_section_header(line: str) -> bool:
     low = line.lower().strip(" :")
     if low in _SECTION_HINTS:
@@ -316,6 +457,8 @@ def _is_section_header(line: str) -> bool:
 
 def _kind_for(name: str, section: str) -> str:
     key = naming.norm(name)
+    if key in datafiles.all_unique_names_keys():
+        return "unique"
     if key in datafiles.support_gem_keys():
         return "support"
     if key in datafiles.active_gem_keys():
@@ -347,9 +490,10 @@ def _flush_signal(entry: PatchEntry) -> None:
     )
 
 
-def parse_patch_notes(text: str, *, title: str = "", source: str = "") -> PatchNotes:
+def parse_patch_notes(text: str, *, title: str = "", source: str = "",
+                      game: str = "") -> PatchNotes:
     lines = [line for line in normalize_text(text).split("\n")]
-    notes = PatchNotes(text=text, title=title, source=source)
+    notes = PatchNotes(text=text, title=title, source=source, game=game)
     section = ""
     entry: PatchEntry | None = None
     pending_new: str | None = None
@@ -425,6 +569,18 @@ def parse_patch_notes(text: str, *, title: str = "", source: str = "") -> PatchN
 
         if _BULLET_RE.match(line):
             body = _BULLET_RE.sub("", line).strip()
+            bullet_new_old = _NEW_OLD_RE.match(body)
+            if bullet_new_old and entry is not None:
+                prefix, value = bullet_new_old.group(1).lower(), bullet_new_old.group(2).strip()
+                entry.lines.append(body)
+                if prefix == "new":
+                    pending_new = value
+                elif pending_new is not None:
+                    entry.pairs.append((pending_new, value))
+                    pending_new = None
+                else:
+                    entry.unpaired_old.append(value)
+                continue
             found = naming.find_leading_entity(body)
             if entry is None:
                 if found:
@@ -432,6 +588,11 @@ def parse_patch_notes(text: str, *, title: str = "", source: str = "") -> PatchN
                     entry = start(name)
                     if rest:
                         entry.lines.append(rest)
+                else:
+                    clause = _leading_clause(body)
+                    if clause:
+                        entry = start(clause)
+                        entry.lines.append(body)
                 continue
             # 다른 대상의 변경 문장이 한 불릿으로 들어오면 항목을 나눈다
             if (
@@ -443,6 +604,13 @@ def parse_patch_notes(text: str, *, title: str = "", source: str = "") -> PatchN
                 entry = start(found[0])
                 entry.lines.append(found[1])
                 continue
+            if not found and entry.lines:
+                clause = _leading_clause(body)
+                if clause and naming.norm(clause) != naming.norm(entry.name):
+                    _flush_signal(entry)
+                    entry = start(clause)
+                    entry.lines.append(body)
+                    continue
             entry.lines.append(body)
             continue
 
@@ -507,13 +675,13 @@ def _merge_duplicate_entries(notes: PatchNotes) -> None:
 
 
 def patch_notes_from_source(*, url: str | None = None, text: str | None = None,
-                            path: str | None = None) -> PatchNotes:
+                            path: str | None = None, game: str = "") -> PatchNotes:
     if text:
-        return parse_patch_notes(text, source="붙여넣은 텍스트")
+        return parse_patch_notes(text, source="붙여넣은 텍스트", game=game)
     if path:
         body = load_patch_file(path)
-        return parse_patch_notes(body, title=path.rsplit("/", 1)[-1], source=path)
+        return parse_patch_notes(body, title=path.rsplit("/", 1)[-1], source=path, game=game)
     if url:
         body, title = fetch_patch_text(url)
-        return parse_patch_notes(body, title=title, source=url)
+        return parse_patch_notes(body, title=title, source=url, game=game)
     raise PatchNotesError("패치노트 URL·파일·텍스트 중 하나가 필요합니다.")

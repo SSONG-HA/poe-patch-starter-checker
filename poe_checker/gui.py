@@ -9,8 +9,8 @@ import traceback
 import webbrowser
 from pathlib import Path
 
-from . import APP_TITLE, __version__, analysis, buffs, library as library_mod, matcher
-from . import patchnotes, pob, report
+from . import APP_TITLE, __version__, analysis, buffs, datafiles, library as library_mod, matcher
+from . import news, patchnotes, pob, report
 
 FONT_CANDIDATES = ("Malgun Gothic", "맑은 고딕", "AppleGothic", "NanumGothic", "Segoe UI")
 MONO_CANDIDATES = ("Consolas", "D2Coding", "Menlo", "DejaVu Sans Mono", "Courier New")
@@ -43,17 +43,26 @@ def verdict_rows(result: analysis.AnalysisResult) -> list[tuple[str, ...]]:
     rows = []
     for index, verdict in enumerate(result.verdicts, start=1):
         profile = verdict.profile
+        source = " · ".join(
+            x for x in (verdict.kind_label, verdict.origin, f"트리 {profile.tree_version}" if profile.tree_version else "") if x
+        )
         rows.append(
             (
                 str(index),
                 verdict.label,
                 verdict.build_name,
+                source,
                 " · ".join(x for x in (profile.ascendancy or profile.class_name,) if x),
                 f"{profile.level}레벨" if profile.level else "",
                 verdict.headline(),
             )
         )
     return rows
+
+
+def korean(game: str, section: str, name: str) -> str:
+    label = datafiles.korean_name(game, section, name)
+    return f"{name}({label})" if label and label != name else name
 
 
 def verdict_detail_text(verdict: matcher.BuildVerdict) -> str:
@@ -71,14 +80,17 @@ def verdict_detail_text(verdict: matcher.BuildVerdict) -> str:
     )
     if info:
         lines.append(info)
+    source_bits = [verdict.kind_label, verdict.origin]
+    if source_bits:
+        lines.append("출처: " + " · ".join(x for x in source_bits if x))
     if profile.main_skill_names:
-        lines.append(f"주력 스킬: {', '.join(profile.main_skill_names)}")
+        lines.append(f"주력 스킬: {', '.join(korean(profile.game, 'gems', n) for n in profile.main_skill_names)}")
     if profile.support_names:
         lines.append(f"서포트: {', '.join(profile.support_names[:8])}")
     if profile.uniques:
-        lines.append(f"유니크: {', '.join(profile.uniques)}")
+        lines.append(f"유니크: {', '.join(korean(profile.game, 'uniques', n) for n in profile.uniques)}")
     if profile.keystones:
-        lines.append(f"키스톤: {', '.join(profile.keystones)}")
+        lines.append(f"키스톤: {', '.join(korean(profile.game, 'keystones', n) for n in profile.keystones)}")
     lines.append("")
     lines.append(f"→ {verdict.headline()}")
     if verdict.error:
@@ -165,6 +177,9 @@ class App:  # pragma: no cover - GUI
         self.library = library_mod.BuildLibrary.load()
         self.result: analysis.AnalysisResult | None = None
         self.notes: patchnotes.PatchNotes | None = None
+        self.game = datafiles.GAME_POE1
+        self.feed: news.NewsFeed | None = None
+        self._patch_refs: list[news.PatchNoteRef] = []
         self._busy = False
         self._pending: dict | None = None
 
@@ -176,6 +191,7 @@ class App:  # pragma: no cover - GUI
         self._build_statusbar()
         self.refresh_builds()
         self.root.after(120, self._poll)
+        self.root.after(400, self.refresh_patch_list)
 
     # -- 구성 -----------------------------------------------------------
     def _style(self):
@@ -202,6 +218,18 @@ class App:  # pragma: no cover - GUI
             style="Sub.TLabel",
         ).pack(side="left", padx=(12, 0), pady=(6, 0))
         ttk.Label(header, text=f"v{__version__}", style="Sub.TLabel").pack(side="right")
+        self.game_var = tk.StringVar(value=datafiles.GAME_POE1)
+        game_box = ttk.Frame(header)
+        game_box.pack(side="right", padx=(0, 14))
+        ttk.Label(game_box, text="게임").pack(side="left", padx=(0, 4))
+        for game in datafiles.GAMES:
+            ttk.Radiobutton(
+                game_box,
+                text=datafiles.GAME_VERSION_LABELS[game],
+                value=game,
+                variable=self.game_var,
+                command=self.set_game,
+            ).pack(side="left", padx=2)
 
     def _build_tabs(self):
         ttk = self.ttk
@@ -236,13 +264,14 @@ class App:  # pragma: no cover - GUI
         paned.add(right, weight=3)
 
         ttk.Label(left, text="빌드 라이브러리").pack(anchor="w")
-        columns = ("name", "class", "main", "tree")
+        columns = ("name", "kind", "class", "main", "tree")
         self.lib_tree = ttk.Treeview(left, columns=columns, show="headings", height=10)
         for column, title, width in (
             ("name", "이름", 190),
-            ("class", "전직", 90),
-            ("main", "주력 스킬", 170),
-            ("tree", "트리", 50),
+            ("kind", "종류", 90),
+            ("class", "전직", 80),
+            ("main", "주력 스킬", 150),
+            ("tree", "트리", 45),
         ):
             self.lib_tree.heading(column, text=title)
             self.lib_tree.column(column, width=width, anchor="w")
@@ -262,6 +291,18 @@ class App:  # pragma: no cover - GUI
         # -- 패치노트 입력
         source = ttk.LabelFrame(right, text=" 패치노트 ", padding=8)
         source.pack(fill="x")
+
+        news_row = ttk.Frame(source)
+        news_row.pack(fill="x", pady=(0, 6))
+        ttk.Label(news_row, text="최신 패치노트").pack(side="left")
+        self.patch_choice = tk.StringVar()
+        self.patch_combo = ttk.Combobox(
+            news_row, textvariable=self.patch_choice, state="readonly", width=58
+        )
+        self.patch_combo.pack(side="left", fill="x", expand=True, padx=6)
+        ttk.Button(news_row, text="목록 새로고침", command=self.refresh_patch_list).pack(side="left")
+        ttk.Button(news_row, text="선택 불러오기", command=self.load_selected_patch).pack(side="left", padx=4)
+
         row = ttk.Frame(source)
         row.pack(fill="x")
         ttk.Label(row, text="주소").pack(side="left")
@@ -297,15 +338,16 @@ class App:  # pragma: no cover - GUI
         self.result_paned.add(top, weight=3)
         self.result_paned.add(bottom, weight=2)
 
-        columns = ("no", "verdict", "name", "class", "level", "summary")
+        columns = ("no", "verdict", "name", "source", "class", "level", "summary")
         self.result_tree = ttk.Treeview(top, columns=columns, show="headings", height=8)
         for column, title, width in (
-            ("no", "#", 36),
-            ("verdict", "판정", 120),
-            ("name", "빌드", 240),
-            ("class", "전직", 90),
-            ("level", "레벨", 60),
-            ("summary", "요약", 320),
+            ("no", "#", 32),
+            ("verdict", "판정", 110),
+            ("name", "빌드", 210),
+            ("source", "출처/버전", 170),
+            ("class", "전직", 80),
+            ("level", "레벨", 50),
+            ("summary", "요약", 260),
         ):
             self.result_tree.heading(column, text=title)
             self.result_tree.column(column, width=width, anchor="w")
@@ -398,10 +440,72 @@ class App:  # pragma: no cover - GUI
     def refresh_builds(self):
         tree = self.lib_tree
         tree.delete(*tree.get_children())
-        for row in self.library.rows():
+        rows = self.library.rows(self.game)
+        for row in rows:
             label = row["name"] if not row["error"] else f"{row['name']} (오류)"
-            tree.insert("", "end", iid=row["id"], values=(label, row["class"], row["main"], row["tree"]))
-        self.status_var.set(f"라이브러리: {self.library.path} · 빌드 {len(self.library.builds)}개")
+            tree.insert(
+                "", "end", iid=row["id"],
+                values=(label, row["kind"], row["class"], row["main"], row["tree"]),
+            )
+        game_label = datafiles.GAME_VERSION_LABELS.get(self.game, self.game)
+        self.status_var.set(
+            f"{game_label} · 빌드 {len(rows)}개 · 라이브러리: {self.library.path}"
+        )
+
+    # -- 게임 전환 -------------------------------------------------------
+    def set_game(self):
+        game = datafiles.normalize_game(self.game_var.get())
+        if game == self.game:
+            return
+        self.game = game
+        self.result = None
+        self.notes = None
+        for widget in (self.result_tree,):
+            widget.delete(*widget.get_children())
+        self._set_text(self.detail, "")
+        self.buff_tree.delete(*self.buff_tree.get_children())
+        self._set_text(self.buff_detail, "")
+        self.count_var.set("")
+        self.patch_text.delete("1.0", "end")
+        self.url_var.set("")
+        self.refresh_builds()
+        self.refresh_patch_list()
+
+    def refresh_patch_list(self):
+        game = self.game
+        self.status_var.set(f"{datafiles.GAME_LABELS.get(game, game)} 패치노트 목록을 불러오는 중…")
+
+        def work():
+            try:
+                feed = news.fetch_news()
+                self._pending = {"kind": "news", "feed": feed}
+            except Exception as exc:  # noqa: BLE001
+                self._pending = {"kind": "news_error", "message": str(exc)}
+
+        threading.Thread(target=work, daemon=True).start()
+
+    def load_selected_patch(self):
+        from tkinter import messagebox
+
+        choice = self.patch_choice.get().strip()
+        ref = next((r for r in self._patch_refs if r.display() == choice), None)
+        if ref is None:
+            messagebox.showinfo(APP_TITLE, "불러올 패치노트를 목록에서 선택해 주세요.")
+            return
+        self.url_var.set(ref.url)
+        self._set_busy(True, f"{ref.display()} 본문을 가져오는 중…")
+
+        def work():
+            try:
+                text, title = patchnotes.fetch_patch_text(ref.url)
+                self._pending = {
+                    "kind": "text", "text": text, "title": title,
+                    "url": ref.url, "game": ref.game,
+                }
+            except Exception as exc:  # noqa: BLE001
+                self._pending = {"kind": "error", "message": str(exc)}
+
+        threading.Thread(target=work, daemon=True).start()
 
     def _selected_build_id(self) -> str | None:
         selection = self.lib_tree.selection()
@@ -523,12 +627,17 @@ class App:  # pragma: no cover - GUI
         def work():
             try:
                 if pasted:
-                    notes = patchnotes.parse_patch_notes(pasted, source="붙여넣은 텍스트")
+                    notes = patchnotes.parse_patch_notes(
+                        pasted, source="붙여넣은 텍스트", game=self.game
+                    )
                 else:
                     body, title = patchnotes.fetch_patch_text(url)
-                    notes = patchnotes.parse_patch_notes(body, title=title, source=url)
+                    notes = patchnotes.parse_patch_notes(
+                        body, title=title, source=url, game=self.game
+                    )
                 result = analysis.analyze(
-                    self.library, notes, top=self._top_n(), min_buff=self._min_buff()
+                    self.library, notes, top=self._top_n(), min_buff=self._min_buff(),
+                    game=self.game,
                 )
                 self._pending = {"kind": "result", "result": result}
             except Exception as exc:  # noqa: BLE001
@@ -559,10 +668,35 @@ class App:  # pragma: no cover - GUI
         from tkinter import messagebox
 
         kind = pending.get("kind")
+        if kind == "news":
+            feed = pending["feed"]
+            self.feed = feed
+            refs = feed.filtered(game=self.game)[: (60 if self.game == datafiles.GAME_POE2 else 60)]
+            self._patch_refs = refs
+            values = [ref.display() for ref in refs]
+            self.patch_combo.configure(values=values)
+            if values:
+                self.patch_combo.current(0)
+            counts = feed.counts()
+            note = " · ".join(x for x in feed.errors if x)
+            self.status_var.set(
+                f"패치노트 목록: {datafiles.GAME_LABELS.get(self.game, self.game)} {len(refs)}건"
+                f" (PoE1 {counts.get('poe1', 0)} · PoE2 {counts.get('poe2', 0)})"
+                + (f"  ⚠ {note}" if note else "")
+            )
+            return
+        if kind == "news_error":
+            self.status_var.set(f"패치노트 목록을 가져오지 못했습니다: {pending.get('message', '')}")
+            return
         if kind == "text":
             self.patch_text.configure(state="normal")
             self.patch_text.delete("1.0", "end")
             self.patch_text.insert("1.0", pending["text"])
+            game = pending.get("game")
+            if game and datafiles.normalize_game(game) != self.game:
+                self.game_var.set(datafiles.normalize_game(game))
+                self.game = datafiles.normalize_game(game)
+                self.refresh_builds()
             self.status_var.set(f"불러옴: {pending.get('title') or pending.get('url')}")
             self._set_busy(False, "패치노트를 불러왔습니다. '검사 실행'을 눌러 주세요.")
             return
@@ -590,8 +724,8 @@ class App:  # pragma: no cover - GUI
         for verdict, color in VERDICT_COLORS.items():
             tree.tag_configure(verdict, foreground=color)
         self.count_var.set(
-            f"🔴 {len(result.red)} · 🟡 {len(result.yellow)} · 🟢 {len(result.green)} "
-            f"· 상향 TOP {len(result.filtered_buffs())}"
+            f"{result.game_label} · 🔴 {len(result.red)} · 🟡 {len(result.yellow)} "
+            f"· 🟢 {len(result.green)} · 상향 TOP {len(result.filtered_buffs())}"
         )
         if result.warnings:
             self.status_var.set("⚠ " + " / ".join(result.warnings))

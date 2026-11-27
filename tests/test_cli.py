@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 
+import pytest
+
 from conftest import FIXTURES, make_pob_code
 from poe_checker import cli
 
@@ -103,3 +105,22 @@ def test_cli_missing_source(tmp_path):
 def test_cli_bad_patch_file(tmp_path):
     lib = _library_file(tmp_path)
     assert cli.main(["--library", str(lib), "--patch-file", str(tmp_path / "nope.txt")]) == 3
+
+
+def test_cli_survives_missing_stdout(monkeypatch):
+    """windowed exe 처럼 sys.stdout/stderr 가 None 이어도 --version 이 죽지 않는다."""
+    import sys
+
+    monkeypatch.setattr(sys, "stdout", None)
+    monkeypatch.setattr(sys, "stderr", None)
+    with pytest.raises(SystemExit) as excinfo:
+        cli.main(["--version"])
+    assert excinfo.value.code == 0
+
+
+def test_cli_game_option_filters_builds(tmp_path, capsys):
+    lib = _library_file(tmp_path)
+    assert cli.main(["--library", str(lib), "--list-builds", "--game", "poe2"]) == 0
+    assert "RF 빌드" not in capsys.readouterr().out
+    assert cli.main(["--library", str(lib), "--list-builds", "--game", "poe1"]) == 0
+    assert "RF 빌드" in capsys.readouterr().out

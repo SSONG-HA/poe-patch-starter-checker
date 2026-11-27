@@ -15,6 +15,7 @@ KINDS = {
     "starter": "리그 스타터",
     "character": "내 캐릭터",
     "seed": "시드/엔드게임",
+    "poe2": "PoE2 스타터",
     "custom": "직접 추가",
 }
 
@@ -38,6 +39,8 @@ class BuildEntry:
     id: str
     name: str
     kind: str = "starter"
+    game: str = datafiles.GAME_POE1
+    origin: str = ""
     source: str = ""
     note: str = ""
     code_file: str = ""
@@ -46,6 +49,10 @@ class BuildEntry:
     @property
     def kind_label(self) -> str:
         return KINDS.get(self.kind, self.kind)
+
+    @property
+    def game_label(self) -> str:
+        return datafiles.GAME_LABELS.get(datafiles.normalize_game(self.game), self.game)
 
     def payload(self) -> str:
         """PoB 코드 또는 XML 문자열."""
@@ -63,6 +70,8 @@ class BuildEntry:
             "id": self.id,
             "name": self.name,
             "kind": self.kind,
+            "game": datafiles.normalize_game(self.game),
+            "origin": self.origin,
             "source": self.source,
             "note": self.note,
         }
@@ -74,10 +83,14 @@ class BuildEntry:
 
     @classmethod
     def from_dict(cls, data: dict) -> "BuildEntry":
+        kind = data.get("kind", "starter")
+        game = data.get("game") or ("poe2" if kind == "poe2" else "poe1")
         return cls(
             id=data["id"],
             name=data.get("name", data["id"]),
-            kind=data.get("kind", "starter"),
+            kind=kind,
+            game=datafiles.normalize_game(game),
+            origin=data.get("origin", ""),
             source=data.get("source", ""),
             note=data.get("note", ""),
             code_file=data.get("code_file", ""),
@@ -94,12 +107,17 @@ class BuildLibrary:
 
     # -- load / save ------------------------------------------------------
     @classmethod
-    def load(cls, path: str | os.PathLike | None = None, *, seed: bool = True) -> "BuildLibrary":
+    def load(cls, path: str | os.PathLike | None = None, *, seed: bool = True,
+             sync: bool | None = None) -> "BuildLibrary":
+        """라이브러리를 읽는다. 기본 경로일 때는 앱에 동봉된 스타터 갱신분을 자동 반영한다."""
         target = Path(path) if path else default_library_path()
+        if sync is None:
+            sync = path is None
+        bundled = cls._read_bundled() if seed else None
         if not target.exists():
-            if seed and BUNDLED_LIBRARY.exists():
+            if bundled:
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(BUNDLED_LIBRARY, target)
+                target.write_text(json.dumps(bundled, ensure_ascii=False, indent=2), encoding="utf-8")
             else:
                 return cls(path=target, builds=[])
         try:
@@ -107,14 +125,52 @@ class BuildLibrary:
         except json.JSONDecodeError as exc:
             raise LibraryError(f"라이브러리 JSON 을 읽지 못했습니다: {exc}") from exc
         builds = [BuildEntry.from_dict(row) for row in data.get("builds", [])]
-        return cls(path=target, builds=builds)
+        library = cls(path=target, builds=builds)
+        library._sync_meta = bundled
+        if bundled and sync and cls._needs_sync(data, bundled):
+            library.builds = cls._merge_bundled(builds, bundled)
+            data = {"schema": bundled.get("schema", 1), "builds": [b.to_dict() for b in library.builds]}
+            library._sync_meta = bundled
+            library.save(bundled_meta=bundled)
+        return library
 
-    def save(self) -> None:
+    # -- 동봉 스타터 동기화 ------------------------------------------------
+    @staticmethod
+    def _read_bundled() -> dict | None:
+        if not BUNDLED_LIBRARY.exists():
+            return None
+        try:
+            return json.loads(BUNDLED_LIBRARY.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            return None
+
+    @staticmethod
+    def _needs_sync(data: dict, bundled: dict) -> bool:
+        """앱에 동봉된 스타터 목록이 갱신됐으면 사용자 라이브러리에 반영한다."""
+        if data.get("bundled_updated") != bundled.get("updated"):
+            return True
+        if int(data.get("schema", 1)) < int(bundled.get("schema", 1)):
+            return True
+        return False
+
+    @staticmethod
+    def _merge_bundled(current: list[BuildEntry], bundled: dict) -> list[BuildEntry]:
+        """동봉 빌드는 새 버전으로 갱신하고, 사용자가 직접 추가한 빌드는 그대로 둔다."""
+        bundled_entries = [BuildEntry.from_dict(row) for row in bundled.get("builds", [])]
+        bundled_ids = {entry.id for entry in bundled_entries}
+        custom = [b for b in current if b.id not in bundled_ids and b.kind == "custom"]
+        other = [b for b in current if b.id not in bundled_ids and b.kind != "custom"]
+        return bundled_entries + other + custom
+
+    def save(self, bundled_meta: dict | None = None) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        meta = bundled_meta if bundled_meta is not None else getattr(self, "_sync_meta", None)
         payload = {
-            "schema": 1,
+            "schema": (meta or {}).get("schema", 2),
             "builds": [build.to_dict() for build in self.builds],
         }
+        if meta:
+            payload["bundled_updated"] = meta.get("updated", "")
         tmp = self.path.with_suffix(".json.tmp")
         tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
         tmp.replace(self.path)
@@ -129,15 +185,22 @@ class BuildLibrary:
     def profile(self, build: BuildEntry) -> pob.BuildProfile:
         if build.id in self._profiles:
             return self._profiles[build.id]
-        profile = pob.load_build(build.payload(), name=build.name, notes=build.note)
+        profile = pob.load_build(build.payload(), name=build.name, notes=build.note,
+                                 game=build.game)
         profile.source = build.source or profile.source
         self._profiles[build.id] = profile
         return profile
 
-    def profiles(self) -> list[tuple[BuildEntry, pob.BuildProfile]]:
+    def builds_for(self, game: str | None = None) -> list[BuildEntry]:
+        if not game:
+            return list(self.builds)
+        target = datafiles.normalize_game(game)
+        return [b for b in self.builds if datafiles.normalize_game(b.game) == target]
+
+    def profiles(self, game: str | None = None) -> list[tuple[BuildEntry, pob.BuildProfile]]:
         out = []
         self._errors.clear()
-        for build in self.builds:
+        for build in self.builds_for(game):
             try:
                 out.append((build, self.profile(build)))
             except (pob.PobError, LibraryError) as exc:
@@ -159,7 +222,8 @@ class BuildLibrary:
             index += 1
         return f"{base}-{index}"
 
-    def add(self, source: str, *, name: str = "", kind: str = "custom", note: str = "") -> BuildEntry:
+    def add(self, source: str, *, name: str = "", kind: str = "custom", note: str = "",
+            game: str | None = None) -> BuildEntry:
         """pobb.in URL·PoB 코드·XML 파일을 검사한 뒤 라이브러리에 추가한다."""
         source = (source or "").strip()
         if not source:
@@ -173,10 +237,12 @@ class BuildLibrary:
             label = f"{main} {profile.ascendancy or profile.class_name}".strip()
         # 항상 코드 형태로 정규화해 저장한다(파일 의존 없이 이동 가능).
         stored = pob.encode_pob_code(xml)
+        resolved_game = datafiles.normalize_game(game) if game else profile.game
         entry = BuildEntry(
             id=self._new_id(label),
             name=label,
             kind=kind if kind in KINDS else "custom",
+            game=resolved_game,
             source=source if source.startswith("http") else "직접 입력",
             note=note,
             code=stored,
@@ -204,9 +270,9 @@ class BuildLibrary:
         return True
 
     # -- helpers ----------------------------------------------------------
-    def rows(self) -> list[dict]:
+    def rows(self, game: str | None = None) -> list[dict]:
         rows = []
-        for build in self.builds:
+        for build in self.builds_for(game):
             try:
                 profile = self.profile(build)
                 rows.append(
@@ -214,6 +280,8 @@ class BuildLibrary:
                         "id": build.id,
                         "name": build.name,
                         "kind": build.kind_label,
+                        "game": build.game_label,
+                        "game_key": build.game,
                         "class": profile.ascendancy or profile.class_name,
                         "level": profile.level or "",
                         "main": ", ".join(profile.main_skill_names[:2]),
@@ -227,6 +295,8 @@ class BuildLibrary:
                         "id": build.id,
                         "name": build.name,
                         "kind": build.kind_label,
+                        "game": build.game_label,
+                        "game_key": build.game,
                         "class": "",
                         "level": "",
                         "main": "",

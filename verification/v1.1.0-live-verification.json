@@ -1,0 +1,44 @@
+{
+  "version": "1.1.0",
+  "generated_at": "2026-11-27T16:45:17+09:00",
+  "news_counts": {
+    "poe1": 59,
+    "poe2": 30
+  },
+  "news_errors": [],
+  "runs": [
+    {
+      "game": "poe1",
+      "url": "https://www.pathofexile.com/forum/view-thread/4019056",
+      "title": "Patch Notes - 3.30.0d Hotfix 3",
+      "entries": 0,
+      "builds": 24,
+      "red": 0,
+      "yellow": 0,
+      "green": 24,
+      "warnings": [
+        "패치노트에서 젬·유니크·전직 이름이 붙은 항목을 하나도 찾지 못했습니다. 일반 안내문이거나 형식이 다른 문서일 수 있으니, 0건을 '변경 없음'의 근거로 쓰지 마세요."
+      ]
+    },
+    {
+      "game": "poe2",
+      "url": "https://www.pathofexile.com/forum/view-thread/4016665",
+      "title": "Early Access Patch Notes - 0.5.5h Patch Notes",
+      "entries": 1,
+      "builds": 12,
+      "red": 0,
+      "yellow": 0,
+      "green": 12,
+      "warnings": []
+    },
+    {
+      "game": "poe1",
+      "url": "https://www.pathofexile.com/forum/view-thread/4013898",
+      "title": "Announcements - New and Changed Gems in Path of Exile 1: Covens of Umbra",
+      "entries": 8,
+      "red": 0,
+      "yellow": 9,
+      "green": 15
+    }
+  ]
+}
