@@ -1,9 +1,15 @@
-# PoE 패치노트 스타터 생존·버프 검증기 (PoE-Patch-Starter-Checker) v1.1.0
+# PoE 패치노트 스타터 생존·버프 검증기 (PoE-Patch-Starter-Checker) v1.2.0
 
 리그 시작일(Day 1)에는 `poe.ninja` 에 새 시즌 데이터가 없다. 이 도구는 **패치노트 원문만으로**
 
 1. 내 스타터 빌드가 새 패치에서 살아남는지 (🟢 무사통과 / 🟡 일부 조정 / 🔴 핵심 너프 주의)
 2. 이번 패치에서 **크게 상향된 스킬·서포트·유니크·전직**이 무엇인지 (순위 + 시드 빌드 + 바로가기 링크)
+3. **PoB XML 로 자동 생성한 빌드 가이드 & 빌드업** — 모든 스킬 세트·장비 세트·전직·키스톤·제작자 메모,
+   한 번에 복사하는 PoB 코드, 다크 테마 단일 HTML 문서
+4. **이번 패치 추천 스타터** — 콘텐츠 적합도(맵핑·보스·탱킹·저자본·편한 조작)와 패치 버프/너프를 합쳐
+   올라운더·맵핑·보스·저자본 목적별 추천
+5. **스타터 최신화** — 프로그램을 다시 받지 않아도 원격 카탈로그에서 새 시즌 스타터와 PoB 코드를 받아
+   내 라이브러리에 안전하게 병합 (직접 추가한 빌드는 보존)
 
 를 한 화면에서 보여준다. **PoE1 3.30(Covens of Umbra)과 PoE2 0.5(Runes of Aldur)를 게임 탭으로 나눠**
 각 게임의 패치노트를 그 게임의 스타터로만 검증한다. 외부 패키지 없이 표준 라이브러리만 쓰는 가벼운
@@ -32,6 +38,15 @@ python main.py --patch-file patch_notes.txt --game poe2
 python main.py --list-builds --game poe2
 python main.py --add-build "https://pobb.in/xxxxxxxx" --name "내 새 빌드" --game poe1
 python main.py --remove-build rf-chieftain-330
+
+# 빌드 가이드 & 빌드업 (PoB XML 자동 파싱)
+python main.py --guide rf-chieftain-pohx                 # 텍스트로 출력
+python main.py --export-guide rf-chieftain-pohx --out guide.html --open
+
+# 스타터 최신화 (원격 카탈로그 → 라이브러리 병합)
+python main.py --sync-starters
+python main.py --sync-starters --dry-run                 # 미리보기
+python main.py --sync-starters --catalog-url ./starter_catalog.json
 ```
 
 * Python 3.10+ (tkinter 포함). 실행에 필요한 외부 패키지 없음.
@@ -119,7 +134,51 @@ GUI 의 **최신 패치노트** 드롭다운에서 `[PoE1] 3.30.0d Patch Notes (
 
 ---
 
-## 6. 동봉 스타터 36종
+## 6. 탭 4 — 빌드 가이드 & 빌드업 (v1.2.0 신규)
+
+빌드를 고르면 **PoB XML 전체를 파싱해** 가이드를 자동으로 만든다. 시즌 번호에 묶이지 않으므로
+다음 시즌 새 PoB(`pobb.in` 주소·PoB 코드·XML 파일)를 넣어도 같은 코드가 그대로 돈다.
+
+| 항목 | 내용 |
+| --- | --- |
+| PoB 코드 | 원클릭 복사(내장 XML·XML 파일 빌드는 base64+zlib 코드로 복원), `pobb.in` 원본 링크 열기 |
+| 스킬 세트 | PoB 의 **모든** `SkillSet` 을 순서대로 — 메인 링크/보조 링크, 슬롯, 젬 레벨·퀄리티, 한국어 병기 |
+| 장비 세트 | **모든** `ItemSet` — 슬롯별 고유/레어(핵심 옵션 요약)/플라스크/주얼·클러스터 주얼 |
+| 패시브·전직 | 전직·직업, 키스톤, 여러 `Spec`(트리 단계) 목록과 `{n}` 연결 세트 |
+| 제작자 메모 | `<Notes>` 의 색상 코드를 걷어내고 소제목·문단으로 정리 |
+| 패치 영향 | 패치 검사를 먼저 했으면 이 빌드의 버프/너프/주의 항목과 **보완 포인트**를 가이드 맨 위에 표시 |
+
+* **가이드 크게 보기 (HTML)**: 다크/모던 톤 단일 HTML(표·배지·`<details>` 접기·PoB 코드 복사 버튼·인쇄)
+  을 기본 폴더(`%APPDATA%\PoE-Patch-Starter-Checker\guides`)에 만들고 브라우저로 바로 연다.
+  외부 리소스가 없어 오프라인에서도 열린다. CLI 는 `--export-guide <id> --out <path>`.
+* `names_kr.json` 에 없는 신규 젬·유니크는 **영문 그대로** 안전하게 표시한다(하드코딩 없음).
+
+## 7. 탭 3 — 이번 패치 추천 스타터 (v1.2.0 신규)
+
+패치 검사를 실행하면 **콘텐츠 적합도 + 패치 생존/버프·너프**를 합친 추천이 만들어진다.
+
+* 적합도 5축(1~5): `mapping` 맵핑 · `bossing` 보스 · `tankiness` 탱킹 · `budget` 저자본(5=저렴) · `ease` 편한 조작.
+  내장 36종은 `data/starter_profiles.json` 의 큐레이션 값과 대표 특화 태그를 쓴다.
+* **직접 추가한 PoB** 는 PoB 스탯으로 자동 추정한다 — `TotalDPS`/`CombinedDPS`/`TotalDotDPS`(보스),
+  `TotalEHP`(탱킹), 주력 스킬 태그(광역·소환수·토템·근접·채널링…), 유니크 수·레벨(저자본), 자동 운용 태그(편의).
+  자동 추정값은 화면·HTML 에서 `(자동 추정)` 으로 구분한다.
+* 점수 = 목적별 적합도 조합 + 패치 보정(🟢 +1.2 / 🟡 0 / 🔴 -2.5, 상향·너프 크기와 핵심 요소 가중치 반영).
+* 목적별 **올라운더 / 맵핑 특화 / 보스 특화 / 저자본·편한 손맛** TOP 을 보여주고, 더블클릭하면 그 빌드의
+  가이드 & 빌드업 탭으로 이동한다. 같은 추천이 텍스트·Markdown·JSON 리포트와 HTML 가이드에도 들어간다.
+
+## 8. 스타터 최신화 — 원격 카탈로그 (v1.2.0 신규)
+
+GUI 탭 1 의 **스타터 최신화** 버튼(또는 `--sync-starters`)이
+`poe_checker/data/starter_catalog.json` 의 raw URL 에서 최신 목록을 받아 라이브러리에 병합한다.
+
+* 카탈로그 항목은 `pob_code`(Base64) / `pob_xml` / `pob_code_url`(상대·절대 경로, URL) / `pobb_in` 중
+  하나로 빌드 본문을 준다. 받은 본문은 **파싱에 성공해야만** 반영한다.
+* `sha256` 이 같으면 다시 내려받지 않는다(두 번째 최신화부터 빠름).
+* **사용자가 직접 추가한 빌드(kind=custom)는 절대 덮어쓰거나 지우지 않는다.** 카탈로그에서 빠진 로컬
+  빌드도 보존하고 결과에 표시한다. 오프라인·사내망에서는 `--catalog-url` 로 파일 경로를 줄 수 있다.
+* 새 스타터를 배포할 때: `python tools/gen_catalog.py` 로 카탈로그를 다시 만들고 `builds/` 와 함께 커밋.
+
+## 9. 동봉 스타터 36종
 
 ### PoE1 3.30 — 내 빌드 2 + 리그 스타터 19 + 시드/엔드게임 3
 
@@ -173,11 +232,13 @@ GUI 의 **최신 패치노트** 드롭다운에서 `[PoE1] 3.30.0d Patch Notes (
   전직·패시브·아이템이 부여하는 스킬(예: `Summon Elemental Relic`, `Doom Blast`)은 젬 목록에 없어 예외로 둔다.
 * 한국어 이름: `names_kr.json` 은 `poedb.tw/kr`(PoE1)·`poe2db.tw/kr`(PoE2) 색인에서 영문↔한국어를
   맞춘 표다(젬 850+/786+, 유니크 1,242/432, 키스톤, 전직). 한국어 표기가 없는 이름은 영문 그대로 보인다.
+* 스타터 카탈로그: `data/starter_catalog.json` (「스타터 최신화」가 받는 목록, `tools/gen_catalog.py` 로 생성).
+* 콘텐츠 적합도: `data/starter_profiles.json` (내장 36종의 맵핑·보스·탱킹·저자본·편한 조작 1~5점 + 특화 태그).
 
-## 7. 검증
+## 10. 검증
 
 ```bash
-python -m pytest -q      # 84 tests
+python -m pytest -q      # 122 tests
 ```
 
 * `tests/fixtures/patch_notes_synthetic_full.txt` — GGG 문체를 따른 합성 패치노트.
@@ -185,6 +246,7 @@ python -m pytest -q      # 84 tests
 * `tests/fixtures/patch_notes_poe2_055h.txt` — 실제 PoE2 `0.5.5h Patch Notes` 본문 픽스처.
 * `tests/fixtures/news_rss_poe1.xml`, `forum_patch_notes_poe1.html`, `forum_patch_notes_poe2.html` —
   실제 응답을 3건으로 줄인 목록 픽스처(오프라인/CI 테스트).
+* `pyproject.toml`·`__version__` = **1.2.0**, `pytest -q` **122 tests**, `sys.stdout=None` 스모크 통과.
 * 실제 네트워크 실행 결과는 `verification/v1.1.0-live-verification.txt`(와 `.json`)에 있다.
   * 2026-11-27 16:45 KST 기준 목록: **PoE1 59건 · PoE2 30건**, 실패한 출처 없음.
   * PoE1 최신 `3.30.0d Hotfix 3`: 항목 0개(핫픽스 문장) → ⚠ 경고와 함께 빌드 24개 전부 🟢.
@@ -193,7 +255,7 @@ python -m pytest -q      # 84 tests
 * `sys.stdout=None`(windowed exe) 상태에서도 `--version`·`--list-patch-notes`·`--list-builds` 가
   종료코드 0 으로 동작한다(`_ensure_streams()`).
 
-## 8. 한계
+## 11. 한계
 
 * 판정은 어디까지나 **문장 매칭 + 수치 비교**다. "젬이 재작업되어 문장만 바뀐" 경우는 🟡 로만 표시된다.
 * 패치노트가 전직 노티컬 이름만 언급하면(예: `Master Surgeon`) 전직명(`Pathfinder`)만으로는 잡지 못할 수 있다.

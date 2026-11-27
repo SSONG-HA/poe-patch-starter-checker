@@ -5,7 +5,7 @@ import re
 from dataclasses import dataclass, field
 from datetime import datetime
 
-from . import buffs, datafiles, library as library_mod, matcher, patchnotes
+from . import buffs, datafiles, library as library_mod, matcher, patchnotes, recommend
 
 
 @dataclass
@@ -13,6 +13,7 @@ class AnalysisResult:
     notes: patchnotes.PatchNotes
     verdicts: list[matcher.BuildVerdict] = field(default_factory=list)
     buffs: list[buffs.BuffCandidate] = field(default_factory=list)
+    recommendations: recommend.RecommendationBoard | None = None
     generated_at: datetime = field(default_factory=datetime.now)
     game: str = datafiles.GAME_POE1
     source_label: str = ""
@@ -102,4 +103,5 @@ def analyze(
         result.warnings.append(
             "읽지 못한 빌드가 있습니다: " + ", ".join(v.build_name for v in failed)
         )
+    result.recommendations = recommend.build_board(result, lib)
     return result

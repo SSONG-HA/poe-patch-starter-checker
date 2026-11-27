@@ -5,8 +5,8 @@ import argparse
 import sys
 from pathlib import Path
 
-from . import (APP_TITLE, __version__, analysis, datafiles, library as library_mod,
-               news, patchnotes, pob, report)
+from . import (APP_TITLE, __version__, analysis, catalog, datafiles, guide,
+               library as library_mod, news, patchnotes, pob, report)
 
 
 def _print(text: str) -> None:
@@ -52,6 +52,18 @@ def build_parser() -> argparse.ArgumentParser:
     lib.add_argument("--kind", default="custom", choices=sorted(library_mod.KINDS), help="추가할 빌드 종류")
     lib.add_argument("--note", default="", help="--add-build 시 메모")
     lib.add_argument("--remove-build", metavar="ID", help="라이브러리에서 빌드 제거")
+    lib.add_argument("--sync-starters", action="store_true",
+                     help="원격 카탈로그에서 스타터 목록·PoB 코드를 받아 최신화")
+    lib.add_argument("--catalog-url", metavar="URL",
+                     help="카탈로그 주소/파일 경로(기본: 공식 저장소 raw URL)")
+    lib.add_argument("--dry-run", action="store_true", help="--sync-starters 미리보기(저장 안 함)")
+
+    guides = parser.add_argument_group("빌드 가이드")
+    guides.add_argument("--guide", metavar="BUILD_ID",
+                        help="PoB XML 로 만든 빌드 가이드 & 빌드업을 텍스트로 출력")
+    guides.add_argument("--export-guide", metavar="BUILD_ID",
+                        help="빌드 가이드 HTML 을 생성(--out 으로 경로 지정, 없으면 기본 폴더)")
+    guides.add_argument("--open", action="store_true", help="--export-guide HTML 을 기본 브라우저로 열기")
 
     parser.add_argument("--version", action="version", version=f"{APP_TITLE} {__version__}")
     parser.add_argument("--gui", action="store_true", help="GUI 로 실행")
@@ -127,6 +139,65 @@ def run(args) -> int:
             return 0
         _print(f"해당 ID 가 없습니다: {args.remove_build}")
         return 2
+
+    if args.sync_starters:
+        try:
+            result = catalog.sync_library(
+                lib, url=args.catalog_url, dry_run=args.dry_run
+            )
+        except (catalog.CatalogError, OSError) as exc:
+            _print(f"스타터 최신화 실패: {exc}")
+            return 3
+        for line in result.lines():
+            _print(line)
+        return 0
+
+    if args.guide or args.export_guide:
+        build_id = args.export_guide or args.guide
+        build = lib.get(build_id)
+        if build is None:
+            _print(f"해당 ID 가 없습니다: {build_id}")
+            return 2
+        result = None
+        if args.patch_url or args.patch_file or args.patch_text or args.patch_latest:
+            url = args.patch_url
+            try:
+                if args.patch_latest and not (url or args.patch_file or args.patch_text):
+                    feed = news.fetch_news()
+                    latest = feed.latest(game=build.game)
+                    if latest is None:
+                        _print("최신 패치노트를 찾지 못했습니다.")
+                        return 3
+                    url = latest.url
+                notes = patchnotes.patch_notes_from_source(
+                    url=url, path=args.patch_file, text=args.patch_text, game=build.game
+                )
+                result = analysis.analyze(lib, notes, game=build.game)
+            except (patchnotes.PatchNotesError, OSError) as exc:
+                _print(f"패치노트 오류: {exc}")
+                return 3
+        try:
+            made = guide.build_guide(build, result=result)
+        except guide.GuideError as exc:
+            _print(f"가이드 생성 실패: {exc}")
+            return 3
+        if args.export_guide:
+            path = guide.export_html(made, args.out)
+            if not args.quiet:
+                _print(f"HTML 가이드: {path}")
+                _print(f"  빌드: {made.name} · 스킬 세트 {len(made.skill_sets)} · 장비 세트 {len(made.item_sets)}")
+                _print(f"  PoB 코드 {len(made.code)}자 · 패치 분석 {'포함' if made.patch else '없음'}")
+            if args.open:
+                guide.open_guide(path)
+            return 0
+        text = guide.render_text(made)
+        if args.out:
+            Path(args.out).write_text(text, encoding="utf-8")
+            if not args.quiet:
+                _print(f"가이드 저장: {args.out}")
+        if not args.quiet:
+            _print(text)
+        return 0
 
     if args.patch_latest and not (args.patch_url or args.patch_file or args.patch_text):
         try:

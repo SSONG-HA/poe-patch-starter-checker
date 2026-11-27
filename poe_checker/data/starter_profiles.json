@@ -1,0 +1,475 @@
+{
+ "schema": 1,
+ "note": "스타터 콘텐츠 적합도(1~5). mapping=맵핑, bossing=보스, tankiness=탱킹, budget=저자본(5=저렴), ease=편한 조작. tags=대표 특화.",
+ "updated": "2026-11-27",
+ "builds": {
+  "rf-chieftain-current": {
+   "mapping": 3,
+   "bossing": 4,
+   "tankiness": 5,
+   "budget": 4,
+   "ease": 4,
+   "tags": [
+    "화염 지속",
+    "탱커",
+    "토템"
+   ],
+   "note": "제물의 작열 광선 토템 + RF. 화염 지속 피해와 두터운 생존, 손이 편한 축."
+  },
+  "rf-chieftain-330": {
+   "mapping": 3,
+   "bossing": 4,
+   "tankiness": 5,
+   "budget": 4,
+   "ease": 4,
+   "tags": [
+    "화염 지속",
+    "탱커",
+    "토템"
+   ],
+   "note": "11-24 갱신 RF 치프틴. 화염 지속·탱킹 중심의 안정형."
+  },
+  "rf-chieftain-pohx": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 5,
+   "budget": 4,
+   "ease": 4,
+   "tags": [
+    "화염 지속",
+    "탱커",
+    "올라운더"
+   ],
+   "note": "Pohx SRI. 맵핑·보스 모두 무난하고 방어가 두터움."
+  },
+  "poison-holy-relic-necro": {
+   "mapping": 3,
+   "bossing": 5,
+   "tankiness": 4,
+   "budget": 3,
+   "ease": 4,
+   "tags": [
+    "소환수",
+    "독",
+    "보스"
+   ],
+   "note": "신성한 유물 중독. 보스 단일 피해가 강하고 소환수라 조작이 편함."
+  },
+  "dominating-blow-guardian": {
+   "mapping": 5,
+   "bossing": 4,
+   "tankiness": 4,
+   "budget": 3,
+   "ease": 3,
+   "tags": [
+    "소환수",
+    "근접",
+    "맵핑"
+   ],
+   "note": "지배의 일격으로 소환수를 계속 채우는 맵핑형. 장비 요구가 조금 있음."
+  },
+  "tornado-inquisitor": {
+   "mapping": 4,
+   "bossing": 5,
+   "tankiness": 3,
+   "budget": 2,
+   "ease": 3,
+   "tags": [
+    "회오리",
+    "보스",
+    "고자본"
+   ],
+   "note": "회오리바람 인퀴지터. 고자본 완성형으로 보스 화력이 매우 높음."
+  },
+  "eviscerate-elementalist": {
+   "mapping": 3,
+   "bossing": 4,
+   "tankiness": 2,
+   "budget": 2,
+   "ease": 2,
+   "tags": [
+    "점화",
+    "근접",
+    "고자본"
+   ],
+   "note": "절개 점화. 장비 의존도가 높고 생존이 얇음."
+  },
+  "static-strike-guardian": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 4,
+   "budget": 4,
+   "ease": 4,
+   "tags": [
+    "근접",
+    "광역",
+    "올라운더"
+   ],
+   "note": "정전기 타격. 저자본으로도 안정적인 올라운더."
+  },
+  "poison-concoction-pathfinder": {
+   "mapping": 3,
+   "bossing": 3,
+   "tankiness": 4,
+   "budget": 5,
+   "ease": 4,
+   "tags": [
+    "독",
+    "저자본",
+    "올라운더"
+   ],
+   "note": "독성 혼합물. 유니크 없이 시작하는 저자본 스타터."
+  },
+  "bladefall-impaling-pathfinder": {
+   "mapping": 4,
+   "bossing": 5,
+   "tankiness": 3,
+   "budget": 3,
+   "ease": 2,
+   "tags": [
+    "관통",
+    "보스",
+    "주문"
+   ],
+   "note": "칼날 낙하 관통. 보스 화력이 뛰어나지만 조작이 바쁨."
+  },
+  "cold-dot-spellslinger-elementalist": {
+   "mapping": 3,
+   "bossing": 2,
+   "tankiness": 3,
+   "budget": 4,
+   "ease": 3,
+   "tags": [
+    "냉기 지속",
+    "주문",
+    "스타터"
+   ],
+   "note": "냉기 도트 스펠슬링어. 리그 초반 밸류가 좋은 스타터."
+  },
+  "stormburst-totem-hierophant": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 3,
+   "budget": 3,
+   "ease": 3,
+   "tags": [
+    "토템",
+    "번개",
+    "보스"
+   ],
+   "note": "폭풍 파열 토템. 토템이라 딜 넣기 편하고 보스도 준수."
+  },
+  "incinerate-venting-elementalist": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 3,
+   "budget": 3,
+   "ease": 2,
+   "tags": [
+    "화염",
+    "채널링",
+    "광역"
+   ],
+   "note": "소각 분출. 광역 정리에 강하지만 채널링 조작이 필요."
+  },
+  "animate-weapon-ranged-necromancer": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 3,
+   "budget": 2,
+   "ease": 2,
+   "tags": [
+    "소환수",
+    "원거리",
+    "고자본"
+   ],
+   "note": "무기 소환 원거리. 무기 준비가 필요해 초반 운용이 번거로움."
+  },
+  "generals-cry-lacerate-champion": {
+   "mapping": 3,
+   "bossing": 4,
+   "tankiness": 5,
+   "budget": 3,
+   "ease": 3,
+   "tags": [
+    "근접",
+    "탱커",
+    "보스"
+   ],
+   "note": "장군의 함성 절단. 방어가 좋고 보스전이 안정적."
+  },
+  "static-strike-slayer": {
+   "mapping": 4,
+   "bossing": 3,
+   "tankiness": 3,
+   "budget": 4,
+   "ease": 4,
+   "tags": [
+    "근접",
+    "광역",
+    "스타터"
+   ],
+   "note": "정전기 타격 슬레이어. 저자본 맵핑 스타터."
+  },
+  "smite-armor-stacker-luminary": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 5,
+   "budget": 3,
+   "ease": 3,
+   "tags": [
+    "번개",
+    "방어구 중첩",
+    "탱커"
+   ],
+   "note": "강타 방어구 중첩. 방어가 두텁고 파티 기여도 있음."
+  },
+  "arc-crab-totems-reliquarian": {
+   "mapping": 4,
+   "bossing": 3,
+   "tankiness": 4,
+   "budget": 4,
+   "ease": 4,
+   "tags": [
+    "토템",
+    "번개",
+    "저자본"
+   ],
+   "note": "연쇄 번개 게 토템. 저자본으로 편하게 맵핑."
+  },
+  "explosive-arrow-ballista-hierophant": {
+   "mapping": 4,
+   "bossing": 5,
+   "tankiness": 3,
+   "budget": 2,
+   "ease": 3,
+   "tags": [
+    "발리스타",
+    "보스",
+    "고자본"
+   ],
+   "note": "폭발 화살 발리스타. 보스 화력 최상급, 자본 필요."
+  },
+  "boneshatter-juggernaut": {
+   "mapping": 4,
+   "bossing": 3,
+   "tankiness": 5,
+   "budget": 4,
+   "ease": 3,
+   "tags": [
+    "근접",
+    "탱커",
+    "스타터"
+   ],
+   "note": "뼈 분쇄 저거너트. 매우 단단한 근접 스타터."
+  },
+  "luminary-merc-aurabit": {
+   "mapping": 2,
+   "bossing": 1,
+   "tankiness": 4,
+   "budget": 2,
+   "ease": 2,
+   "tags": [
+    "오라봇",
+    "파티",
+    "고자본"
+   ],
+   "note": "파티용 오라봇. 혼자 사냥하기엔 부적합."
+  },
+  "coc-forbidden-rite-assassin": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 2,
+   "budget": 2,
+   "ease": 2,
+   "tags": [
+    "주문",
+    "트리거",
+    "고자본"
+   ],
+   "note": "CoC 금단의 의식. 화력은 좋지만 생존이 얇고 자본이 듦."
+  },
+  "impending-doom-elementalist": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 2,
+   "budget": 2,
+   "ease": 3,
+   "tags": [
+    "독조",
+    "광역",
+    "고자본"
+   ],
+   "note": "독조 엘리멘탈리스트. 광역 폭발이 강하지만 생존이 얇음."
+  },
+  "dual-strike-gladiator": {
+   "mapping": 3,
+   "bossing": 3,
+   "tankiness": 4,
+   "budget": 5,
+   "ease": 4,
+   "tags": [
+    "근접",
+    "저자본",
+    "올라운더"
+   ],
+   "note": "쌍수 타격 글래디에이터. Ephemeral Edge 저자본 구성."
+  },
+  "poe2-spark-stormweaver": {
+   "mapping": 5,
+   "bossing": 3,
+   "tankiness": 3,
+   "budget": 3,
+   "ease": 4,
+   "tags": [
+    "번개",
+    "투사체",
+    "맵핑"
+   ],
+   "note": "전기불꽃 스톰위버. PoE2 대표 맵핑 스타터."
+  },
+  "poe2-permafrost-witchhunter": {
+   "mapping": 4,
+   "bossing": 3,
+   "tankiness": 3,
+   "budget": 4,
+   "ease": 3,
+   "tags": [
+    "냉기",
+    "원거리",
+    "스타터"
+   ],
+   "note": "영구 동토 탄환. 저자본 원거리 스타터."
+  },
+  "poe2-explosive-grenade-witchhunter": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 3,
+   "budget": 4,
+   "ease": 3,
+   "tags": [
+    "화염",
+    "수류탄",
+    "보스"
+   ],
+   "note": "폭발 수류탄. 광역과 보스 모두 무난."
+  },
+  "poe2-martial-artist-monk": {
+   "mapping": 3,
+   "bossing": 3,
+   "tankiness": 3,
+   "budget": 4,
+   "ease": 3,
+   "tags": [
+    "근접",
+    "레벨링",
+    "스타터"
+   ],
+   "note": "무술가 몽크 레벨링 구성. 캠페인 구간용."
+  },
+  "poe2-falling-thunder-monk": {
+   "mapping": 4,
+   "bossing": 5,
+   "tankiness": 2,
+   "budget": 3,
+   "ease": 2,
+   "tags": [
+    "번개",
+    "근접",
+    "보스"
+   ],
+   "note": "낙뢰 무술가. 보스 화력이 매우 높지만 생존이 얇음."
+  },
+  "poe2-ice-strike-amazon": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 4,
+   "budget": 3,
+   "ease": 3,
+   "tags": [
+    "냉기",
+    "근접",
+    "올라운더"
+   ],
+   "note": "얼음 타격 아마존. 근접 올라운더."
+  },
+  "poe2-chaos-flicker-chayula": {
+   "mapping": 5,
+   "bossing": 3,
+   "tankiness": 2,
+   "budget": 2,
+   "ease": 2,
+   "tags": [
+    "혼돈",
+    "섬광",
+    "고자본"
+   ],
+   "note": "혼돈 섬광. 맵핑 속도 최상급, 생존·자본 부담."
+  },
+  "poe2-pathfinder-spark": {
+   "mapping": 5,
+   "bossing": 3,
+   "tankiness": 3,
+   "budget": 3,
+   "ease": 4,
+   "tags": [
+    "번개",
+    "투사체",
+    "맵핑"
+   ],
+   "note": "전기불꽃 패스파인더. 맵핑 특화."
+  },
+  "poe2-twister-gemling": {
+   "mapping": 4,
+   "bossing": 3,
+   "tankiness": 3,
+   "budget": 4,
+   "ease": 3,
+   "tags": [
+    "회오리",
+    "근접",
+    "스타터"
+   ],
+   "note": "회오리 보석병. 저자본 근접 스타터."
+  },
+  "poe2-gemling-twister": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 3,
+   "budget": 2,
+   "ease": 3,
+   "tags": [
+    "회오리",
+    "보스",
+    "고자본"
+   ],
+   "note": "회오리 보석병 완성형. 장비 투자가 큼."
+  },
+  "poe2-minion-infernalist": {
+   "mapping": 4,
+   "bossing": 4,
+   "tankiness": 4,
+   "budget": 4,
+   "ease": 5,
+   "tags": [
+    "소환수",
+    "편한 조작",
+    "올라운더"
+   ],
+   "note": "소환수 인퍼널리스트. 손이 가장 편한 축."
+  },
+  "poe2-lightning-spear-tactician": {
+   "mapping": 4,
+   "bossing": 5,
+   "tankiness": 4,
+   "budget": 3,
+   "ease": 4,
+   "tags": [
+    "번개",
+    "투사체",
+    "보스"
+   ],
+   "note": "번개 창 택티션. 보스·맵핑 균형형."
+  }
+ }
+}

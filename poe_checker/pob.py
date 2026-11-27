@@ -66,7 +66,26 @@ class BuildProfile:
     keystones: list[str] = field(default_factory=list)
     source: str = ""
     notes: str = ""
+    stats: dict[str, float] = field(default_factory=dict)
     warnings: list[str] = field(default_factory=list)
+
+    @property
+    def dps(self) -> float:
+        """PoB 가 계산해 둔 최대 피해량(직접타격·지속·총합 중 큰 값)."""
+        keys = ("CombinedDPS", "FullDPS", "TotalDotDPS", "WithDotDPS", "TotalDPS")
+        return max((self.stats.get(key, 0.0) for key in keys), default=0.0)
+
+    @property
+    def dot_dps(self) -> float:
+        return max(self.stats.get("TotalDotDPS", 0.0), self.stats.get("WithDotDPS", 0.0))
+
+    @property
+    def ehp(self) -> float:
+        """유효 생명력(TotalEHP). 없으면 생명력+에너지 보호막."""
+        total = self.stats.get("TotalEHP", 0.0)
+        if total:
+            return total
+        return self.stats.get("Life", 0.0) + self.stats.get("EnergyShield", 0.0)
 
     @property
     def main_skill_names(self) -> list[str]:
@@ -253,6 +272,14 @@ def parse_pob_xml(xml: str, *, name: str = "", source: str = "", notes: str = ""
         notes=notes,
     )
 
+    for stat in build.findall("PlayerStat"):
+        key = stat.get("stat") or ""
+        value = stat.get("value") or ""
+        try:
+            profile.stats[key] = float(value)
+        except ValueError:
+            continue
+
     spec = root.find("Tree")
     if spec is not None:
         active_spec = spec.get("activeSpec")
@@ -373,3 +400,18 @@ def encode_pob_code(xml: str) -> str:
     """XML → PoB 코드(base64url, 패딩 없음). 테스트·내보내기용."""
     compressed = zlib.compress(xml.encode("utf-8"), 9)
     return base64.urlsafe_b64encode(compressed).decode("ascii").rstrip("=")
+
+
+def code_for(source: str) -> str:
+    """코드/XML/PoB 파일 → 가져오기용 PoB 코드.
+
+    이미 코드 형태면 원문을 그대로 돌려준다(내장 빌드의 pobb.in 코드 보존).
+    XML 이면 base64+zlib 코드로 되돌린다. 어느 경우에도 빈 문자열은 돌려주지 않는다.
+    """
+    text = (source or "").strip()
+    if not text:
+        raise PobError("PoB 코드가 비어 있습니다.")
+    xml = resolve_source(text)
+    if looks_like_xml(text):
+        return encode_pob_code(xml)
+    return re.sub(r"\s+", "", text)

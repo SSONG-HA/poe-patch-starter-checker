@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from datetime import datetime
 
-from . import APP_TITLE, __version__, datafiles, matcher
+from . import APP_TITLE, __version__, datafiles, matcher, recommend
 from .analysis import AnalysisResult
 
 WIDTH = 78
@@ -124,6 +124,27 @@ def render_text(result: AnalysisResult, *, show_details: bool = True) -> str:
                 links.append(ninja)
             out.append(f"     링크: {' | '.join(links)}")
     out.append("")
+
+    board = result.recommendations
+    out.append("[3] 이번 패치 추천 스타터")
+    out.append(_rule("-"))
+    if board is None or not board.entries:
+        out.append("   추천할 빌드가 없습니다.")
+    else:
+        out.append("   점수 = 콘텐츠 적합도(1~5) + 이번 패치 버프/너프·생존 보정")
+        for category in recommend.CATEGORY_ORDER:
+            out.append("")
+            out.append(f"   ▸ {recommend.CATEGORY_LABELS[category]}")
+            rows = board.top(category, 5)
+            if not rows:
+                out.append("      (해당 없음)")
+                continue
+            for index, entry in enumerate(rows, start=1):
+                head = f"      {index}. {entry.build_name}  [{entry.score_for(category):.2f}]"
+                out.append(head)
+                for wrapped in _wrap(entry.reason_for(category), indent="         "):
+                    out.append(wrapped)
+    out.append("")
     out.append(_rule())
     out.append("주의: 판정은 패치노트 문장과 빌드 구성 요소의 이름 매칭·수치 비교로 계산됩니다.")
     out.append("      실제 체감은 젬 레벨·장비·플레이 방식에 따라 다를 수 있습니다.")
@@ -150,6 +171,7 @@ def render_json(result: AnalysisResult) -> str:
         },
         "builds": [],
         "buffs": [],
+        "recommendations": result.recommendations.to_dict() if result.recommendations else {},
     }
     for verdict in result.verdicts:
         profile = verdict.profile
@@ -251,4 +273,23 @@ def render_markdown(result: AnalysisResult) -> str:
         for line in cand.evidence(limit=3):
             out.append(f"   - {line}")
     out.append("")
+    out.append("## 3. 이번 패치 추천 스타터")
+    out.append("")
+    board = result.recommendations
+    if board is None or not board.entries:
+        out.append("추천할 빌드가 없습니다.")
+    else:
+        for category in recommend.CATEGORY_ORDER:
+            out.append(f"### {recommend.CATEGORY_LABELS[category]}")
+            out.append("")
+            out.append("| # | 빌드 | 판정 | 점수 | 맵핑 | 보스 | 탱킹 | 저자본 | 편한 | 추천 사유 |")
+            out.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
+            for index, entry in enumerate(board.top(category, 5), start=1):
+                fit = entry.fit
+                out.append(
+                    f"| {index} | {entry.build_name} | {entry.verdict_label} | "
+                    f"{entry.score_for(category):.2f} | {fit.mapping} | {fit.bossing} | "
+                    f"{fit.tankiness} | {fit.budget} | {fit.ease} | {entry.reason_for(category)} |"
+                )
+            out.append("")
     return "\n".join(out)

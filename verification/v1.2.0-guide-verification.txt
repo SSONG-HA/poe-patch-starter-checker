@@ -1,0 +1,86 @@
+PoE-Patch-Starter-Checker v1.2.0 — 빌드 가이드/추천/최신화 검증
+==============================================================================
+검증 시각: 2026-11-27 (KST) · Python 3.12.16
+라이브러리: 동봉 스타터 36종 (PoE1 24 · PoE2 12)
+
+[1] 내장 36종 — PoB 코드 보존/복원 + 가이드 전수 생성
+------------------------------------------------------------------------------
+ID                                        SS  IS Spec  Notes    Code     HTML
+rf-chieftain-current                       1   1    1      0   13196    37300
+rf-chieftain-330                           1   1    1      0   13222    37120
+rf-chieftain-pohx                          4   4    4   1241   23710    72255
+poison-holy-relic-necro                    1   1    1      0   11731    33699
+dominating-blow-guardian                  16  17   16  35906   57202   190757
+tornado-inquisitor                         7   5   10   5563   49626   110977
+eviscerate-elementalist                    8   8    8    410   26235   107558
+static-strike-guardian                     8   8    8   1052   31280    89167
+poison-concoction-pathfinder               7   1   10   1629    9100    37434
+bladefall-impaling-pathfinder              1   3    1      0   13464    42544
+cold-dot-spellslinger-elementalist         7   7    7    171   18040    65594
+stormburst-totem-hierophant                7   6   15  10335   46968   133556
+incinerate-venting-elementalist            5   5    5  10335   30104    83582
+animate-weapon-ranged-necromancer          1   2    1      0   13640    38430
+generals-cry-lacerate-champion             1   1    1      0   11340    32636
+static-strike-slayer                       1   1    2      0   11432    32839
+smite-armor-stacker-luminary               4   4    4      0   18892    56166
+arc-crab-totems-reliquarian                1   1    1      0    9608    30764
+explosive-arrow-ballista-hierophant        6   3    7  15671   26328    81700
+boneshatter-juggernaut                     8   3   12   6880   21628    81396
+luminary-merc-aurabit                     18  29   23  27113   73024   243063
+coc-forbidden-rite-assassin                1   1    1     73   15608    36967
+impending-doom-elementalist                1   1    1      0   10932    33918
+dual-strike-gladiator                      1   1    1      0   14236    36931
+poe2-spark-stormweaver                     1   1    1      0   11832    37345
+poe2-permafrost-witchhunter                3   3    3   3719   18104    65961
+poe2-explosive-grenade-witchhunter         1   1    1      0   11132    34608
+poe2-martial-artist-monk                   2   2    2      0   36380    68297
+poe2-falling-thunder-monk                  1   1    1   3612   15016    44675
+poe2-ice-strike-amazon                     4   1   11   1747   17272    55956
+poe2-chaos-flicker-chayula                 1   1    3    873   28348    58920
+poe2-pathfinder-spark                      1   1    1      0   11428    35246
+poe2-twister-gemling                       1   1    1      0   12596    39305
+poe2-gemling-twister                       1   1    1      0   11672    34098
+poe2-minion-infernalist                   14  14   14      0   28712   164954
+poe2-lightning-spear-tactician             1   1    2      0   31228    50812
+합계                                                                    2436530
+생성 시간: 8.7s · 코드 복원 실패 0건 · 스킬/장비 세트 0개 빌드 0건
+
+[2] 가이드 항목 표본 (RF 치프틴 · Pohx SRI)
+------------------------------------------------------------------------------
+스킬 세트 4개: Lvl 90 Block Based / Lvl 95 Cluster + Nebulis / Lvl 98 Annihilation's Approach / Lvl 100 Cogwork Ring
+장비 세트 4개: Lvl 90 Block Based / Lvl 95 Cluster + Nebulis / Lvl 98 Annihilation's Approach / Lvl 100 Cogwork Ring
+트리 단계 4개: Lvl 90 Block Based(1) / Lvl 95 Cluster + Nebulis(2) / Lvl 98 Annihilation's Approach(3) / Lvl 100 Cogwork Ring(4)
+키스톤: Glancing Blows · 메모 1241자
+첫 메인 링크: [Body Armour] Scorching Ray of Immolation
+    - Scorching Ray of Immolation (제물의 작열 광선) 20
+    - Multiple Totems (다중 토템 보조) 20/20
+    - Spell Totem (주문 토템 보조) 20/20
+    - Lifetap (생명력 전환 보조) 20
+    - Efficacy (효력 보조) 20/20
+    - Controlled Destruction (제어된 파괴 보조) 20/20
+아이템 분류: {'magic': 1, 'rare': 26, 'unique': 13, 'flask': 20}
+유니크 표본: Body Armour · Cloak of Flame (화염의 망토)
+레어 표본: Weapon 2 · Ezomyte Tower Shield / Ezomyte Tower Shield · 핵심옵션 ['+(30-40) to maximum Life', '+(56-70) to maximum Life']
+HTML: 카드 Guide · PoB 코드 블록 포함 · 외부 리소스 없음
+
+[3] 패치노트 연결 — 실제 픽스처 'New and Changed Gems'
+------------------------------------------------------------------------------
+판정: 🔴 0 · 🟡 9 · 🟢 15 (빌드 24개)
+가이드 패치 영향: 🟢 무사통과 · 상향 0 · 너프 0
+보완 포인트: 이 패치노트에는 이 빌드의 구성 요소(주력 스킬·서포트·전직·키스톤·유니크)와 겹치는 변경이 없습니다.
+올라운더 추천 TOP: 지배의 일격 가디언 (ArminYou) 5.50 | RF 치프틴 (Pohx SRI) 5.40 | 정전기 타격 가디언 (Alohaa) 5.20 | 폭발 화살 발리스타 히에로판트 (3.30) 5.20 | 회오리바람 인퀴지터 (BalorMage) 5.20
+맵핑 특화: 지배의 일격 가디언 (ArminYou) 5.55 | RF 치프틴 (Pohx SRI) 5.35 | 정전기 타격 가디언 (Alohaa) 5.20 | 뼈 분쇄 저거너트 (Zizaran) 5.05 | 정전기 타격 슬레이어 (3.30) 4.95
+보스 특화: 폭발 화살 발리스타 히에로판트 (3.30) 5.45 | 회오리바람 인퀴지터 (BalorMage) 5.45 | RF 치프틴 (Pohx SRI) 5.40 | 작열 광선 RF 치프틴 (내 캐릭터 · 11-24) 5.25 | 작열 광선 RF 치프틴 (내 캐릭터 · 최신) 5.25
+저자본·편한 손맛: 독성 혼합물 패스파인더 (DapperDD) 5.65 | 쌍수 타격 글래디에이터 (Ephemeral Edge) 5.65 | RF 치프틴 (Pohx SRI) 5.40 | 작열 광선 RF 치프틴 (내 캐릭터 · 11-24) 5.40 | 작열 광선 RF 치프틴 (내 캐릭터 · 최신) 5.40
+
+[4] 스타터 최신화(원격 카탈로그)
+------------------------------------------------------------------------------
+카탈로그 빌드 36개 · 기준일 2026-11-27 · base_url https://raw.githubusercontent.com/SSONG-HA/poe-patch-starter-checker/main/poe_checker/data/
+sha256 불일치: 0건 []
+병합 규칙: 카탈로그 빌드 갱신/추가 · kind=custom 절대 보존 · 카탈로그에 없는 로컬 빌드 보존 · 파싱 실패 시 기존 유지
+오프라인 테스트(tests/test_sync.py): 추가·갱신·커스텀 보존·sha 스킵·pobb_in·pob_code·pob_xml·깨진 본문·dry-run·네트워크 오류 — 11건 통과
+
+[5] 테스트
+------------------------------------------------------------------------------
+pytest -q : 122 passed (기존 84 + test_guide 12 + test_sync 11 + test_recommend 15)
+sys.stdout=None 스모크: --version / --export-guide / --list-builds 모두 종료코드 0

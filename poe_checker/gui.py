@@ -9,7 +9,8 @@ import traceback
 import webbrowser
 from pathlib import Path
 
-from . import APP_TITLE, __version__, analysis, buffs, datafiles, library as library_mod, matcher
+from . import APP_TITLE, __version__, analysis, buffs, catalog, datafiles, guide
+from . import library as library_mod, matcher, recommend
 from . import news, patchnotes, pob, report
 
 FONT_CANDIDATES = ("Malgun Gothic", "맑은 고딕", "AppleGothic", "NanumGothic", "Segoe UI")
@@ -119,6 +120,34 @@ def buff_rows(result: analysis.AnalysisResult) -> list[tuple[str, ...]]:
             )
         )
     return rows
+
+
+def recommend_detail_text(entry: recommend.Recommendation, category: str) -> str:
+    """추천 탭 상세 — 적합도 별점·패치 보정·추천 사유."""
+    fit = entry.fit
+    lines = [f"{entry.build_name}   [{entry.score_for(category):.2f}]  {entry.verdict_label}"]
+    lines.append(recommend.CATEGORY_LABELS.get(category, category))
+    who = " · ".join(x for x in (entry.kind_label, entry.origin) if x)
+    if who:
+        lines.append(who)
+    lines.append(f"→ {entry.headline}")
+    lines.append("")
+    lines.append("[콘텐츠 적합도]" + ("  (자동 추정)" if fit.auto else ""))
+    for key, label in recommend.FIELDS:
+        lines.append(f"  {label:6} {fit.stars(key)} {fit.score(key)}")
+    if fit.tags:
+        lines.append(f"  특화: {' · '.join(fit.tags)}")
+    if fit.note:
+        lines.append(f"  근거: {fit.note}")
+    lines.append("")
+    lines.append(f"[패치 보정] {entry.patch_delta:+.2f} (상향 {entry.buffs} · 너프 {entry.nerfs})")
+    lines.append("")
+    lines.append("[추천 사유]")
+    lines.append(f"  {entry.reason_for(category)}")
+    if entry.error:
+        lines.append("")
+        lines.append(f"! {entry.error}")
+    return "\n".join(lines)
 
 
 def buff_detail_text(cand: buffs.BuffCandidate) -> str:
@@ -237,11 +266,17 @@ class App:  # pragma: no cover - GUI
         self.tabs.pack(fill="both", expand=True, padx=12, pady=(0, 6))
         self.tab_survival = ttk.Frame(self.tabs, padding=8)
         self.tab_buffs = ttk.Frame(self.tabs, padding=8)
+        self.tab_recommend = ttk.Frame(self.tabs, padding=8)
+        self.tab_guide = ttk.Frame(self.tabs, padding=8)
         self.tabs.add(self.tab_survival, text=" 1. 스타터 생존 검증 ")
         self.tabs.add(self.tab_buffs, text=" 2. 대폭 상향(버프) 탐지 ")
+        self.tabs.add(self.tab_recommend, text=" 3. 이번 패치 추천 스타터 ")
+        self.tabs.add(self.tab_guide, text=" 4. 빌드 가이드 & 빌드업 ")
 
         self._build_survival_tab()
         self._build_buff_tab()
+        self._build_recommend_tab()
+        self._build_guide_tab()
 
     def _build_statusbar(self):
         ttk = self.ttk
@@ -282,6 +317,7 @@ class App:  # pragma: no cover - GUI
         ttk.Button(buttons, text="빌드 추가", command=self.add_build).pack(side="left")
         ttk.Button(buttons, text="선택 삭제", command=self.remove_build).pack(side="left", padx=4)
         ttk.Button(buttons, text="새로고침", command=self.refresh_builds).pack(side="left")
+        ttk.Button(buttons, text="스타터 최신화", command=self.sync_starters).pack(side="left", padx=4)
         ttk.Label(
             left,
             text="pobb.in 주소, PoB 코드, .xml 파일을 추가할 수 있습니다.",
@@ -428,6 +464,110 @@ class App:  # pragma: no cover - GUI
         buff_scroll.pack(side="right", fill="y")
         self._configure_tags(self.buff_detail)
 
+    # -- 탭 3: 이번 패치 추천 스타터 ------------------------------------
+    def _build_recommend_tab(self):
+        tk, ttk = self.tk, self.ttk
+        top = ttk.Frame(self.tab_recommend)
+        top.pack(fill="x")
+        ttk.Label(top, text="목적").pack(side="left")
+        self.rec_category = tk.StringVar(value=recommend.CATEGORY_LABELS["allrounder"])
+        self.rec_category_box = ttk.Combobox(
+            top,
+            textvariable=self.rec_category,
+            values=list(recommend.CATEGORY_LABELS.values()),
+            state="readonly",
+            width=22,
+        )
+        self.rec_category_box.pack(side="left", padx=(4, 12))
+        self.rec_category_box.bind("<<ComboboxSelected>>", lambda _e: self.show_recommendations())
+        ttk.Label(top, text="표시").pack(side="left")
+        self.rec_limit_var = tk.StringVar(value="10")
+        ttk.Spinbox(top, from_=3, to=36, increment=1, width=5,
+                    textvariable=self.rec_limit_var).pack(side="left", padx=(4, 12))
+        ttk.Button(top, text="다시 계산", command=self.show_recommendations).pack(side="left")
+        ttk.Button(top, text="가이드 보기", command=self.open_recommendation_guide).pack(side="left", padx=4)
+        ttk.Label(
+            top,
+            text="패치노트 검사를 실행하면 채워집니다. 더블클릭하면 그 빌드의 가이드로 이동합니다.",
+            style="Sub.TLabel",
+        ).pack(side="left", padx=10)
+
+        paned = ttk.Panedwindow(self.tab_recommend, orient="vertical")
+        paned.pack(fill="both", expand=True, pady=(8, 0))
+        table = ttk.Frame(paned)
+        detail = ttk.Frame(paned)
+        paned.add(table, weight=3)
+        paned.add(detail, weight=2)
+
+        columns = ("no", "name", "verdict", "score", "mapping", "bossing",
+                   "tank", "budget", "ease", "reason")
+        self.rec_tree = ttk.Treeview(table, columns=columns, show="headings", height=9)
+        for column, title, width in (
+            ("no", "#", 34),
+            ("name", "빌드", 250),
+            ("verdict", "판정", 100),
+            ("score", "점수", 56),
+            ("mapping", "맵핑", 46),
+            ("bossing", "보스", 46),
+            ("tank", "탱킹", 46),
+            ("budget", "저자본", 52),
+            ("ease", "편한", 46),
+            ("reason", "추천 사유", 400),
+        ):
+            self.rec_tree.heading(column, text=title)
+            self.rec_tree.column(column, width=width, anchor="w")
+        scroll = ttk.Scrollbar(table, orient="vertical", command=self.rec_tree.yview)
+        self.rec_tree.configure(yscrollcommand=scroll.set)
+        self.rec_tree.pack(side="left", fill="both", expand=True)
+        scroll.pack(side="right", fill="y")
+        self.rec_tree.bind("<<TreeviewSelect>>", self.show_recommend_detail)
+        self.rec_tree.bind("<Double-1>", self.open_recommendation_guide)
+
+        self.rec_detail = tk.Text(detail, wrap="word", font=self.mono, height=11)
+        detail_scroll = ttk.Scrollbar(detail, orient="vertical", command=self.rec_detail.yview)
+        self.rec_detail.configure(yscrollcommand=detail_scroll.set)
+        self.rec_detail.pack(side="left", fill="both", expand=True)
+        detail_scroll.pack(side="right", fill="y")
+        self._configure_tags(self.rec_detail)
+        self._rec_view: list[recommend.Recommendation] = []
+
+    # -- 탭 4: 빌드 가이드 & 빌드업 ------------------------------------
+    def _build_guide_tab(self):
+        tk, ttk = self.tk, self.ttk
+        top = ttk.Frame(self.tab_guide)
+        top.pack(fill="x")
+        ttk.Label(top, text="빌드").pack(side="left")
+        self.guide_choice = tk.StringVar()
+        self.guide_combo = ttk.Combobox(
+            top, textvariable=self.guide_choice, state="readonly", width=48
+        )
+        self.guide_combo.pack(side="left", padx=6)
+        self.guide_combo.bind("<<ComboboxSelected>>", lambda _e: self.generate_guide())
+        ttk.Button(top, text="가이드 생성", command=self.generate_guide).pack(side="left")
+        ttk.Button(top, text="PoB 코드 복사", command=self.copy_guide_code).pack(side="left", padx=4)
+        ttk.Button(top, text="pobb.in 열기", command=self.open_guide_source).pack(side="left")
+        ttk.Button(top, text="가이드 크게 보기 (HTML)", command=self.export_guide_html).pack(
+            side="left", padx=4
+        )
+
+        self.guide_status = tk.StringVar(
+            value="빌드를 고르면 PoB XML 로 스킬 세트·장비 세트·전직·메모 가이드를 만듭니다."
+        )
+        ttk.Label(self.tab_guide, textvariable=self.guide_status, style="Sub.TLabel").pack(
+            anchor="w", pady=(6, 0)
+        )
+
+        body = ttk.Frame(self.tab_guide)
+        body.pack(fill="both", expand=True, pady=(6, 0))
+        self.guide_text = tk.Text(body, wrap="word", font=self.mono)
+        scroll = ttk.Scrollbar(body, orient="vertical", command=self.guide_text.yview)
+        self.guide_text.configure(yscrollcommand=scroll.set)
+        self.guide_text.pack(side="left", fill="both", expand=True)
+        scroll.pack(side="right", fill="y")
+        self._configure_tags(self.guide_text)
+        self._guide: guide.Guide | None = None
+        self._guide_ids: list[str] = []
+
     def _configure_tags(self, widget):
         widget.tag_configure("red", foreground=VERDICT_COLORS[matcher.VERDICT_RED])
         widget.tag_configure("yellow", foreground=VERDICT_COLORS[matcher.VERDICT_YELLOW])
@@ -451,6 +591,171 @@ class App:  # pragma: no cover - GUI
         self.status_var.set(
             f"{game_label} · 빌드 {len(rows)}개 · 라이브러리: {self.library.path}"
         )
+        self.refresh_guide_choices()
+
+    # -- 탭 3: 추천 ------------------------------------------------------
+    def _rec_category_key(self) -> str:
+        label = self.rec_category.get()
+        for key, value in recommend.CATEGORY_LABELS.items():
+            if value == label:
+                return key
+        return "allrounder"
+
+    def _rec_limit(self) -> int:
+        try:
+            return max(1, int(self.rec_limit_var.get()))
+        except ValueError:
+            return 10
+
+    def show_recommendations(self):
+        tree = self.rec_tree
+        tree.delete(*tree.get_children())
+        board = getattr(self.result, "recommendations", None) if self.result else None
+        if board is None:
+            self._set_text(self.rec_detail, "패치노트를 불러오고 '검사 실행'을 하면 추천 스타터가 채워집니다.")
+            return
+        category = self._rec_category_key()
+        limit = self._rec_limit()
+        self._rec_view = board.top(category, limit)
+        for row, entry in zip(recommend.recommend_rows(board, category, limit), self._rec_view):
+            tree.insert("", "end", iid=entry.build_id, values=row)
+        if self._rec_view:
+            first = self._rec_view[0].build_id
+            tree.selection_set(first)
+            tree.focus(first)
+            self.show_recommend_detail()
+        self.count_var.set(
+            f"{board.game} · {recommend.CATEGORY_LABELS[category]} {len(self._rec_view)}개"
+        )
+
+    def show_recommend_detail(self, _event=None):
+        selection = self.rec_tree.selection()
+        if not selection:
+            return
+        build_id = selection[0]
+        entry = next((row for row in self._rec_view if row.build_id == build_id), None)
+        if entry is None:
+            return
+        self._set_text(self.rec_detail, recommend_detail_text(entry, self._rec_category_key()))
+
+    def open_recommendation_guide(self, _event=None):
+        selection = self.rec_tree.selection()
+        if not selection:
+            return
+        build_id = selection[0]
+        if self.library.get(build_id) is None:
+            return
+        self.refresh_guide_choices(select_id=build_id)
+        self.generate_guide()
+
+    # -- 탭 4: 가이드 ----------------------------------------------------
+    def refresh_guide_choices(self, select_id: str | None = None):
+        if not hasattr(self, "guide_combo"):
+            return
+        builds = self.library.builds_for(self.game)
+        self._guide_ids = [build.id for build in builds]
+        self.guide_combo.configure(values=[build.name for build in builds])
+        index = None
+        if select_id and select_id in self._guide_ids:
+            index = self._guide_ids.index(select_id)
+        elif self.guide_combo.current() < 0 and builds:
+            index = 0
+        if index is not None:
+            self.guide_combo.current(index)
+
+    def _selected_guide_build(self):
+        index = self.guide_combo.current()
+        if index < 0 or index >= len(getattr(self, "_guide_ids", [])):
+            return None
+        return self.library.get(self._guide_ids[index])
+
+    def generate_guide(self):
+        from tkinter import messagebox
+
+        build = self._selected_guide_build()
+        if build is None:
+            messagebox.showinfo(APP_TITLE, "가이드를 만들 빌드를 골라 주세요.")
+            return
+        self.guide_status.set(f"{build.name} 가이드를 만드는 중…")
+        try:
+            made = guide.build_guide(build, result=self.result)
+        except Exception as exc:  # noqa: BLE001
+            self._guide = None
+            self._set_text(self.guide_text, "")
+            self.guide_status.set(f"가이드를 만들지 못했습니다: {exc}")
+            messagebox.showerror(APP_TITLE, f"가이드를 만들지 못했습니다: {exc}")
+            return
+        self._guide = made
+        self._set_text(self.guide_text, guide.render_text(made))
+        bits = [
+            f"{made.name}",
+            f"스킬 세트 {len(made.skill_sets)}",
+            f"장비 세트 {len(made.item_sets)}",
+            f"PoB 코드 {len(made.code):,}자",
+        ]
+        if made.patch is not None:
+            bits.append(f"패치 영향 포함({made.patch.label})")
+        self.guide_status.set(" · ".join(bits))
+        self.tabs.select(self.tab_guide)
+
+    def copy_guide_code(self):
+        from tkinter import messagebox
+
+        if self._guide is None:
+            self.generate_guide()
+        if self._guide is None:
+            return
+        try:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(self._guide.code)
+            self.root.update_idletasks()
+        except Exception as exc:  # noqa: BLE001
+            messagebox.showerror(APP_TITLE, f"클립보드에 복사하지 못했습니다: {exc}")
+            return
+        self.guide_status.set(
+            "PoB 코드를 클립보드에 복사했습니다. PoB → Import → 'Import Code'에 붙여넣으세요."
+        )
+
+    def open_guide_source(self):
+        from tkinter import messagebox
+
+        if self._guide is None:
+            self.generate_guide()
+        if self._guide is None:
+            return
+        if not self._guide.source_url:
+            messagebox.showinfo(APP_TITLE, "이 빌드에는 pobb.in 원본 링크가 없습니다.")
+            return
+        webbrowser.open(self._guide.source_url)
+
+    def export_guide_html(self):
+        from tkinter import messagebox
+
+        if self._guide is None:
+            self.generate_guide()
+        if self._guide is None:
+            return
+        try:
+            path = guide.export_html(self._guide)
+        except OSError as exc:
+            messagebox.showerror(APP_TITLE, f"HTML 가이드를 저장하지 못했습니다: {exc}")
+            return
+        webbrowser.open(path.resolve().as_uri())
+        self.guide_status.set(f"HTML 가이드를 만들었습니다: {path}")
+
+    def sync_starters(self):
+        if self._busy:
+            return
+        self._set_busy(True, "스타터 최신화 중… (원격 카탈로그)")
+
+        def work():
+            try:
+                result = catalog.sync_library(self.library)
+                self._pending = {"kind": "sync", "report": result}
+            except Exception as exc:  # noqa: BLE001
+                self._pending = {"kind": "sync_error", "message": str(exc)}
+
+        threading.Thread(target=work, daemon=True).start()
 
     # -- 게임 전환 -------------------------------------------------------
     def set_game(self):
@@ -470,6 +775,13 @@ class App:  # pragma: no cover - GUI
         self.url_var.set("")
         self.refresh_builds()
         self.refresh_patch_list()
+        if hasattr(self, "rec_tree"):
+            self.rec_tree.delete(*self.rec_tree.get_children())
+            self._rec_view = []
+        if hasattr(self, "guide_text"):
+            self._guide = None
+            self._set_text(self.guide_text, "")
+            self.guide_status.set("빌드를 고르면 가이드를 만듭니다.")
 
     def refresh_patch_list(self):
         game = self.game
@@ -706,6 +1018,18 @@ class App:  # pragma: no cover - GUI
             self.show_results()
             self._set_busy(False, "검사 완료")
             return
+        if kind == "sync":
+            report_ = pending["report"]
+            self.refresh_builds()
+            message = report_.summary()
+            if report_.errors:
+                message += "  ⚠ " + report_.errors[0]
+            self._set_busy(False, message)
+            return
+        if kind == "sync_error":
+            self._set_busy(False, "스타터 최신화 실패")
+            messagebox.showerror(APP_TITLE, pending.get("message", "알 수 없는 오류"))
+            return
         if kind == "error":
             self._set_busy(False, "오류")
             messagebox.showerror(APP_TITLE, pending.get("message", "알 수 없는 오류"))
@@ -730,6 +1054,7 @@ class App:  # pragma: no cover - GUI
         if result.warnings:
             self.status_var.set("⚠ " + " / ".join(result.warnings))
         self.show_buffs()
+        self.show_recommendations()
         if rows:
             children = tree.get_children()
             tree.selection_set(children[0])
