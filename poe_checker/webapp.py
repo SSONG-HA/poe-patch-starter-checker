@@ -445,10 +445,12 @@ class AppState:
     def builds(self, game: str | None = None) -> dict:
         target = datafiles.normalize_game(game) if game else self.game
         custom_ids = {b.id for b in self.library.builds if b.kind == "custom"}
+        mine_ids = {b.id for b in self.library.builds if b.kind in ("custom", "character")}
         rows = []
         for row in self.library.rows(target):
             row = dict(row)
             row["custom"] = row["id"] in custom_ids
+            row["mine"] = row["id"] in mine_ids
             entry = self.library.get(row["id"])
             row["origin"] = entry.origin if entry else ""
             row["note"] = entry.note if entry else ""
@@ -601,9 +603,11 @@ class AppState:
             if result is None:
                 return {"result": None, "summary": None}
             custom_ids = {b.id for b in self.library.builds if b.kind == "custom"}
+            mine_ids = {b.id for b in self.library.builds if b.kind in ("custom", "character")}
             verdicts = [verdict_payload(v) for v in result.verdicts]
             for row in verdicts:
                 row["custom"] = row["id"] in custom_ids
+                row["mine"] = row["id"] in mine_ids
             buffs = [buff_payload(c) for c in result.filtered_buffs(top=999, min_buff=0.0)]
             board = result.recommendations
             rec_entries = [entry.to_dict() for entry in board.entries] if board else []
@@ -642,8 +646,10 @@ class AppState:
             game = result.game
             rows = [verdict_payload(v) for v in result.verdicts]
         custom = {b.id for b in self.library.builds if b.kind == "custom"}
+        mine = {b.id for b in self.library.builds if b.kind in ("custom", "character")}
         for row in rows:
             row["custom"] = row["id"] in custom
+            row["mine"] = row["id"] in mine
         needle = (q or "").strip().lower()
         if needle:
             rows = [
@@ -659,7 +665,7 @@ class AppState:
         if filter_ in ("green", "yellow", "red"):
             rows = [row for row in rows if row["verdict"] == filter_]
         elif filter_ == "custom":
-            rows = [row for row in rows if row["custom"]]
+            rows = [row for row in rows if row.get("mine")]
         return {"verdicts": rows, "game": game, "updated": result.generated_at.isoformat(timespec="seconds")}
 
     def buffs(self, *, top: int = 15, min_buff: float = 3.0, kind: str = "") -> dict:

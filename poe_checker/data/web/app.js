@@ -580,7 +580,7 @@
     if (!S.result) return [];
     const q = S.survival.q.trim().toLowerCase();
     return S.result.verdicts.filter((v) => {
-      if (S.survival.filter === 'custom' && !v.custom) return false;
+      if (S.survival.filter === 'custom' && !v.mine) return false;
       if (['green', 'yellow', 'red'].includes(S.survival.filter) && v.verdict !== S.survival.filter) return false;
       if (!q) return true;
       return (
@@ -601,7 +601,7 @@
       ['green', '🟢', k ? k.green : ''],
       ['yellow', '🟡', k ? k.yellow : ''],
       ['red', '🔴', k ? k.red : ''],
-      ['custom', '내 빌드', S.result ? S.result.verdicts.filter((v) => v.custom).length : ''],
+      ['custom', '내 빌드', S.result ? S.result.verdicts.filter((v) => v.mine).length : ''],
     ];
     filters.innerHTML = defs
       .map(
@@ -623,7 +623,7 @@
         (v) => `<div class="row ${S.survival.id === v.id ? 'active' : ''}" data-action="survival-select" data-id="${esc(v.id)}">
           <span class="dot ${v.verdict}"></span>
           <div class="row-main">
-            <div class="row-title">${esc(v.name)}${v.custom ? ' <span class="pill gold" style="height:17px;font-size:9px">내 빌드</span>' : ''}</div>
+            <div class="row-title">${esc(v.name)}${v.mine ? ' <span class="pill gold" style="height:17px;font-size:9px">내 빌드</span>' : ''}</div>
             <div class="row-sub">${esc(v.headline)}</div>
           </div>
           <div class="row-side">
@@ -760,7 +760,7 @@
         (b) => `<div class="row ${S.guide.id === b.id ? 'active' : ''}" data-action="guide-select" data-id="${esc(b.id)}">
           <span class="dot ${verdicts.get(b.id) || ''}"></span>
           <div class="row-main">
-            <div class="row-title">${esc(b.name)}${b.custom ? ' <span class="pill gold" style="height:17px;font-size:9px">내 빌드</span>' : ''}</div>
+            <div class="row-title">${esc(b.name)}${b.mine ? ' <span class="pill gold" style="height:17px;font-size:9px">내 빌드</span>' : ''}</div>
             <div class="row-sub">${esc([b.class, b.level ? `${b.level}레벨` : '', b.kind].filter(Boolean).join(' · '))}${b.error ? ' · ⚠ 읽기 오류' : ''}</div>
           </div>
           <div class="row-side"><div class="sc">${esc(b.tree || '')}</div></div>

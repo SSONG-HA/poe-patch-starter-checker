@@ -181,7 +181,9 @@ def test_builds_endpoint(handle):
     assert data["count"] == 2
     assert [row["id"] for row in data["builds"]] == ["rf", "arc"]
     assert data["builds"][0]["custom"] is True
+    assert data["builds"][0]["mine"] is True
     assert data["builds"][1]["custom"] is False
+    assert data["builds"][1]["mine"] is False
     assert data["builds"][0]["class"] == "Chieftain"
     assert data["builds"][0]["main"] == "Righteous Fire"
 
@@ -253,6 +255,7 @@ def test_verdicts_filters_and_search(handle):
     assert [v["id"] for v in data["verdicts"]] == ["rf"]
     status, data, _ = _request(handle, "/api/verdicts?filter=custom")
     assert [v["id"] for v in data["verdicts"]] == ["rf"]
+    assert data["verdicts"][0]["mine"] is True
     status, data, _ = _request(handle, "/api/verdicts?q=arc")
     assert [v["id"] for v in data["verdicts"]] == ["arc"]
     status, data, _ = _request(handle, "/api/verdicts?q=" + urllib.parse.quote("정의"))
