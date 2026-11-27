@@ -1,4 +1,4 @@
-# PoE 패치노트 스타터 생존·버프 검증기 (PoE-Patch-Starter-Checker) v1.2.0
+# PoE 패치노트 스타터 생존·버프 검증기 (PoE-Patch-Starter-Checker) v1.3.0
 
 리그 시작일(Day 1)에는 `poe.ninja` 에 새 시즌 데이터가 없다. 이 도구는 **패치노트 원문만으로**
 
@@ -12,8 +12,12 @@
    내 라이브러리에 안전하게 병합 (직접 추가한 빌드는 보존)
 
 를 한 화면에서 보여준다. **PoE1 3.30(Covens of Umbra)과 PoE2 0.5(Runes of Aldur)를 게임 탭으로 나눠**
-각 게임의 패치노트를 그 게임의 스타터로만 검증한다. 외부 패키지 없이 표준 라이브러리만 쓰는 가벼운
-`tkinter` 앱이며 PyInstaller 단일 `.exe` 로 빌드된다.
+각 게임의 패치노트를 그 게임의 스타터로만 검증한다.
+
+v1.3.0 부터 화면은 **흑요석·브러시드 골드 다크 대시보드**다. 앱 안에 로컬 HTTP 서버를 띄우고
+`pywebview` 전용 창(1360×880)으로 띄우며, WebView2 런타임이 없으면 크래시 없이 기본 브라우저로
+폴백한다. HTML/CSS/JS 는 `poe_checker/data/web/` 에 들어 있어 PyInstaller `.exe` 에 그대로 포함되고,
+외부 CDN·폰트에 의존하지 않으므로 오프라인에서도 100% 동작한다.
 
 ---
 
@@ -49,7 +53,8 @@ python main.py --sync-starters --dry-run                 # 미리보기
 python main.py --sync-starters --catalog-url ./starter_catalog.json
 ```
 
-* Python 3.10+ (tkinter 포함). 실행에 필요한 외부 패키지 없음.
+* Python 3.10+. 실행에 필요한 외부 패키지는 `pywebview` 하나뿐이다(나머지는 표준 라이브러리).
+  CLI·pytest 는 `pywebview` 없이도 동작한다(지연 import).
 * 라이브러리 파일은 기본적으로 `%APPDATA%\PoE-Patch-Starter-Checker\library.json`
   (macOS/Linux 는 `~/.poe-patch-starter-checker/library.json`)에 있고, 처음 실행할 때 동봉된
   36개 빌드로 자동 생성된다. `--library` 로 다른 파일을 쓰면 동봉분 자동 병합은 하지 않는다
@@ -70,7 +75,47 @@ pyinstaller --noconfirm --clean --onefile --windowed --name PoE-Patch-Starter-Ch
 
 ---
 
-## 2. 게임 탭 — PoE1 / PoE2 분리 (v1.1.0 신규)
+## 2. 대시보드 UI — 다크 골드 (v1.3.0 신규)
+
+v1.2.0 의 tkinter 화면을 **내장 로컬 HTTP 서버 + pywebview 전용 창** 구조로 바꿨다.
+
+| 구성 | 파일 | 설명 |
+| --- | --- | --- |
+| 서버·API | `poe_checker/webapp.py` | `127.0.0.1:0` 임시 포트의 스레드 HTTP 서버. `/api/*` JSON API 로 기존 핵심 모듈(news·patchnotes·analysis·buffs·recommend·guide·library·catalog·pob·report·datafiles)을 그대로 노출 |
+| 화면 | `poe_checker/data/web/index.html` · `styles.css` · `app.js` | 외부 CDN·아이콘 폰트 없이 동작하는 순수 HTML/CSS/JS |
+| 창 | `poe_checker/gui.py` | `webview.create_window(... width=1360, height=880, min_size=(1060,700), background_color="#0b0a09")` |
+| 폴백 | 위와 같음 | `pywebview`/WebView2 가 없으면 기본 브라우저로 열고 서버는 유지(작은 「종료」 창 표시) |
+
+* 4개 뷰
+  1. **대시보드** — 신호등 KPI 카드(🟢/🟡/🔴/⬆), 콘텐츠 적합도 프리셋(올라운더·맵핑·보스·저자본·편의성),
+     추천 스타터 TOP 카드(점수 게이지·별점·핵심 태그, 클릭 시 가이드로 이동), 위험 신호·대폭 상향 요약.
+  2. **스타터 생존 검증** — 검색 + `전체/🟢/🟡/🔴/내 빌드` 필터, 좌측 리스트 + 우측 인스펙터
+     (적용된 패치 항목 원문, 한국어 명칭 병기, 영향받은 스킬·서포트·유니크·전직·키스톤 태그, PoB 수치).
+  3. **PoB 가이드 & 빌드업** — 내장 36종 + 직접 추가 빌드, **단계 탭(액트·초반 → 맵핑 → 엔드게임)**,
+     색상별 소켓 도트가 붙은 스킬 젬 링크, 장비 슬롯 카드, 전직·키스톤, 제작자 메모, 패치 주의사항,
+     **PoB 코드 원클릭 복사**, **브라우저로 크게 보기**, pobb.in 원본 열기.
+  4. **상향 탐지 & 내 스타터 관리** — 최소 상향률·유형·표시 개수 필터가 있는 버프 TOP 과 근거 문장,
+     `pobb.in` 주소/PoB 코드 붙여넣기로 추가, 내 빌드 삭제.
+* 상단바: 앱 타이틀+v1.3.0, **PoE 1 / PoE 2 세그먼트 토글**, **공식 패치노트 드롭다운 + 새로고침 + 분석 실행**,
+  **스타터 최신화(원격 카탈로그 갱신 배지)**, 로컬 파일 열기, 결과 저장(Markdown/JSON/TXT).
+* 파일 열기·저장은 pywebview 네이티브 대화상자를 쓰고, 브라우저 폴백에서는 `<input type=file>` 과
+  다운로드로 동작한다. PoB 코드 복사는 `navigator.clipboard` → `execCommand('copy')` →
+  백엔드 클립보드(`clip.exe`/`pbcopy`/`xclip`) 순서로 폴백한다.
+* 분석 중에는 상단 진행 막대·버튼 스피너·상태 토스트로 진행 상황을 보여준다.
+* **접근 토큰**: 서버가 실행마다 무작위 토큰을 만들어 `/` 응답에 심고, 모든 `/api/*` 요청에
+  `X-App-Token` 을 요구한다(다른 로컬 페이지·스크립트의 무단 호출 차단). 정적 파일은 화이트리스트로만 서빙한다.
+
+### API 요약
+
+```
+GET  /api/state /api/builds /api/news /api/result /api/verdicts
+     /api/buffs /api/recommend /api/guide /api/guide/code /api/health
+POST /api/game /api/analyze /api/patch/text /api/patch/file
+     /api/library/add /api/library/remove /api/sync /api/export
+     /api/guide/open /api/clipboard
+```
+
+## 3. 게임 탭 — PoE1 / PoE2 분리 (v1.1.0 신규)
 
 * 헤더의 **게임** 라디오 버튼으로 `PoE1 3.30` / `PoE2 0.5` 를 고른다.
 * 선택한 게임의 **스타터만** 라이브러리·검사 결과에 나오고, 패치노트 목록도 그 게임 것만 표시된다.
@@ -78,7 +123,7 @@ pyinstaller --noconfirm --clean --onefile --windowed --name PoE-Patch-Starter-Ch
 * 게임별 데이터: `gems_3_30.json` / `gems_poe2.json`, `keystones_3_30.json` / `keystones_poe2.json`,
   `ascendancies_3_30.json` / `ascendancies_poe2.json` (PoE2 는 PoB-PoE2 `0_5` 트리·`Gems.lua` 에서 추출).
 
-## 3. 최신 패치노트 자동 수집 (v1.1.0 신규)
+## 4. 최신 패치노트 자동 수집 (v1.1.0 신규)
 
 GUI 의 **최신 패치노트** 드롭다운에서 `[PoE1] 3.30.0d Patch Notes (2026-11-20)` 같은 항목을 고르고
 **선택 불러오기** 를 누르면 본문을 바로 가져온다. 기존의 주소 입력·본문 붙여넣기·파일 열기도 그대로다.
@@ -98,7 +143,7 @@ GUI 의 **최신 패치노트** 드롭다운에서 `[PoE1] 3.30.0d Patch Notes (
 * 오프라인·CI 테스트용 실제 캡처 픽스처: `tests/fixtures/news_rss_poe1.xml`,
   `forum_patch_notes_poe1.html`, `forum_patch_notes_poe2.html`.
 
-## 4. 탭 1 — 스타터 생존 검증
+## 5. 탭 1 — 스타터 생존 검증
 
 * **빌드 라이브러리**: PoB 코드(pobb.in 코드)와 XML 을 그대로 읽어 `base64 + zlib` 로 풀고, 활성 스킬
   세트의 `mainSocketGroup`·서포트 수·젬 레벨을 기준으로 **주력 스킬 / 보조 스킬 / 서포트**를 나눈다.
@@ -121,7 +166,7 @@ GUI 의 **최신 패치노트** 드롭다운에서 `[PoE1] 3.30.0d Patch Notes (
   `PoE2 스타터 · Chem · PoE2 0.5`, `트리 3_29`)이 함께 나온다. 상세 창은 주력 스킬·유니크·키스톤의
   한국어 명칭을 병기한다(예: `Righteous Fire(정의의 화염)`).
 
-## 5. 탭 2 — 대폭 상향(버프) 탐지
+## 6. 탭 2 — 대폭 상향(버프) 탐지
 
 * 패치노트 전체에서 `New:`/`Old:` 쌍, `(previously ...)`, `from X to Y`, `X% less ...` 같은 수치 변화를 뽑아
   **사용자 이득 기준 상대 변화율** `(새 값 − 옛 값) / 옛 값` 을 계산한다.
@@ -134,7 +179,7 @@ GUI 의 **최신 패치노트** 드롭다운에서 `[PoE1] 3.30.0d Patch Notes (
 
 ---
 
-## 6. 탭 4 — 빌드 가이드 & 빌드업 (v1.2.0 신규)
+## 7. 탭 4 — 빌드 가이드 & 빌드업 (v1.2.0 신규)
 
 빌드를 고르면 **PoB XML 전체를 파싱해** 가이드를 자동으로 만든다. 시즌 번호에 묶이지 않으므로
 다음 시즌 새 PoB(`pobb.in` 주소·PoB 코드·XML 파일)를 넣어도 같은 코드가 그대로 돈다.
@@ -153,7 +198,7 @@ GUI 의 **최신 패치노트** 드롭다운에서 `[PoE1] 3.30.0d Patch Notes (
   외부 리소스가 없어 오프라인에서도 열린다. CLI 는 `--export-guide <id> --out <path>`.
 * `names_kr.json` 에 없는 신규 젬·유니크는 **영문 그대로** 안전하게 표시한다(하드코딩 없음).
 
-## 7. 탭 3 — 이번 패치 추천 스타터 (v1.2.0 신규)
+## 8. 탭 3 — 이번 패치 추천 스타터 (v1.2.0 신규)
 
 패치 검사를 실행하면 **콘텐츠 적합도 + 패치 생존/버프·너프**를 합친 추천이 만들어진다.
 
@@ -166,7 +211,7 @@ GUI 의 **최신 패치노트** 드롭다운에서 `[PoE1] 3.30.0d Patch Notes (
 * 목적별 **올라운더 / 맵핑 특화 / 보스 특화 / 저자본·편한 손맛** TOP 을 보여주고, 더블클릭하면 그 빌드의
   가이드 & 빌드업 탭으로 이동한다. 같은 추천이 텍스트·Markdown·JSON 리포트와 HTML 가이드에도 들어간다.
 
-## 8. 스타터 최신화 — 원격 카탈로그 (v1.2.0 신규)
+## 9. 스타터 최신화 — 원격 카탈로그 (v1.2.0 신규)
 
 GUI 탭 1 의 **스타터 최신화** 버튼(또는 `--sync-starters`)이
 `poe_checker/data/starter_catalog.json` 의 raw URL 에서 최신 목록을 받아 라이브러리에 병합한다.
@@ -178,7 +223,7 @@ GUI 탭 1 의 **스타터 최신화** 버튼(또는 `--sync-starters`)이
   빌드도 보존하고 결과에 표시한다. 오프라인·사내망에서는 `--catalog-url` 로 파일 경로를 줄 수 있다.
 * 새 스타터를 배포할 때: `python tools/gen_catalog.py` 로 카탈로그를 다시 만들고 `builds/` 와 함께 커밋.
 
-## 9. 동봉 스타터 36종
+## 10. 동봉 스타터 36종
 
 ### PoE1 3.30 — 내 빌드 2 + 리그 스타터 19 + 시드/엔드게임 3
 
@@ -235,10 +280,10 @@ GUI 탭 1 의 **스타터 최신화** 버튼(또는 `--sync-starters`)이
 * 스타터 카탈로그: `data/starter_catalog.json` (「스타터 최신화」가 받는 목록, `tools/gen_catalog.py` 로 생성).
 * 콘텐츠 적합도: `data/starter_profiles.json` (내장 36종의 맵핑·보스·탱킹·저자본·편한 조작 1~5점 + 특화 태그).
 
-## 10. 검증
+## 11. 검증
 
 ```bash
-python -m pytest -q      # 124 tests
+python -m pytest -q      # 162 tests
 ```
 
 * `tests/fixtures/patch_notes_synthetic_full.txt` — GGG 문체를 따른 합성 패치노트.
@@ -246,7 +291,7 @@ python -m pytest -q      # 124 tests
 * `tests/fixtures/patch_notes_poe2_055h.txt` — 실제 PoE2 `0.5.5h Patch Notes` 본문 픽스처.
 * `tests/fixtures/news_rss_poe1.xml`, `forum_patch_notes_poe1.html`, `forum_patch_notes_poe2.html` —
   실제 응답을 3건으로 줄인 목록 픽스처(오프라인/CI 테스트).
-* `pyproject.toml`·`__version__` = **1.2.0**, `pytest -q` **124 tests**, `sys.stdout=None` 스모크 통과.
+* `pyproject.toml`·`__version__` = **1.3.0**, `pytest -q` **162 tests** (37개는 새 웹 API 테스트), `sys.stdout=None` 스모크 통과.
 * 실제 네트워크 실행 결과는 `verification/v1.1.0-live-verification.txt`(와 `.json`)에 있다.
   * 2026-11-27 16:45 KST 기준 목록: **PoE1 59건 · PoE2 30건**, 실패한 출처 없음.
   * PoE1 최신 `3.30.0d Hotfix 3`: 항목 0개(핫픽스 문장) → ⚠ 경고와 함께 빌드 24개 전부 🟢.
@@ -255,7 +300,7 @@ python -m pytest -q      # 124 tests
 * `sys.stdout=None`(windowed exe) 상태에서도 `--version`·`--list-patch-notes`·`--list-builds` 가
   종료코드 0 으로 동작한다(`_ensure_streams()`).
 
-## 11. 한계
+## 12. 한계
 
 * 판정은 어디까지나 **문장 매칭 + 수치 비교**다. "젬이 재작업되어 문장만 바뀐" 경우는 🟡 로만 표시된다.
 * 패치노트가 전직 노티컬 이름만 언급하면(예: `Master Surgeon`) 전직명(`Pathfinder`)만으로는 잡지 못할 수 있다.

@@ -264,4 +264,8 @@ def main(argv: list[str] | None = None) -> int:
             pass
     parser = build_parser()
     args = parser.parse_args(argv)
+    if getattr(args, "gui", False):
+        from .gui import launch
+
+        return launch()
     return run(args)

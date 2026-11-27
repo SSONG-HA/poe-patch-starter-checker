@@ -172,11 +172,17 @@ def resolve_source(source: str) -> str:
     if looks_like_xml(text):
         return text
     path = Path(text)
-    if "\n" not in text and len(text) < 500 and path.exists():
-        body = path.read_text(encoding="utf-8", errors="replace")
-        if looks_like_xml(body):
-            return body
-        return decode_pob_code(body)
+    if "\n" not in text and len(text) < 500:
+        # 짧은 PoB 코드도 파일 경로로 오인해 OSError(파일명 초과)가 나지 않게 한다.
+        try:
+            is_file = path.exists()
+        except OSError:
+            is_file = False
+        if is_file:
+            body = path.read_text(encoding="utf-8", errors="replace")
+            if looks_like_xml(body):
+                return body
+            return decode_pob_code(body)
     if text.startswith("http://") or text.startswith("https://"):
         return decode_pob_code(fetch_pobb(text))
     return decode_pob_code(text)

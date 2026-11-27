@@ -1,43 +1,36 @@
-"""tkinter GUI — 탭 2개: 스타터 생존 검증 / 대폭 상향 탐지.
+"""데스크톱 실행 진입점 — 내장 로컬 웹 대시보드.
 
-tkinter 는 여기서만 쓴다(CLI·테스트는 tkinter 없이 동작).
+v1.3.0 부터 tkinter 화면 대신 `poe_checker/webapp.py` 의 로컬 HTTP 서버가
+`poe_checker/data/web/` 의 다크 골드 대시보드를 서비스하고, `pywebview`
+전용 창으로 띄운다. pywebview/WebView2 런타임이 없으면 크래시하지 않고
+기본 브라우저로 자동 폴백한다(서버는 유지).
+
+CLI·pytest 는 pywebview 없이 이 모듈만 import 해도 동작한다(지연 import).
 """
 from __future__ import annotations
 
-import threading
+import time
 import traceback
 import webbrowser
 from pathlib import Path
 
-from . import APP_TITLE, __version__, analysis, buffs, catalog, datafiles, guide
-from . import library as library_mod, matcher, recommend
-from . import news, patchnotes, pob, report
+from . import (
+    APP_TITLE,
+    __version__,
+    analysis,
+    buffs as buffs_mod,
+    datafiles,
+    matcher,
+    patchnotes,
+    recommend,
+)
+from . import webapp
 
-FONT_CANDIDATES = ("Malgun Gothic", "맑은 고딕", "AppleGothic", "NanumGothic", "Segoe UI")
-MONO_CANDIDATES = ("Consolas", "D2Coding", "Menlo", "DejaVu Sans Mono", "Courier New")
-
-VERDICT_COLORS = {
-    matcher.VERDICT_RED: "#c0392b",
-    matcher.VERDICT_YELLOW: "#b8860b",
-    matcher.VERDICT_GREEN: "#1e824c",
-}
-
-
-def _pick_font(root, candidates, size=10):
-    try:
-        from tkinter import font as tkfont
-
-        available = set(tkfont.families(root))
-    except Exception:  # pragma: no cover
-        available = set()
-    for name in candidates:
-        if name in available:
-            return (name, size)
-    return ("TkDefaultFont", size)
+WINDOW_TITLE = f"{APP_TITLE} v{__version__}"
 
 
 # ---------------------------------------------------------------------------
-# tkinter 없는 순수 로직 (테스트 대상)
+# tkinter 없는 순수 로직 (테스트·내보내기용 — v1.2.0 과 호환)
 # ---------------------------------------------------------------------------
 
 def verdict_rows(result: analysis.AnalysisResult) -> list[tuple[str, ...]]:
@@ -45,7 +38,8 @@ def verdict_rows(result: analysis.AnalysisResult) -> list[tuple[str, ...]]:
     for index, verdict in enumerate(result.verdicts, start=1):
         profile = verdict.profile
         source = " · ".join(
-            x for x in (verdict.kind_label, verdict.origin, f"트리 {profile.tree_version}" if profile.tree_version else "") if x
+            x for x in (verdict.kind_label, verdict.origin,
+                        f"트리 {profile.tree_version}" if profile.tree_version else "") if x
         )
         rows.append(
             (
@@ -123,7 +117,6 @@ def buff_rows(result: analysis.AnalysisResult) -> list[tuple[str, ...]]:
 
 
 def recommend_detail_text(entry: recommend.Recommendation, category: str) -> str:
-    """추천 탭 상세 — 적합도 별점·패치 보정·추천 사유."""
     fit = entry.fit
     lines = [f"{entry.build_name}   [{entry.score_for(category):.2f}]  {entry.verdict_label}"]
     lines.append(recommend.CATEGORY_LABELS.get(category, category))
@@ -150,7 +143,7 @@ def recommend_detail_text(entry: recommend.Recommendation, category: str) -> str
     return "\n".join(lines)
 
 
-def buff_detail_text(cand: buffs.BuffCandidate) -> str:
+def buff_detail_text(cand: buffs_mod.BuffCandidate) -> str:
     lines = [f"{cand.name}  ({cand.kind_label})"]
     lines.append(f"최대 상향 {cand.score:+.1f}% · 합산 {cand.total:+.1f}% · {cand.occurrences}건")
     if cand.seeds:
@@ -172,1013 +165,226 @@ def buff_detail_text(cand: buffs.BuffCandidate) -> str:
 
 
 # ---------------------------------------------------------------------------
-# GUI
+# pywebview 네이티브 브리지 (파일 선택·저장 대화상자, 외부 링크)
 # ---------------------------------------------------------------------------
 
-def launch() -> int:  # pragma: no cover - GUI 는 수동/윈도우 실행
-    import tkinter as tk
-    from tkinter import ttk
-
-    root = tk.Tk()
-    root.title(f"{APP_TITLE} v{__version__}")
-    root.geometry("1240x820")
-    root.minsize(980, 640)
-    try:  # Windows 고해상도 대응
-        import ctypes
-
-        ctypes.windll.shcore.SetProcessDpiAwareness(1)
-    except Exception:
-        pass
-
-    app = App(root)
-    root.mainloop()
-    return 0
-
-
-class App:  # pragma: no cover - GUI
-    def __init__(self, root):
-        import tkinter as tk
-        from tkinter import ttk
-
-        self.tk = tk
-        self.ttk = ttk
-        self.root = root
-        self.library = library_mod.BuildLibrary.load()
-        self.result: analysis.AnalysisResult | None = None
-        self.notes: patchnotes.PatchNotes | None = None
-        self.game = datafiles.GAME_POE1
-        self.feed: news.NewsFeed | None = None
-        self._patch_refs: list[news.PatchNoteRef] = []
-        self._busy = False
-        self._pending: dict | None = None
-
-        self.font = _pick_font(root, FONT_CANDIDATES, 10)
-        self.mono = _pick_font(root, MONO_CANDIDATES, 10)
-        self._style()
-        self._build_header()
-        self._build_tabs()
-        self._build_statusbar()
-        self.refresh_builds()
-        self.root.after(120, self._poll)
-        self.root.after(400, self.refresh_patch_list)
-
-    # -- 구성 -----------------------------------------------------------
-    def _style(self):
-        style = self.ttk.Style(self.root)
-        for theme in ("vista", "clam", "default"):
-            if theme in style.theme_names():
-                style.theme_use(theme)
-                break
-        style.configure(".", font=self.font)
-        style.configure("Head.TLabel", font=(self.font[0], 15, "bold"))
-        style.configure("Sub.TLabel", foreground="#555555")
-        style.configure("Treeview", rowheight=24, font=self.font)
-        style.configure("Treeview.Heading", font=(self.font[0], 10, "bold"))
-        style.configure("Run.TButton", font=(self.font[0], 11, "bold"), padding=(14, 8))
-
-    def _build_header(self):
-        tk, ttk = self.tk, self.ttk
-        header = ttk.Frame(self.root, padding=(14, 10, 14, 4))
-        header.pack(fill="x")
-        ttk.Label(header, text=APP_TITLE, style="Head.TLabel").pack(side="left")
-        ttk.Label(
-            header,
-            text="Day 1, poe.ninja 없이 패치노트만으로 스타터 생존·상향 스킬 확인",
-            style="Sub.TLabel",
-        ).pack(side="left", padx=(12, 0), pady=(6, 0))
-        ttk.Label(header, text=f"v{__version__}", style="Sub.TLabel").pack(side="right")
-        self.game_var = tk.StringVar(value=datafiles.GAME_POE1)
-        game_box = ttk.Frame(header)
-        game_box.pack(side="right", padx=(0, 14))
-        ttk.Label(game_box, text="게임").pack(side="left", padx=(0, 4))
-        for game in datafiles.GAMES:
-            ttk.Radiobutton(
-                game_box,
-                text=datafiles.GAME_VERSION_LABELS[game],
-                value=game,
-                variable=self.game_var,
-                command=self.set_game,
-            ).pack(side="left", padx=2)
-
-    def _build_tabs(self):
-        ttk = self.ttk
-        self.tabs = ttk.Notebook(self.root)
-        self.tabs.pack(fill="both", expand=True, padx=12, pady=(0, 6))
-        self.tab_survival = ttk.Frame(self.tabs, padding=8)
-        self.tab_buffs = ttk.Frame(self.tabs, padding=8)
-        self.tab_recommend = ttk.Frame(self.tabs, padding=8)
-        self.tab_guide = ttk.Frame(self.tabs, padding=8)
-        self.tabs.add(self.tab_survival, text=" 1. 스타터 생존 검증 ")
-        self.tabs.add(self.tab_buffs, text=" 2. 대폭 상향(버프) 탐지 ")
-        self.tabs.add(self.tab_recommend, text=" 3. 이번 패치 추천 스타터 ")
-        self.tabs.add(self.tab_guide, text=" 4. 빌드 가이드 & 빌드업 ")
-
-        self._build_survival_tab()
-        self._build_buff_tab()
-        self._build_recommend_tab()
-        self._build_guide_tab()
-
-    def _build_statusbar(self):
-        ttk = self.ttk
-        bar = ttk.Frame(self.root, padding=(14, 4, 14, 8))
-        bar.pack(fill="x")
-        self.status_var = self.tk.StringVar(value=f"라이브러리: {self.library.path}")
-        ttk.Label(bar, textvariable=self.status_var, style="Sub.TLabel").pack(side="left")
-        self.count_var = self.tk.StringVar(value="")
-        ttk.Label(bar, textvariable=self.count_var, style="Sub.TLabel").pack(side="right")
-
-    # -- 탭 1 -----------------------------------------------------------
-    def _build_survival_tab(self):
-        tk, ttk = self.tk, self.ttk
-        paned = ttk.Panedwindow(self.tab_survival, orient="horizontal")
-        paned.pack(fill="both", expand=True)
-
-        left = ttk.Frame(paned, padding=(0, 0, 8, 0))
-        right = ttk.Frame(paned)
-        paned.add(left, weight=2)
-        paned.add(right, weight=3)
-
-        ttk.Label(left, text="빌드 라이브러리").pack(anchor="w")
-        columns = ("name", "kind", "class", "main", "tree")
-        self.lib_tree = ttk.Treeview(left, columns=columns, show="headings", height=10)
-        for column, title, width in (
-            ("name", "이름", 190),
-            ("kind", "종류", 90),
-            ("class", "전직", 80),
-            ("main", "주력 스킬", 150),
-            ("tree", "트리", 45),
-        ):
-            self.lib_tree.heading(column, text=title)
-            self.lib_tree.column(column, width=width, anchor="w")
-        self.lib_tree.pack(fill="both", expand=True, pady=(4, 6))
-
-        buttons = ttk.Frame(left)
-        buttons.pack(fill="x")
-        ttk.Button(buttons, text="빌드 추가", command=self.add_build).pack(side="left")
-        ttk.Button(buttons, text="선택 삭제", command=self.remove_build).pack(side="left", padx=4)
-        ttk.Button(buttons, text="새로고침", command=self.refresh_builds).pack(side="left")
-        ttk.Button(buttons, text="스타터 최신화", command=self.sync_starters).pack(side="left", padx=4)
-        ttk.Label(
-            left,
-            text="pobb.in 주소, PoB 코드, .xml 파일을 추가할 수 있습니다.",
-            style="Sub.TLabel",
-        ).pack(anchor="w", pady=(6, 0))
-
-        # -- 패치노트 입력
-        source = ttk.LabelFrame(right, text=" 패치노트 ", padding=8)
-        source.pack(fill="x")
-
-        news_row = ttk.Frame(source)
-        news_row.pack(fill="x", pady=(0, 6))
-        ttk.Label(news_row, text="최신 패치노트").pack(side="left")
-        self.patch_choice = tk.StringVar()
-        self.patch_combo = ttk.Combobox(
-            news_row, textvariable=self.patch_choice, state="readonly", width=58
-        )
-        self.patch_combo.pack(side="left", fill="x", expand=True, padx=6)
-        ttk.Button(news_row, text="목록 새로고침", command=self.refresh_patch_list).pack(side="left")
-        ttk.Button(news_row, text="선택 불러오기", command=self.load_selected_patch).pack(side="left", padx=4)
-
-        row = ttk.Frame(source)
-        row.pack(fill="x")
-        ttk.Label(row, text="주소").pack(side="left")
-        self.url_var = tk.StringVar()
-        ttk.Entry(row, textvariable=self.url_var).pack(side="left", fill="x", expand=True, padx=6)
-        ttk.Button(row, text="불러오기", command=self.fetch_url).pack(side="left")
-        ttk.Button(row, text="파일…", command=self.pick_file).pack(side="left", padx=4)
-
-        paste_row = ttk.Frame(source)
-        paste_row.pack(fill="x", pady=(8, 0))
-        ttk.Label(paste_row, text="또는 본문 붙여넣기").pack(anchor="w")
-        self.patch_text = tk.Text(paste_row, height=7, wrap="word", font=self.font, undo=True)
-        self.patch_text.pack(fill="both", expand=True, pady=(4, 6))
-
-        action = ttk.Frame(source)
-        action.pack(fill="x")
-        self.run_button = ttk.Button(
-            action, text="검사 실행", style="Run.TButton", command=self.run_check
-        )
-        self.run_button.pack(side="left")
-        self.progress = ttk.Progressbar(action, mode="indeterminate", length=180)
-        self.progress.pack(side="left", padx=10)
-        ttk.Button(action, text="리포트 저장", command=self.save_report).pack(side="right")
-
-        # -- 결과
-        result_frame = ttk.Frame(right)
-        result_frame.pack(fill="both", expand=True, pady=(8, 0))
-        self.result_paned = ttk.Panedwindow(result_frame, orient="vertical")
-        self.result_paned.pack(fill="both", expand=True)
-
-        top = ttk.Frame(self.result_paned)
-        bottom = ttk.Frame(self.result_paned)
-        self.result_paned.add(top, weight=3)
-        self.result_paned.add(bottom, weight=2)
-
-        columns = ("no", "verdict", "name", "source", "class", "level", "summary")
-        self.result_tree = ttk.Treeview(top, columns=columns, show="headings", height=8)
-        for column, title, width in (
-            ("no", "#", 32),
-            ("verdict", "판정", 110),
-            ("name", "빌드", 210),
-            ("source", "출처/버전", 170),
-            ("class", "전직", 80),
-            ("level", "레벨", 50),
-            ("summary", "요약", 260),
-        ):
-            self.result_tree.heading(column, text=title)
-            self.result_tree.column(column, width=width, anchor="w")
-        scroll = ttk.Scrollbar(top, orient="vertical", command=self.result_tree.yview)
-        self.result_tree.configure(yscrollcommand=scroll.set)
-        self.result_tree.pack(side="left", fill="both", expand=True)
-        scroll.pack(side="right", fill="y")
-        self.result_tree.bind("<<TreeviewSelect>>", self.show_verdict_detail)
-
-        self.detail = tk.Text(bottom, wrap="word", font=self.mono, height=12)
-        detail_scroll = ttk.Scrollbar(bottom, orient="vertical", command=self.detail.yview)
-        self.detail.configure(yscrollcommand=detail_scroll.set)
-        self.detail.pack(side="left", fill="both", expand=True)
-        detail_scroll.pack(side="right", fill="y")
-        self._configure_tags(self.detail)
-
-    # -- 탭 2 -----------------------------------------------------------
-    def _build_buff_tab(self):
-        tk, ttk = self.tk, self.ttk
-        top = ttk.Frame(self.tab_buffs)
-        top.pack(fill="x")
-        ttk.Label(top, text="최소 상향률(%)").pack(side="left")
-        self.min_buff_var = tk.StringVar(value="3")
-        ttk.Spinbox(top, from_=0, to=100, increment=1, width=6, textvariable=self.min_buff_var).pack(
-            side="left", padx=(4, 12)
-        )
-        ttk.Label(top, text="표시 개수").pack(side="left")
-        self.top_var = tk.StringVar(value="15")
-        ttk.Spinbox(top, from_=5, to=100, increment=1, width=6, textvariable=self.top_var).pack(
-            side="left", padx=(4, 12)
-        )
-        ttk.Label(top, text="유형").pack(side="left")
-        self.kind_var = tk.StringVar(value="전체")
-        ttk.Combobox(
-            top,
-            textvariable=self.kind_var,
-            values=("전체", "스킬", "서포트", "유니크", "전직", "키스톤"),
-            state="readonly",
-            width=8,
-        ).pack(side="left", padx=(4, 12))
-        ttk.Button(top, text="다시 계산", command=lambda: self.show_buffs()).pack(side="left")
-        ttk.Label(
-            top,
-            text="패치노트는 1번 탭에서 불러옵니다.",
-            style="Sub.TLabel",
-        ).pack(side="left", padx=12)
-
-        paned = ttk.Panedwindow(self.tab_buffs, orient="vertical")
-        paned.pack(fill="both", expand=True, pady=(8, 0))
-        table = ttk.Frame(paned)
-        detail = ttk.Frame(paned)
-        paned.add(table, weight=3)
-        paned.add(detail, weight=2)
-
-        columns = ("no", "name", "kind", "score", "count", "seeds")
-        self.buff_tree = ttk.Treeview(table, columns=columns, show="headings", height=10)
-        for column, title, width in (
-            ("no", "#", 40),
-            ("name", "대상", 260),
-            ("kind", "유형", 110),
-            ("score", "상향", 90),
-            ("count", "건수", 60),
-            ("seeds", "연결된 빌드", 380),
-        ):
-            self.buff_tree.heading(column, text=title)
-            self.buff_tree.column(column, width=width, anchor="w")
-        scroll = ttk.Scrollbar(table, orient="vertical", command=self.buff_tree.yview)
-        self.buff_tree.configure(yscrollcommand=scroll.set)
-        self.buff_tree.pack(side="left", fill="both", expand=True)
-        scroll.pack(side="right", fill="y")
-        self.buff_tree.bind("<<TreeviewSelect>>", self.show_buff_detail)
-        self.buff_tree.bind("<Double-1>", self.open_buff_link)
-
-        self.buff_detail = tk.Text(detail, wrap="word", font=self.mono, height=12)
-        buff_scroll = ttk.Scrollbar(detail, orient="vertical", command=self.buff_detail.yview)
-        self.buff_detail.configure(yscrollcommand=buff_scroll.set)
-        self.buff_detail.pack(side="left", fill="both", expand=True)
-        buff_scroll.pack(side="right", fill="y")
-        self._configure_tags(self.buff_detail)
-
-    # -- 탭 3: 이번 패치 추천 스타터 ------------------------------------
-    def _build_recommend_tab(self):
-        tk, ttk = self.tk, self.ttk
-        top = ttk.Frame(self.tab_recommend)
-        top.pack(fill="x")
-        ttk.Label(top, text="목적").pack(side="left")
-        self.rec_category = tk.StringVar(value=recommend.CATEGORY_LABELS["allrounder"])
-        self.rec_category_box = ttk.Combobox(
-            top,
-            textvariable=self.rec_category,
-            values=list(recommend.CATEGORY_LABELS.values()),
-            state="readonly",
-            width=22,
-        )
-        self.rec_category_box.pack(side="left", padx=(4, 12))
-        self.rec_category_box.bind("<<ComboboxSelected>>", lambda _e: self.show_recommendations())
-        ttk.Label(top, text="표시").pack(side="left")
-        self.rec_limit_var = tk.StringVar(value="10")
-        ttk.Spinbox(top, from_=3, to=36, increment=1, width=5,
-                    textvariable=self.rec_limit_var).pack(side="left", padx=(4, 12))
-        ttk.Button(top, text="다시 계산", command=self.show_recommendations).pack(side="left")
-        ttk.Button(top, text="가이드 보기", command=self.open_recommendation_guide).pack(side="left", padx=4)
-        ttk.Label(
-            top,
-            text="패치노트 검사를 실행하면 채워집니다. 더블클릭하면 그 빌드의 가이드로 이동합니다.",
-            style="Sub.TLabel",
-        ).pack(side="left", padx=10)
-
-        paned = ttk.Panedwindow(self.tab_recommend, orient="vertical")
-        paned.pack(fill="both", expand=True, pady=(8, 0))
-        table = ttk.Frame(paned)
-        detail = ttk.Frame(paned)
-        paned.add(table, weight=3)
-        paned.add(detail, weight=2)
-
-        columns = ("no", "name", "verdict", "score", "mapping", "bossing",
-                   "tank", "budget", "ease", "reason")
-        self.rec_tree = ttk.Treeview(table, columns=columns, show="headings", height=9)
-        for column, title, width in (
-            ("no", "#", 34),
-            ("name", "빌드", 250),
-            ("verdict", "판정", 100),
-            ("score", "점수", 56),
-            ("mapping", "맵핑", 46),
-            ("bossing", "보스", 46),
-            ("tank", "탱킹", 46),
-            ("budget", "저자본", 52),
-            ("ease", "편한", 46),
-            ("reason", "추천 사유", 400),
-        ):
-            self.rec_tree.heading(column, text=title)
-            self.rec_tree.column(column, width=width, anchor="w")
-        scroll = ttk.Scrollbar(table, orient="vertical", command=self.rec_tree.yview)
-        self.rec_tree.configure(yscrollcommand=scroll.set)
-        self.rec_tree.pack(side="left", fill="both", expand=True)
-        scroll.pack(side="right", fill="y")
-        self.rec_tree.bind("<<TreeviewSelect>>", self.show_recommend_detail)
-        self.rec_tree.bind("<Double-1>", self.open_recommendation_guide)
-
-        self.rec_detail = tk.Text(detail, wrap="word", font=self.mono, height=11)
-        detail_scroll = ttk.Scrollbar(detail, orient="vertical", command=self.rec_detail.yview)
-        self.rec_detail.configure(yscrollcommand=detail_scroll.set)
-        self.rec_detail.pack(side="left", fill="both", expand=True)
-        detail_scroll.pack(side="right", fill="y")
-        self._configure_tags(self.rec_detail)
-        self._rec_view: list[recommend.Recommendation] = []
-
-    # -- 탭 4: 빌드 가이드 & 빌드업 ------------------------------------
-    def _build_guide_tab(self):
-        tk, ttk = self.tk, self.ttk
-        top = ttk.Frame(self.tab_guide)
-        top.pack(fill="x")
-        ttk.Label(top, text="빌드").pack(side="left")
-        self.guide_choice = tk.StringVar()
-        self.guide_combo = ttk.Combobox(
-            top, textvariable=self.guide_choice, state="readonly", width=48
-        )
-        self.guide_combo.pack(side="left", padx=6)
-        self.guide_combo.bind("<<ComboboxSelected>>", lambda _e: self.generate_guide())
-        ttk.Button(top, text="가이드 생성", command=self.generate_guide).pack(side="left")
-        ttk.Button(top, text="PoB 코드 복사", command=self.copy_guide_code).pack(side="left", padx=4)
-        ttk.Button(top, text="pobb.in 열기", command=self.open_guide_source).pack(side="left")
-        ttk.Button(top, text="가이드 크게 보기 (HTML)", command=self.export_guide_html).pack(
-            side="left", padx=4
-        )
-
-        self.guide_status = tk.StringVar(
-            value="빌드를 고르면 PoB XML 로 스킬 세트·장비 세트·전직·메모 가이드를 만듭니다."
-        )
-        ttk.Label(self.tab_guide, textvariable=self.guide_status, style="Sub.TLabel").pack(
-            anchor="w", pady=(6, 0)
-        )
-
-        body = ttk.Frame(self.tab_guide)
-        body.pack(fill="both", expand=True, pady=(6, 0))
-        self.guide_text = tk.Text(body, wrap="word", font=self.mono)
-        scroll = ttk.Scrollbar(body, orient="vertical", command=self.guide_text.yview)
-        self.guide_text.configure(yscrollcommand=scroll.set)
-        self.guide_text.pack(side="left", fill="both", expand=True)
-        scroll.pack(side="right", fill="y")
-        self._configure_tags(self.guide_text)
-        self._guide: guide.Guide | None = None
-        self._guide_ids: list[str] = []
-
-    def _configure_tags(self, widget):
-        widget.tag_configure("red", foreground=VERDICT_COLORS[matcher.VERDICT_RED])
-        widget.tag_configure("yellow", foreground=VERDICT_COLORS[matcher.VERDICT_YELLOW])
-        widget.tag_configure("green", foreground=VERDICT_COLORS[matcher.VERDICT_GREEN])
-        widget.tag_configure("dim", foreground="#666666")
-        widget.tag_configure("bold", font=(self.mono[0], 11, "bold"))
-        widget.configure(state="disabled")
-
-    # -- 라이브러리 ------------------------------------------------------
-    def refresh_builds(self):
-        tree = self.lib_tree
-        tree.delete(*tree.get_children())
-        rows = self.library.rows(self.game)
-        for row in rows:
-            label = row["name"] if not row["error"] else f"{row['name']} (오류)"
-            tree.insert(
-                "", "end", iid=row["id"],
-                values=(label, row["kind"], row["class"], row["main"], row["tree"]),
-            )
-        game_label = datafiles.GAME_VERSION_LABELS.get(self.game, self.game)
-        self.status_var.set(
-            f"{game_label} · 빌드 {len(rows)}개 · 라이브러리: {self.library.path}"
-        )
-        self.refresh_guide_choices()
-
-    # -- 탭 3: 추천 ------------------------------------------------------
-    def _rec_category_key(self) -> str:
-        label = self.rec_category.get()
-        for key, value in recommend.CATEGORY_LABELS.items():
-            if value == label:
-                return key
-        return "allrounder"
-
-    def _rec_limit(self) -> int:
-        try:
-            return max(1, int(self.rec_limit_var.get()))
-        except ValueError:
-            return 10
-
-    def show_recommendations(self):
-        tree = self.rec_tree
-        tree.delete(*tree.get_children())
-        board = getattr(self.result, "recommendations", None) if self.result else None
-        if board is None:
-            self._set_text(self.rec_detail, "패치노트를 불러오고 '검사 실행'을 하면 추천 스타터가 채워집니다.")
-            return
-        category = self._rec_category_key()
-        limit = self._rec_limit()
-        self._rec_view = board.top(category, limit)
-        for row, entry in zip(recommend.recommend_rows(board, category, limit), self._rec_view):
-            tree.insert("", "end", iid=entry.build_id, values=row)
-        if self._rec_view:
-            first = self._rec_view[0].build_id
-            tree.selection_set(first)
-            tree.focus(first)
-            self.show_recommend_detail()
-        self.count_var.set(
-            f"{board.game} · {recommend.CATEGORY_LABELS[category]} {len(self._rec_view)}개"
-        )
-
-    def show_recommend_detail(self, _event=None):
-        selection = self.rec_tree.selection()
-        if not selection:
-            return
-        build_id = selection[0]
-        entry = next((row for row in self._rec_view if row.build_id == build_id), None)
-        if entry is None:
-            return
-        self._set_text(self.rec_detail, recommend_detail_text(entry, self._rec_category_key()))
-
-    def open_recommendation_guide(self, _event=None):
-        selection = self.rec_tree.selection()
-        if not selection:
-            return
-        build_id = selection[0]
-        if self.library.get(build_id) is None:
-            return
-        self.refresh_guide_choices(select_id=build_id)
-        self.generate_guide()
-
-    # -- 탭 4: 가이드 ----------------------------------------------------
-    def refresh_guide_choices(self, select_id: str | None = None):
-        if not hasattr(self, "guide_combo"):
-            return
-        builds = self.library.builds_for(self.game)
-        self._guide_ids = [build.id for build in builds]
-        self.guide_combo.configure(values=[build.name for build in builds])
-        index = None
-        if select_id and select_id in self._guide_ids:
-            index = self._guide_ids.index(select_id)
-        elif self.guide_combo.current() < 0 and builds:
-            index = 0
-        if index is not None:
-            self.guide_combo.current(index)
-
-    def _selected_guide_build(self):
-        index = self.guide_combo.current()
-        if index < 0 or index >= len(getattr(self, "_guide_ids", [])):
-            return None
-        return self.library.get(self._guide_ids[index])
-
-    def generate_guide(self):
-        from tkinter import messagebox
-
-        build = self._selected_guide_build()
-        if build is None:
-            messagebox.showinfo(APP_TITLE, "가이드를 만들 빌드를 골라 주세요.")
-            return
-        self.guide_status.set(f"{build.name} 가이드를 만드는 중…")
-        try:
-            made = guide.build_guide(build, result=self.result)
-        except Exception as exc:  # noqa: BLE001
-            self._guide = None
-            self._set_text(self.guide_text, "")
-            self.guide_status.set(f"가이드를 만들지 못했습니다: {exc}")
-            messagebox.showerror(APP_TITLE, f"가이드를 만들지 못했습니다: {exc}")
-            return
-        self._guide = made
-        self._set_text(self.guide_text, guide.render_text(made))
-        bits = [
-            f"{made.name}",
-            f"스킬 세트 {len(made.skill_sets)}",
-            f"장비 세트 {len(made.item_sets)}",
-            f"PoB 코드 {len(made.code):,}자",
-        ]
-        if made.patch is not None:
-            bits.append(f"패치 영향 포함({made.patch.label})")
-        self.guide_status.set(" · ".join(bits))
-        self.tabs.select(self.tab_guide)
-
-    def copy_guide_code(self):
-        from tkinter import messagebox
-
-        if self._guide is None:
-            self.generate_guide()
-        if self._guide is None:
-            return
-        try:
-            self.root.clipboard_clear()
-            self.root.clipboard_append(self._guide.code)
-            self.root.update_idletasks()
-        except Exception as exc:  # noqa: BLE001
-            messagebox.showerror(APP_TITLE, f"클립보드에 복사하지 못했습니다: {exc}")
-            return
-        self.guide_status.set(
-            "PoB 코드를 클립보드에 복사했습니다. PoB → Import → 'Import Code'에 붙여넣으세요."
-        )
-
-    def open_guide_source(self):
-        from tkinter import messagebox
-
-        if self._guide is None:
-            self.generate_guide()
-        if self._guide is None:
-            return
-        if not self._guide.source_url:
-            messagebox.showinfo(APP_TITLE, "이 빌드에는 pobb.in 원본 링크가 없습니다.")
-            return
-        webbrowser.open(self._guide.source_url)
-
-    def export_guide_html(self):
-        from tkinter import messagebox
-
-        if self._guide is None:
-            self.generate_guide()
-        if self._guide is None:
-            return
-        try:
-            path = guide.export_html(self._guide)
-        except OSError as exc:
-            messagebox.showerror(APP_TITLE, f"HTML 가이드를 저장하지 못했습니다: {exc}")
-            return
-        webbrowser.open(path.resolve().as_uri())
-        self.guide_status.set(f"HTML 가이드를 만들었습니다: {path}")
-
-    def sync_starters(self):
-        if self._busy:
-            return
-        self._set_busy(True, "스타터 최신화 중… (원격 카탈로그)")
-
-        def work():
-            try:
-                result = catalog.sync_library(self.library)
-                self._pending = {"kind": "sync", "report": result}
-            except Exception as exc:  # noqa: BLE001
-                self._pending = {"kind": "sync_error", "message": str(exc)}
-
-        threading.Thread(target=work, daemon=True).start()
-
-    # -- 게임 전환 -------------------------------------------------------
-    def set_game(self):
-        game = datafiles.normalize_game(self.game_var.get())
-        if game == self.game:
-            return
-        self.game = game
-        self.result = None
-        self.notes = None
-        for widget in (self.result_tree,):
-            widget.delete(*widget.get_children())
-        self._set_text(self.detail, "")
-        self.buff_tree.delete(*self.buff_tree.get_children())
-        self._set_text(self.buff_detail, "")
-        self.count_var.set("")
-        self.patch_text.delete("1.0", "end")
-        self.url_var.set("")
-        self.refresh_builds()
-        self.refresh_patch_list()
-        if hasattr(self, "rec_tree"):
-            self.rec_tree.delete(*self.rec_tree.get_children())
-            self._rec_view = []
-        if hasattr(self, "guide_text"):
-            self._guide = None
-            self._set_text(self.guide_text, "")
-            self.guide_status.set("빌드를 고르면 가이드를 만듭니다.")
-
-    def refresh_patch_list(self):
-        game = self.game
-        self.status_var.set(f"{datafiles.GAME_LABELS.get(game, game)} 패치노트 목록을 불러오는 중…")
-
-        def work():
-            try:
-                feed = news.fetch_news()
-                self._pending = {"kind": "news", "feed": feed}
-            except Exception as exc:  # noqa: BLE001
-                self._pending = {"kind": "news_error", "message": str(exc)}
-
-        threading.Thread(target=work, daemon=True).start()
-
-    def load_selected_patch(self):
-        from tkinter import messagebox
-
-        choice = self.patch_choice.get().strip()
-        ref = next((r for r in self._patch_refs if r.display() == choice), None)
-        if ref is None:
-            messagebox.showinfo(APP_TITLE, "불러올 패치노트를 목록에서 선택해 주세요.")
-            return
-        self.url_var.set(ref.url)
-        self._set_busy(True, f"{ref.display()} 본문을 가져오는 중…")
-
-        def work():
-            try:
-                text, title = patchnotes.fetch_patch_text(ref.url)
-                self._pending = {
-                    "kind": "text", "text": text, "title": title,
-                    "url": ref.url, "game": ref.game,
-                }
-            except Exception as exc:  # noqa: BLE001
-                self._pending = {"kind": "error", "message": str(exc)}
-
-        threading.Thread(target=work, daemon=True).start()
-
-    def _selected_build_id(self) -> str | None:
-        selection = self.lib_tree.selection()
-        return selection[0] if selection else None
-
-    def add_build(self):
-        tk, ttk = self.tk, self.ttk
-        dialog = tk.Toplevel(self.root)
-        dialog.title("빌드 추가")
-        dialog.transient(self.root)
-        dialog.grab_set()
-        dialog.geometry("620x300")
-
-        ttk.Label(
-            dialog,
-            text="pobb.in 주소, PoB 코드, PoB .xml 파일 경로 중 하나를 넣어 주세요.",
-        ).pack(anchor="w", padx=12, pady=(12, 4))
-        text = tk.Text(dialog, height=8, wrap="word", font=self.mono)
-        text.pack(fill="both", expand=True, padx=12, pady=4)
-
-        name_row = ttk.Frame(dialog)
-        name_row.pack(fill="x", padx=12)
-        ttk.Label(name_row, text="이름(선택)").pack(side="left")
-        name_var = tk.StringVar()
-        ttk.Entry(name_row, textvariable=name_var).pack(side="left", fill="x", expand=True, padx=6)
-
-        status = ttk.Label(dialog, text="", style="Sub.TLabel")
-        status.pack(anchor="w", padx=12)
-
-        def submit():
-            source = text.get("1.0", "end").strip()
-            if not source:
-                status.configure(text="코드나 주소를 입력해 주세요.")
-                return
-            status.configure(text="확인 중…")
-            dialog.update_idletasks()
-            try:
-                entry = self.library.add(source, name=name_var.get().strip(), kind="custom")
-            except (pob.PobError, library_mod.LibraryError) as exc:
-                status.configure(text=f"추가 실패: {exc}")
-                return
-            game = datafiles.normalize_game(entry.game)
-            if game != self.game:
-                self.game_var.set(game)
-                self.game = game
-                self.refresh_patch_list()
-            self.refresh_builds()
-            self.status_var.set(f"추가됨: {entry.name}")
-            dialog.destroy()
-            # 추가한 빌드의 가이드를 바로 만들어 준다(파싱→저장→가이드).
-            self.refresh_guide_choices(select_id=entry.id)
-            self.generate_guide()
-
-        buttons = ttk.Frame(dialog)
-        buttons.pack(fill="x", padx=12, pady=10)
-        ttk.Button(buttons, text="추가", command=submit).pack(side="right")
-        ttk.Button(buttons, text="취소", command=dialog.destroy).pack(side="right", padx=6)
-
-    def remove_build(self):
-        from tkinter import messagebox
-
-        build_id = self._selected_build_id()
-        if not build_id:
-            messagebox.showinfo(APP_TITLE, "삭제할 빌드를 선택해 주세요.")
-            return
-        build = self.library.get(build_id)
-        if not build:
-            return
-        if not messagebox.askyesno(APP_TITLE, f"'{build.name}' 을(를) 라이브러리에서 삭제할까요?"):
-            return
-        self.library.remove(build_id)
-        self.refresh_builds()
-
-    # -- 패치노트 --------------------------------------------------------
-    def fetch_url(self):
-        from tkinter import messagebox
-
-        url = self.url_var.get().strip()
-        if not url:
-            messagebox.showinfo(APP_TITLE, "패치노트 주소를 입력해 주세요.")
-            return
-        self._set_busy(True, "패치노트를 불러오는 중…")
-
-        def work():
-            try:
-                text, title = patchnotes.fetch_patch_text(url)
-                self._pending = {"kind": "text", "text": text, "title": title, "url": url}
-            except Exception as exc:  # noqa: BLE001
-                self._pending = {"kind": "error", "message": str(exc)}
-
-        threading.Thread(target=work, daemon=True).start()
-
-    def pick_file(self):
-        from tkinter import filedialog, messagebox
-
-        path = filedialog.askopenfilename(
-            title="패치노트 텍스트 선택",
-            filetypes=[("텍스트", "*.txt *.md"), ("모든 파일", "*.*")],
+class NativeApi:
+    """JS `window.pywebview.api.*` 로 노출되는 로컬 기능 모음."""
+
+    def __init__(self, state: webapp.AppState):
+        self.state = state
+        self.window = None
+
+    # -- 파일 선택 ---------------------------------------------------------
+    def pick_patch_file(self) -> dict:
+        path = self._dialog(
+            "open",
+            file_types=("패치노트 텍스트 (*.txt;*.md)", "모든 파일 (*.*)"),
         )
         if not path:
-            return
+            return {"cancelled": True}
         try:
             text = patchnotes.load_patch_file(path)
         except OSError as exc:
-            messagebox.showerror(APP_TITLE, f"파일을 읽지 못했습니다: {exc}")
-            return
-        self.patch_text.configure(state="normal")
-        self.patch_text.delete("1.0", "end")
-        self.patch_text.insert("1.0", text)
-        self.status_var.set(f"패치노트 파일: {path}")
+            return {"error": f"파일을 읽지 못했습니다: {exc}"}
+        return {"path": path, "name": Path(path).name, "text": text, "chars": len(text)}
 
-    def run_check(self):
-        from tkinter import messagebox
-
-        if self._busy:
-            return
-        url = self.url_var.get().strip()
-        pasted = self.patch_text.get("1.0", "end").strip()
-        if not pasted and not url:
-            messagebox.showinfo(
-                APP_TITLE, "패치노트 주소를 입력하거나 본문을 붙여넣어 주세요."
-            )
-            return
-
-        self._set_busy(True, "검사 중…")
-
-        def work():
-            try:
-                if pasted:
-                    notes = patchnotes.parse_patch_notes(
-                        pasted, source="붙여넣은 텍스트", game=self.game
-                    )
-                else:
-                    body, title = patchnotes.fetch_patch_text(url)
-                    notes = patchnotes.parse_patch_notes(
-                        body, title=title, source=url, game=self.game
-                    )
-                result = analysis.analyze(
-                    self.library, notes, top=self._top_n(), min_buff=self._min_buff(),
-                    game=self.game,
-                )
-                self._pending = {"kind": "result", "result": result}
-            except Exception as exc:  # noqa: BLE001
-                self._pending = {"kind": "error", "message": str(exc)}
-
-        threading.Thread(target=work, daemon=True).start()
-
-    def _top_n(self) -> int:
-        try:
-            return max(1, int(self.top_var.get()))
-        except ValueError:
-            return 15
-
-    def _min_buff(self) -> float:
-        try:
-            return max(0.0, float(self.min_buff_var.get()))
-        except ValueError:
-            return 3.0
-
-    # -- 결과 표시 -------------------------------------------------------
-    def _poll(self):
-        if self._pending:
-            pending, self._pending = self._pending, None
-            self._handle_pending(pending)
-        self.root.after(150, self._poll)
-
-    def _handle_pending(self, pending: dict):
-        from tkinter import messagebox
-
-        kind = pending.get("kind")
-        if kind == "news":
-            feed = pending["feed"]
-            self.feed = feed
-            refs = feed.filtered(game=self.game)[: (60 if self.game == datafiles.GAME_POE2 else 60)]
-            self._patch_refs = refs
-            values = [ref.display() for ref in refs]
-            self.patch_combo.configure(values=values)
-            if values:
-                self.patch_combo.current(0)
-            counts = feed.counts()
-            note = " · ".join(x for x in feed.errors if x)
-            self.status_var.set(
-                f"패치노트 목록: {datafiles.GAME_LABELS.get(self.game, self.game)} {len(refs)}건"
-                f" (PoE1 {counts.get('poe1', 0)} · PoE2 {counts.get('poe2', 0)})"
-                + (f"  ⚠ {note}" if note else "")
-            )
-            return
-        if kind == "news_error":
-            self.status_var.set(f"패치노트 목록을 가져오지 못했습니다: {pending.get('message', '')}")
-            return
-        if kind == "text":
-            self.patch_text.configure(state="normal")
-            self.patch_text.delete("1.0", "end")
-            self.patch_text.insert("1.0", pending["text"])
-            game = pending.get("game")
-            if game and datafiles.normalize_game(game) != self.game:
-                self.game_var.set(datafiles.normalize_game(game))
-                self.game = datafiles.normalize_game(game)
-                self.refresh_builds()
-            self.status_var.set(f"불러옴: {pending.get('title') or pending.get('url')}")
-            self._set_busy(False, "패치노트를 불러왔습니다. '검사 실행'을 눌러 주세요.")
-            return
-        if kind == "result":
-            self.result = pending["result"]
-            self.notes = self.result.notes
-            self.show_results()
-            self._set_busy(False, "검사 완료")
-            return
-        if kind == "sync":
-            report_ = pending["report"]
-            self.refresh_builds()
-            message = report_.summary()
-            if report_.errors:
-                message += "  ⚠ " + report_.errors[0]
-            if report_.changed:
-                message += " · 다시 검사하면 새 스타터가 반영됩니다."
-            self._set_busy(False, message)
-            return
-        if kind == "sync_error":
-            self._set_busy(False, "스타터 최신화 실패")
-            messagebox.showerror(APP_TITLE, pending.get("message", "알 수 없는 오류"))
-            return
-        if kind == "error":
-            self._set_busy(False, "오류")
-            messagebox.showerror(APP_TITLE, pending.get("message", "알 수 없는 오류"))
-
-    def show_results(self):
-        result = self.result
-        if result is None:
-            return
-        tree = self.result_tree
-        tree.delete(*tree.get_children())
-        rows = verdict_rows(result)
-        for row in rows:
-            iid = tree.insert("", "end", values=row)
-            verdict = result.verdicts[int(row[0]) - 1]
-            tree.item(iid, tags=(verdict.verdict,))
-        for verdict, color in VERDICT_COLORS.items():
-            tree.tag_configure(verdict, foreground=color)
-        self.count_var.set(
-            f"{result.game_label} · 🔴 {len(result.red)} · 🟡 {len(result.yellow)} "
-            f"· 🟢 {len(result.green)} · 상향 TOP {len(result.filtered_buffs())}"
-        )
-        if result.warnings:
-            self.status_var.set("⚠ " + " / ".join(result.warnings))
-        self.show_buffs()
-        self.show_recommendations()
-        if rows:
-            children = tree.get_children()
-            tree.selection_set(children[0])
-            tree.focus(children[0])
-            self.show_verdict_detail()
-
-    def show_verdict_detail(self, _event=None):
-        selection = self.result_tree.selection()
-        if not selection or self.result is None:
-            return
-        index = int(self.result_tree.item(selection[0], "values")[0]) - 1
-        verdict = self.result.verdicts[index]
-        text = verdict_detail_text(verdict)
-        self._set_text(self.detail, text, verdict.verdict)
-
-    def _set_text(self, widget, text: str, tag: str | None = None):
-        widget.configure(state="normal")
-        widget.delete("1.0", "end")
-        first, _, rest = text.partition("\n")
-        widget.insert("end", first + "\n", ("bold", tag) if tag else ("bold",))
-        widget.insert("end", rest)
-        widget.configure(state="disabled")
-
-    # -- 버프 탭 ---------------------------------------------------------
-    def show_buffs(self):
-        if self.result is None:
-            return
-        kind = self.kind_var.get()
-        kinds = None if kind == "전체" else {kind}
-        filtered = self.result.filtered_buffs(
-            top=self._top_n(), min_buff=self._min_buff(), kinds=kinds
-        )
-        tree = self.buff_tree
-        tree.delete(*tree.get_children())
-        for index, cand in enumerate(filtered, start=1):
-            tree.insert(
-                "",
-                "end",
-                iid=str(index),
-                values=(
-                    str(index),
-                    cand.name,
-                    cand.kind_label + (" · 혼합" if cand.entry.direction == "mixed" else ""),
-                    f"{cand.score:+.1f}%",
-                    str(cand.occurrences),
-                    ", ".join(cand.seeds) or "—",
-                ),
-            )
-        self._buff_view = filtered
-        if filtered:
-            tree.selection_set("1")
-            self.show_buff_detail()
-
-    def show_buff_detail(self, _event=None):
-        selection = self.buff_tree.selection()
-        if not selection:
-            return
-        index = int(selection[0]) - 1
-        view = getattr(self, "_buff_view", [])
-        if index >= len(view):
-            return
-        self._set_text(self.buff_detail, buff_detail_text(view[index]))
-
-    def open_buff_link(self, _event=None):
-        selection = self.buff_tree.selection()
-        if not selection:
-            return
-        index = int(selection[0]) - 1
-        view = getattr(self, "_buff_view", [])
-        if index < len(view):
-            webbrowser.open(view[index].poedb_url())
-
-    # -- 저장/상태 -------------------------------------------------------
-    def save_report(self):
-        from tkinter import filedialog, messagebox
-
-        if self.result is None:
-            messagebox.showinfo(APP_TITLE, "먼저 검사를 실행해 주세요.")
-            return
-        path = filedialog.asksaveasfilename(
-            title="리포트 저장",
-            defaultextension=".txt",
-            filetypes=[("텍스트", "*.txt"), ("Markdown", "*.md"), ("JSON", "*.json")],
+    def pick_build_file(self) -> dict:
+        path = self._dialog(
+            "open",
+            file_types=("PoB XML (*.xml;*.txt)", "모든 파일 (*.*)"),
         )
         if not path:
-            return
-        suffix = Path(path).suffix.lower()
-        if suffix == ".json":
-            body = report.render_json(self.result)
-        elif suffix == ".md":
-            body = report.render_markdown(self.result)
-        else:
-            body = report.render_text(self.result)
-        Path(path).write_text(body, encoding="utf-8")
-        self.status_var.set(f"저장됨: {path}")
-
-    def _set_busy(self, busy: bool, message: str = ""):
-        self._busy = busy
-        state = "disabled" if busy else "normal"
+            return {"cancelled": True}
         try:
-            self.run_button.configure(state=state)
-        except Exception:
-            pass
-        if busy:
-            self.progress.start(12)
-        else:
-            self.progress.stop()
-        if message:
-            self.status_var.set(message)
+            text = Path(path).read_text(encoding="utf-8", errors="replace")
+        except OSError as exc:
+            return {"error": f"파일을 읽지 못했습니다: {exc}"}
+        return {"path": path, "name": Path(path).name, "text": text, "chars": len(text)}
+
+    # -- 리포트 저장 -------------------------------------------------------
+    def save_report(self, fmt: str = "md") -> dict:
+        try:
+            body, name = self.state.export_text(fmt)
+        except webapp.ApiError as exc:
+            return {"error": str(exc)}
+        target = self._dialog(
+            "save",
+            save_filename=name,
+            directory=str(self.state.default_export_dir()),
+        )
+        if not target:
+            return {"cancelled": True}
+        try:
+            path = Path(target)
+            if not path.suffix:
+                path = path.with_suffix("." + (name.rsplit(".", 1)[-1]))
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(body, encoding="utf-8")
+        except OSError as exc:
+            return {"error": f"저장하지 못했습니다: {exc}"}
+        return {"ok": True, "path": str(path), "bytes": len(body.encode("utf-8"))}
+
+    # -- 외부 열기 ---------------------------------------------------------
+    def open_url(self, url: str) -> dict:
+        if not url:
+            return {"error": "주소가 없습니다."}
+        try:
+            webbrowser.open(url)
+            return {"ok": True}
+        except Exception as exc:  # noqa: BLE001
+            return {"error": f"브라우저를 열지 못했습니다: {exc}"}
+
+    def open_guide(self, build_id: str) -> dict:
+        try:
+            path = self.state.export_guide_html(build_id)
+        except webapp.ApiError as exc:
+            return {"error": str(exc)}
+        try:
+            webbrowser.open(path.resolve().as_uri())
+        except Exception as exc:  # noqa: BLE001
+            return {"error": f"브라우저를 열지 못했습니다: {exc}", "path": str(path)}
+        return {"ok": True, "path": str(path)}
+
+    def copy_text(self, text: str) -> dict:
+        return {"ok": webapp.copy_to_clipboard(text or "")}
+
+    # -- 내부 -------------------------------------------------------------
+    def _dialog(self, kind: str, **kwargs):
+        window = self.window
+        if window is None:
+            return None
+        try:
+            import webview
+
+            dialog_type = webview.SAVE_DIALOG if kind == "save" else webview.OPEN_DIALOG
+            chosen = window.create_file_dialog(dialog_type, **kwargs)
+        except Exception:  # noqa: BLE001 - 대화상자 실패는 치명적이지 않다
+            traceback.print_exc()
+            return None
+        if not chosen:
+            return None
+        if isinstance(chosen, (list, tuple)):
+            return str(chosen[0]) if chosen else None
+        return str(chosen)
 
 
-def main() -> int:  # pragma: no cover
+# ---------------------------------------------------------------------------
+# 실행
+# ---------------------------------------------------------------------------
+
+def _debug_enabled() -> bool:
+    import os
+
+    return os.environ.get("POE_CHECKER_DEBUG", "").strip().lower() in ("1", "true", "yes")
+
+
+def _run_native_window(url: str, state: webapp.AppState) -> bool:
+    """pywebview 전용 창으로 연다. 실패하면 False(브라우저 폴백)."""
+    try:
+        import webview
+    except Exception:
+        return False
+    api = NativeApi(state)
+    try:
+        window = webview.create_window(
+            WINDOW_TITLE,
+            url,
+            width=1360,
+            height=880,
+            min_size=(1060, 700),
+            background_color="#0b0a09",
+            js_api=api,
+            text_select=True,
+            confirm_close=False,
+        )
+        api.window = window
+        webview.start(debug=_debug_enabled(), private_mode=False)
+        return True
+    except Exception:  # noqa: BLE001 - WebView2 런타임 없음 등
+        traceback.print_exc()
+        return False
+
+
+def _mini_window(url: str) -> bool:
+    """브라우저 폴백용 최소 창 — 닫으면 서버도 끝난다."""
+    try:
+        import tkinter as tk
+    except Exception:
+        return False
+    try:
+        root = tk.Tk()
+        root.title(WINDOW_TITLE)
+        root.configure(bg="#0b0a09")
+        root.geometry("440x190")
+        root.resizable(False, False)
+        frame = tk.Frame(root, bg="#0b0a09", padx=20, pady=18)
+        frame.pack(fill="both", expand=True)
+        tk.Label(
+            frame, text="대시보드를 기본 브라우저로 열었습니다",
+            bg="#0b0a09", fg="#dfba74", font=("Malgun Gothic", 12, "bold"),
+        ).pack(anchor="w")
+        tk.Label(
+            frame, text=url, bg="#0b0a09", fg="#948b7c", font=("Consolas", 9),
+        ).pack(anchor="w", pady=(6, 10))
+        row = tk.Frame(frame, bg="#0b0a09")
+        row.pack(fill="x")
+        tk.Button(
+            row, text="브라우저 다시 열기", command=lambda: webbrowser.open(url),
+            bg="#241e19", fg="#e9e3d7", relief="flat", padx=12, pady=4,
+        ).pack(side="left")
+        tk.Button(
+            row, text="종료", command=root.destroy,
+            bg="#2c251e", fg="#e9e3d7", relief="flat", padx=16, pady=4,
+        ).pack(side="right")
+        tk.Label(
+            frame, text="이 창을 닫으면 프로그램이 종료됩니다.",
+            bg="#0b0a09", fg="#6f675c", font=("Malgun Gothic", 9),
+        ).pack(anchor="w", pady=(10, 0))
+        root.mainloop()
+        return True
+    except Exception:  # noqa: BLE001
+        return False
+
+
+def launch(open_window: bool = True) -> int:
+    """로컬 서버를 띄우고 pywebview 창(또는 브라우저)으로 대시보드를 연다."""
+    try:
+        state = webapp.AppState()
+    except Exception as exc:  # noqa: BLE001
+        print(f"라이브러리를 읽지 못했습니다: {exc}")
+        return 1
+    try:
+        handle = webapp.start_server(state)
+    except OSError as exc:
+        print(f"로컬 서버를 시작하지 못했습니다: {exc}")
+        return 1
+    url = handle.url
+    if not open_window:
+        print(f"로컬 대시보드: {url}")
+        return 0
+    try:
+        if _run_native_window(url, state):
+            return 0
+        webbrowser.open(url)
+        if not _mini_window(url):
+            try:
+                while True:
+                    time.sleep(1)
+            except KeyboardInterrupt:
+                pass
+        return 0
+    finally:
+        handle.shutdown()
+
+
+def main() -> int:  # pragma: no cover - 수동/윈도우 실행
     try:
         return launch()
     except Exception:  # noqa: BLE001
         traceback.print_exc()
         return 1
+
+
+if __name__ == "__main__":  # pragma: no cover
+    raise SystemExit(main())
