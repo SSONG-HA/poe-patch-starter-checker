@@ -257,7 +257,11 @@ class NativeApi:
         try:
             import webview
 
-            dialog_type = webview.SAVE_DIALOG if kind == "save" else webview.OPEN_DIALOG
+            dialogs = getattr(webview, "FileDialog", None)
+            if dialogs is not None:  # pywebview 6+
+                dialog_type = dialogs.SAVE if kind == "save" else dialogs.OPEN
+            else:  # pywebview 5
+                dialog_type = webview.SAVE_DIALOG if kind == "save" else webview.OPEN_DIALOG
             chosen = window.create_file_dialog(dialog_type, **kwargs)
         except Exception:  # noqa: BLE001 - 대화상자 실패는 치명적이지 않다
             traceback.print_exc()
