@@ -1349,6 +1349,8 @@
     } catch (err) {
       errors += 1;
       toast(`원격 카탈로그 최신화 실패: ${err.message}`, 'error', 7000);
+    } finally {
+      busy(false);
     }
     try {
       busy(true, '② EXILEFILTER·유튜브에서 새 시즌 빌드를 찾는 중… (최대 1~2분)');

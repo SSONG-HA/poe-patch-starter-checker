@@ -60,6 +60,11 @@ class LiveSyncError(RuntimeError):
     """라이브 소스를 읽지 못했을 때(개별 단계는 errors 로 흡수된다)."""
 
 
+def _expired(deadline: float | None) -> bool:
+    """전체 시간 예산을 넘겼는가(넘기면 남은 후보는 건너뛴다)."""
+    return deadline is not None and time.monotonic() > deadline
+
+
 # ---------------------------------------------------------------------------
 # HTTP
 # ---------------------------------------------------------------------------
@@ -704,7 +709,7 @@ def collect_exilebuilds(
     fetcher,
     pobb_fetcher,
     workers: int,
-    deadline: float | None,
+    deadline: float | None = None,
 ) -> None:
     """EXILEFILTER 목록 → 상세 → pobb.in → 라이브러리."""
     try:
@@ -713,6 +718,9 @@ def collect_exilebuilds(
         report.errors.append(f"EXILEFILTER 목록: {exc}")
         return
 
+    if _expired(deadline):
+        report.skipped.append("시간 예산 초과 — EXILEFILTER 상세 확인 생략")
+        return
     items = parse_listing(listing_html)
     pool: list[ListingItem] = []
     for game in games:
@@ -745,6 +753,9 @@ def collect_exilebuilds(
             details.append(result)
     report.scanned += len(details)
 
+    if _expired(deadline):
+        report.skipped.append("시간 예산 초과 — EXILEFILTER PoB 내려받기 생략")
+        return
     per_game: dict[str, int] = {}
     chosen: list[tuple[ListingItem, BuildDetail]] = []
     for item, detail, error in details:
@@ -830,6 +841,7 @@ def collect_youtube(
     pobb_fetcher,
     workers: int,
     channels: tuple[Channel, ...] = DEFAULT_CHANNELS,
+    deadline: float | None = None,
 ) -> None:
     """유튜브 채널 → 스타터 영상 → 설명란 pobb.in → 라이브러리."""
     if max_total <= 0:
@@ -847,6 +859,9 @@ def collect_youtube(
                 last_error = str(exc)
         return channel, "", last_error or "채널을 찾지 못했습니다"
 
+    if _expired(deadline):
+        report.skipped.append("시간 예산 초과 — 유튜브 채널 확인 생략")
+        return
     with ThreadPoolExecutor(max_workers=max(2, workers)) as pool_exec:
         results = list(pool_exec.map(fetch_channel, wanted))
 
@@ -881,6 +896,9 @@ def collect_youtube(
         except Exception as exc:  # noqa: BLE001
             return channel, video, "", str(exc)
 
+    if _expired(deadline):
+        report.skipped.append("시간 예산 초과 — 유튜브 영상 설명 확인 생략")
+        return
     with ThreadPoolExecutor(max_workers=max(2, workers)) as pool_exec:
         watches = list(pool_exec.map(fetch_watch, picked))
     report.scanned += len(watches)
@@ -973,6 +991,8 @@ def sync_live(
     어떤 실패도 예외로 올리지 않는다(수집 단계별 errors).
     """
     started = time.monotonic()
+    budget = DEFAULT_DEADLINE if deadline_seconds is None else max(0.0, float(deadline_seconds))
+    deadline = started + budget
     target_games = tuple(
         datafiles.normalize_game(game) for game in (games or datafiles.GAMES)
     )
@@ -992,7 +1012,7 @@ def sync_live(
             fetcher=fetcher,
             pobb_fetcher=pobb_fetcher,
             workers=workers,
-            deadline=deadline_seconds,
+            deadline=deadline,
         )
     except Exception as exc:  # noqa: BLE001 - 수집기 자체 버그도 최신화를 깨지 않게
         report.errors.append(f"EXILEFILTER 수집: {exc}")
@@ -1010,6 +1030,7 @@ def sync_live(
                 pobb_fetcher=pobb_fetcher,
                 workers=workers,
                 channels=channels or DEFAULT_CHANNELS,
+                deadline=deadline,
             )
         except Exception as exc:  # noqa: BLE001
             report.errors.append(f"유튜브 수집: {exc}")

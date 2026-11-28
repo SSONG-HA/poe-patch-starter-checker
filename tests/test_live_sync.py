@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 
 import pytest
@@ -398,3 +399,18 @@ def test_custom_builds_are_preserved(tmp_path):
                         fetcher=web, pobb_fetcher=web.pobb)
     assert lib.get(custom.id) is not None
     assert lib.get(custom.id).name == "내 빌드"
+
+
+def test_deadline_budget_skips_remaining_work(tmp_path):
+    lib = _empty_library(tmp_path)
+    web = _web(with_youtube=False)
+
+    def slow(url: str) -> str:
+        time.sleep(0.02)  # 목록을 받는 사이 시간 예산이 끝난다
+        return web(url)
+
+    report = live_sync.sync_live(lib, games=["poe1"], include_youtube=False,
+                                 fetcher=slow, pobb_fetcher=web.pobb, deadline_seconds=0.001)
+    assert not report.changed
+    assert any("시간 예산" in note for note in report.skipped)
+    assert len(lib.builds) == 0
