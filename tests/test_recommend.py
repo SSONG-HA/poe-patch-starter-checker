@@ -254,3 +254,90 @@ def test_custom_build_guide_marks_auto_fit(tmp_path):
     assert made.fit is not None and made.fit.auto
     html = guide.render_html(made)
     assert "자동 추정" in html
+
+
+# ---------------------------------------------------------------------------
+# 고점·전환 추천(무재육성)
+# ---------------------------------------------------------------------------
+
+def test_ceiling_category_is_first_and_labeled():
+    assert recommend.CATEGORY_ORDER[0] == "ceiling"
+    assert "고점" in recommend.CATEGORY_LABELS["ceiling"]
+    assert "무재육성" in recommend.CATEGORY_LABELS["ceiling"]
+
+
+def test_profiles_have_ceiling_and_transition():
+    profiles = recommend.load_profiles()
+    assert len(profiles) == 36
+    for build_id, fit in profiles.items():
+        assert 1 <= fit.ceiling <= 5, build_id
+        assert 1 <= fit.transition <= 5, build_id
+    # 사용자가 든 전환 경로가 큐레이션에 들어 있다
+    assert "CoC" in profiles["poison-holy-relic-necro"].path
+    assert "칼날 낙하" in profiles["poison-concoction-pathfinder"].path
+    assert "RF" in profiles["rf-chieftain-330"].path
+    assert "쉐도우" in profiles["coc-forbidden-rite-assassin"].path
+
+
+def test_ceiling_board_ranks_high_ceiling_no_reroll(tmp_path):
+    lib, result = _board(tmp_path)
+    board = result.recommendations
+    rows = board.top("ceiling", 5)
+    assert len(rows) == 5
+    scores = [row.score_for("ceiling") for row in rows]
+    assert scores == sorted(scores, reverse=True)
+    # 같은 직업에서 갈아탈 수 있는 고점 빌드가 상위에 온다
+    assert any(row.fit.transition >= 4 for row in rows)
+    top = rows[0]
+    assert "무재육성 전환" in top.reason_for("ceiling")
+    assert top.fit.path
+
+
+def test_ceiling_prefers_transition_over_cheap_low_ceiling(tmp_path):
+    lib, result = _board(tmp_path)
+    board = result.recommendations
+    cheap = board.find("generals-cry-lacerate-champion")   # 저자본이지만 상한 낮음
+    strong = board.find("coc-forbidden-rite-assassin")     # 재육성 없이 갈 수 있는 고점
+    assert cheap is not None and strong is not None
+    assert strong.score_for("ceiling") > cheap.score_for("ceiling")
+    assert strong.score_for("budget") < cheap.score_for("budget")
+
+
+def test_ceiling_payload_fields(tmp_path):
+    lib, result = _board(tmp_path)
+    entry = result.recommendations.find("tornado-inquisitor")
+    payload = entry.to_dict()
+    assert payload["ceiling"] == entry.fit.ceiling
+    assert payload["transition"] == entry.fit.transition
+    assert payload["path"]
+    assert payload["fit"]["ceiling"] == entry.fit.ceiling
+    assert payload["reasons"]["ceiling"].startswith("고점")
+
+
+def test_custom_build_ceiling_estimated_from_pob(tmp_path):
+    lib = _library_with(tmp_path / "ceil", pob.encode_pob_code(
+        _stats_xml(ehp=90_000, dps=25_000_000, main="Forbidden Rite")
+    ))
+    build = lib.builds[0]
+    # XML 기본 클래스는 머라우더/치프틴 → 같은 계열 고점 전환(4+)
+    fit = recommend.fit_for(build.id, lib.profile(build))
+    assert fit.auto
+    assert fit.ceiling >= 4
+    assert fit.transition >= 4
+    assert fit.path
+
+
+def test_low_dps_custom_build_has_low_ceiling(tmp_path):
+    lib = _library_with(tmp_path / "low", pob.encode_pob_code(
+        _stats_xml(ehp=12_000, dps=200_000)
+    ))
+    fit = recommend.fit_for(lib.builds[0].id, lib.profile(lib.builds[0]))
+    assert fit.ceiling <= 2
+
+
+def test_report_contains_ceiling_section(tmp_path):
+    lib, result = _board(tmp_path)
+    text = report.render_text(result)
+    assert recommend.CATEGORY_LABELS["ceiling"] in text
+    markdown = report.render_markdown(result)
+    assert "고점·전환" in markdown

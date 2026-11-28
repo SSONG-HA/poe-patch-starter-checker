@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 from . import (APP_TITLE, __version__, analysis, catalog, datafiles, guide,
-               library as library_mod, news, patchnotes, pob, report)
+               library as library_mod, live_sync, news, patchnotes, pob, report)
 
 
 def _print(text: str) -> None:
@@ -56,7 +56,14 @@ def build_parser() -> argparse.ArgumentParser:
                      help="원격 카탈로그에서 스타터 목록·PoB 코드를 받아 최신화")
     lib.add_argument("--catalog-url", metavar="URL",
                      help="카탈로그 주소/파일 경로(기본: 공식 저장소 raw URL)")
-    lib.add_argument("--dry-run", action="store_true", help="--sync-starters 미리보기(저장 안 함)")
+    lib.add_argument("--dry-run", action="store_true", help="--sync-starters/--sync-live 미리보기(저장 안 함)")
+    lib.add_argument("--live", action="store_true",
+                     help="--sync-starters 뒤에 EXILEFILTER·유튜브 실시간 수집까지 실행")
+    lib.add_argument("--sync-live", action="store_true",
+                     help="원격 카탈로그 없이 실시간(EXILEFILTER·유튜브) 빌드만 수집")
+    lib.add_argument("--live-games", metavar="poe1,poe2",
+                     help="실시간 수집 대상 게임(기본: 둘 다)")
+    lib.add_argument("--no-youtube", action="store_true", help="실시간 수집에서 유튜브 채널 건너뛰기")
 
     guides = parser.add_argument_group("빌드 가이드")
     guides.add_argument("--guide", metavar="BUILD_ID",
@@ -140,6 +147,12 @@ def run(args) -> int:
         _print(f"해당 ID 가 없습니다: {args.remove_build}")
         return 2
 
+    def _live_targets():
+        if not args.live_games:
+            return None
+        wanted = [part.strip() for part in args.live_games.split(",") if part.strip()]
+        return [datafiles.normalize_game(game) for game in wanted] or None
+
     if args.sync_starters:
         try:
             result = catalog.sync_library(
@@ -149,6 +162,22 @@ def run(args) -> int:
             _print(f"스타터 최신화 실패: {exc}")
             return 3
         for line in result.lines():
+            _print(line)
+        if not args.live:
+            return 0
+
+    if args.sync_starters or args.sync_live:
+        try:
+            live = live_sync.sync_live(
+                lib,
+                games=_live_targets(),
+                dry_run=args.dry_run,
+                include_youtube=not args.no_youtube,
+            )
+        except Exception as exc:  # noqa: BLE001 - 실패해도 카탈로그 결과는 남는다
+            _print(f"실시간 수집 실패: {exc}")
+            return 3
+        for line in live.lines():
             _print(line)
         return 0
 

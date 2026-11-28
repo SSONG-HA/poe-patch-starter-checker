@@ -82,7 +82,7 @@
       <button class="btn primary" id="btn-analyze" title="선택한 패치노트로 스타터 생존·버프 검사">
         <svg><use href="#i-play"/></svg><span>분석 실행</span>
       </button>
-      <button class="btn subtle" id="btn-sync" title="원격 카탈로그에서 스타터 최신화">
+      <button class="btn subtle" id="btn-sync" title="원격 카탈로그 + 실시간(EXILEFILTER·유튜브) 스타터 최신화">
         <svg><use href="#i-refresh"/></svg><span>스타터 최신화</span><span class="badge" id="sync-badge">–</span>
       </button>
     </div>
@@ -117,6 +117,7 @@
       <div class="nav-foot">
         <div><strong id="foot-game">PoE1 3.30</strong></div>
         <div id="foot-library">스타터 –개</div>
+        <div id="foot-live" class="path" style="display:none"></div>
         <div class="path" id="foot-path"></div>
       </div>
     </nav>
@@ -140,7 +141,7 @@
           <div class="panel-head">
             <div>
               <h3>추천 스타터 TOP</h3>
-              <p class="sub" id="rec-sub">콘텐츠 적합도 × 패치 보정 점수</p>
+              <p class="sub" id="rec-sub">새로 키우지 않고 상위 빌드로 전환 가능하거나 고점이 높은 스타터 우선</p>
             </div>
             <div class="chips" id="fit-presets"></div>
           </div>
@@ -259,7 +260,7 @@
                 <button class="btn" id="btn-pick-build" title="PoB .xml 파일 열기"><svg><use href="#i-folder"/></svg><span>XML 파일</span></button>
                 <button class="btn primary" id="btn-add-build"><svg><use href="#i-plus"/></svg><span>추가</span></button>
               </div>
-              <p class="hint" id="add-hint">추가한 빌드는 「내 빌드」로 표시되며, 스타터 최신화에도 보존됩니다.</p>
+              <p class="hint" id="add-hint">추가한 빌드는 「내 빌드」로 표시되며, 스타터 최신화(원격 카탈로그 + EXILEFILTER·유튜브 실시간 수집)에도 보존됩니다.</p>
             </div>
             <div class="custom-list" id="custom-list"></div>
           </div>

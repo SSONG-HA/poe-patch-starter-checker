@@ -10,7 +10,7 @@ import urllib.request
 import pytest
 
 from conftest import make_pob_code
-from poe_checker import __version__, catalog, datafiles, library, news, webapp
+from poe_checker import __version__, catalog, datafiles, library, news, recommend, webapp
 
 NOTES = """Skills
 Righteous Fire
@@ -228,11 +228,11 @@ def test_analyze_returns_full_dashboard_payload(handle):
     assert arc_buff["poedb"].startswith("https://poedb.tw/kr/")
 
     rec = result["recommend"]
-    assert set(result["recommend"]["categories"]) == {"allrounder", "mapping", "bossing", "budget"}
+    assert set(result["recommend"]["categories"]) == set(recommend.CATEGORY_ORDER)
     assert len(rec["entries"]) == 2
     top = rec["categories"]["allrounder"]["rows"][0]
     assert top["verdict"] == "green"
-    assert set(top["scores"]) == {"allrounder", "mapping", "bossing", "budget"}
+    assert set(top["scores"]) == set(recommend.CATEGORY_ORDER)
     assert top["reasons"]["bossing"]
 
 
@@ -474,3 +474,63 @@ def test_patch_file_endpoint(handle, tmp_path):
     assert data["title"] == "notes.txt"
     status, data, _ = _request(handle, "/api/patch/file", {"path": str(tmp_path / "missing.txt")})
     assert status == 400
+
+
+# ---------------------------------------------------------------------------
+# 실시간 스타터 수집(EXILEFILTER·유튜브)
+# ---------------------------------------------------------------------------
+
+def test_sync_live_endpoint_reports(handle, monkeypatch):
+    from poe_checker import live_sync
+
+    report = live_sync.LiveSyncReport(
+        games=("poe1", "poe2"),
+        added=["eb-zero-to-hero-bula"],
+        counts={"exilebuilds": 2, "youtube": 1},
+        saved=True,
+        duration=3.4,
+    )
+    seen = {}
+
+    def fake(lib, **kwargs):
+        seen.update(kwargs)
+        return report
+
+    monkeypatch.setattr(live_sync, "sync_live", fake)
+    status, data, _ = _request(handle, "/api/sync/live", {})
+    assert status == 200
+    assert data["added"] == ["eb-zero-to-hero-bula"]
+    assert data["counts"]["youtube"] == 1
+    assert data["summary"].startswith("실시간 수집")
+    assert data["saved"] is True
+    assert data["changed"] is True
+    assert seen["games"] == ["poe1", "poe2"]
+    status, state, _ = _request(handle, "/api/state")
+    assert state["sync"]["live"]["summary"].startswith("실시간 수집")
+    assert state["sync"]["live"]["at"]
+
+
+def test_sync_live_endpoint_accepts_game_filter(handle, monkeypatch):
+    from poe_checker import live_sync
+
+    seen = {}
+
+    def fake(lib, **kwargs):
+        seen.update(kwargs)
+        return live_sync.LiveSyncReport(games=("poe2",))
+
+    monkeypatch.setattr(live_sync, "sync_live", fake)
+    status, _, _ = _request(handle, "/api/sync/live", {"games": "poe2"})
+    assert status == 200
+    assert seen["games"] == ["poe2"]
+
+
+def test_sync_live_resets_analysis_result(handle, monkeypatch):
+    from poe_checker import live_sync
+
+    assert _analyze(handle)["result"] is not None
+    report = live_sync.LiveSyncReport(games=("poe1",), added=["new-live-build"], saved=True)
+    monkeypatch.setattr(live_sync, "sync_live", lambda lib, **kwargs: report)
+    _request(handle, "/api/sync/live", {})
+    status, data, _ = _request(handle, "/api/result")
+    assert status == 200 and data["result"] is None

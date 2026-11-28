@@ -1,5 +1,5 @@
 /* ==========================================================================
-   PoE 패치노트 스타터 검증기 v1.3.0 — 대시보드 프론트엔드
+   PoE 패치노트 스타터 검증기 v1.4.0 — 대시보드 프론트엔드
    외부 라이브러리 없이 동작하는 바닐라 JS. 로컬 서버(/api/*)와 통신한다.
    ========================================================================== */
 (() => {
@@ -35,6 +35,7 @@
   ];
 
   const PRESETS = [
+    { key: 'ceiling', label: '고점·전환' },
     { key: 'allrounder', label: '올라운더' },
     { key: 'mapping', label: '맵핑' },
     { key: 'bossing', label: '보스' },
@@ -56,7 +57,7 @@
     builds: [],
     buildsMeta: { count: 0, builtin: 0, custom: 0, library_path: '' },
     view: 'dashboard',
-    preset: 'allrounder',
+    preset: 'ceiling',
     survival: { filter: 'all', q: '', id: null },
     guide: { id: null, data: null, stage: null, itemSet: null, q: '' },
     buffs: { min: 3, top: 15, kind: '', selected: 0 },
@@ -265,9 +266,23 @@
     const updated = (sync.updated || '').trim();
     const badge = $('#sync-badge');
     badge.textContent = updated ? updated.replace(/^v/i, '') : '동봉';
+    const foot = $('#foot-live');
+    const liveNow = (sync.live || {});
+    if (foot) {
+      if (liveNow.total) {
+        foot.style.display = '';
+        foot.textContent = `실시간 +${num(liveNow.total)} (${liveNow.at || ''})`;
+        foot.title = (liveNow.lines || []).join('\n');
+      } else {
+        foot.style.display = 'none';
+        foot.textContent = '';
+      }
+    }
     const btn = $('#btn-sync');
-    btn.title = `원격 카탈로그에서 스타터 최신화${sync.catalog ? `\n${sync.catalog}` : ''}` +
-      (sync.last_sync ? `\n마지막 동기화: ${sync.last_sync}` : '');
+    const live = sync.live || {};
+    btn.title = `원격 카탈로그 + 실시간(EXILEFILTER·유튜브) 스타터 최신화${sync.catalog ? `\n${sync.catalog}` : ''}` +
+      (sync.last_sync ? `\n마지막 동기화: ${sync.last_sync}` : '') +
+      (live.summary ? `\n${live.summary}${live.at ? ` (${live.at})` : ''}` : '');
   }
 
   // ------------------------------------------------------------------ notes
@@ -479,7 +494,9 @@
     sub.textContent =
       S.preset === 'ease'
         ? '손이 편한 순 (편의 → 저자본 → 올라운더)'
-        : `${preset.label} 적합도 × 이번 패치 보정`;
+        : S.preset === 'ceiling'
+          ? '새로 키우지 않고 상위 빌드로 전환 가능하거나 고점이 높은 스타터 우선'
+          : `${preset.label} 적합도 × 이번 패치 보정`;
     const rows = presetRows().slice(0, 12);
     if (!rows.length) {
       host.innerHTML = emptyState('추천할 빌드가 없습니다', '이 게임의 스타터가 라이브러리에 없거나 모두 읽지 못했습니다.', 'i-alert');
@@ -488,8 +505,11 @@
     host.innerHTML = rows
       .map(({ entry, score, max }, i) => {
         const pct = clamp((score / max) * 100, 4, 100);
-        const fitBits = FIT_FIELDS.map(
-          ([k, label]) => `<span>${label} ${stars(entry.fit[k])}</span>`
+        const fitBits = (S.preset === 'ceiling'
+          ? [['ceiling', '고점'], ['transition', '무재육성 전환']]
+          : FIT_FIELDS
+        ).map(
+          ([k, label]) => `<span>${label} ${stars(entry.fit[k] !== undefined ? entry.fit[k] : entry[k])}</span>`
         ).join('');
         const tags = (entry.fit.tags || []).slice(0, 3).map((t) => `<span class="tag">${esc(t)}</span>`).join('');
         return `
@@ -1306,35 +1326,55 @@
     if (S.busy > 0) return;
     const ok = await confirmModal(
       '스타터 최신화',
-      '원격 카탈로그에서 새 시즌 스타터와 PoB 코드를 받아 라이브러리에 병합합니다. 직접 추가한 빌드는 보존됩니다.',
+      '① 저장소의 원격 카탈로그와 ② EXILEFILTER·유튜브의 실시간 새 시즌 빌드(Zero to Hero·리그 스타터)를 함께 받아 라이브러리에 병합합니다. 직접 추가한 빌드는 보존됩니다.',
       '최신화 실행'
     );
     if (!ok) return;
-    busy(true, '원격 카탈로그에서 스타터를 받는 중…');
+    let remote = null;
+    let live = null;
+    let errors = 0;
     try {
-      const data = await api('/api/sync', {});
+      busy(true, '① 원격 카탈로그에서 스타터를 받는 중…');
+      remote = await api('/api/sync', {});
+      errors += (remote.errors || []).length;
       S.sync = {
-        catalog: data.catalog,
-        updated: data.catalog_updated,
+        catalog: remote.catalog,
+        updated: remote.catalog_updated,
         last_sync: new Date().toLocaleString('ko-KR'),
+        live: S.sync ? S.sync.live : {},
       };
       renderSyncBadge();
       await refreshState();
       await loadBuilds();
-      if (data.changed) {
-        S.result = null;
-        renderDashboard();
-        renderSurvival();
-        renderBuffs();
-      }
-      toast(data.summary + (data.changed ? ' · 다시 분석하면 반영됩니다.' : ''), data.errors.length ? 'error' : 'ok', 7000);
-      setStatus('스타터 최신화 완료');
     } catch (err) {
-      toast(err.message, 'error', 7000);
-      setStatus('최신화 실패', 'error');
+      errors += 1;
+      toast(`원격 카탈로그 최신화 실패: ${err.message}`, 'error', 7000);
+    }
+    try {
+      busy(true, '② EXILEFILTER·유튜브에서 새 시즌 빌드를 찾는 중… (최대 1~2분)');
+      live = await api('/api/sync/live', {});
+      errors += (live.errors || []).length;
+      await refreshState();
+      await loadBuilds();
+    } catch (err) {
+      errors += 1;
+      toast(`실시간 빌드 수집 실패: ${err.message}`, 'error', 7000);
     } finally {
       busy(false);
     }
+    const changed = !!((remote && remote.changed) || (live && live.changed));
+    if (changed) {
+      S.result = null;
+      renderDashboard();
+      renderSurvival();
+      renderBuffs();
+    }
+    const parts = [];
+    if (remote) parts.push(`원격 카탈로그 추가 ${remote.added.length}·갱신 ${remote.updated.length}`);
+    if (live) parts.push(live.summary);
+    if (!parts.length) parts.push('최신화하지 못했습니다');
+    toast(parts.join(' / ') + (changed ? ' · 다시 분석하면 반영됩니다.' : ''), errors ? 'error' : 'ok', 9000);
+    setStatus('스타터 최신화 완료');
   }
 
   async function addBuild() {

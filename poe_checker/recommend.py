@@ -3,6 +3,10 @@
 - 내장 36종 스타터는 `data/starter_profiles.json` 의 큐레이션 점수(1~5)를 쓴다.
 - 사용자가 직접 추가한 PoB 는 PoB 스탯(EHP·DPS)과 주력 스킬 태그로 적합도를 추정한다.
 - 추천 점수 = 콘텐츠 적합도 + 이번 패치의 버프/너프·생존 판정 보정.
+- 「고점·전환 추천 (무재육성)」은 맨땅 가성비 대신 **새 캐릭터를 다시 키우지 않고**
+  같은 직업/전직으로 상위 빌드로 갈아탈 수 있는지(transition)와 투자 대비 상한선(ceiling)을
+  함께 본다. 예: 마녀 → 신성한 유물·CoC 금단의 의식, 레인저 → 독성 혼합물 → 칼날 낙하,
+  쉐도우 → 트릭스터/어쌔신 CoC, 머라우더 → RF 치프틴 → 고점 빌드.
 """
 from __future__ import annotations
 
@@ -23,12 +27,91 @@ FIELDS = (
 FIELD_KEYS = tuple(key for key, _ in FIELDS)
 
 CATEGORY_LABELS = {
+    "ceiling": "고점·전환 추천 (무재육성)",
     "allrounder": "올라운더 추천 TOP",
     "mapping": "맵핑 특화",
     "bossing": "보스 특화",
     "budget": "저자본·편한 손맛",
 }
-CATEGORY_ORDER = ("allrounder", "mapping", "bossing", "budget")
+CATEGORY_ORDER = ("ceiling", "allrounder", "mapping", "bossing", "budget")
+
+
+# ---------------------------------------------------------------------------
+# 고점·전환(무재육성) 큐레이션
+# ---------------------------------------------------------------------------
+# ceiling   : 투자 대비 도달 가능한 상한(보스·엔드게임 화력) 1~5
+# transition: 그 상한까지 **새 캐릭터를 키우지 않고** 같은 직업/전직에서 갈아탈 수 있는가 1~5
+# path      : 실제 전환 경로(한국어)
+
+CEILING_BUILDS: dict[str, tuple[int, int, str]] = {
+    # -- PoE1 -------------------------------------------------------------
+    "rf-chieftain-current": (4, 5, "머라우더 → RF 치프틴 → 제물의 작열 광선 토템 고점"),
+    "rf-chieftain-330": (4, 5, "머라우더 → RF 치프틴 → 제물의 작열 광선 토템 고점"),
+    "rf-chieftain-pohx": (4, 5, "머라우더 → RF 치프틴 → 제물의 작열 광선 토템 고점"),
+    "poison-holy-relic-necro": (4, 5, "마녀 → 성결의 수호자 → CoC 금단의 의식 전환"),
+    "dominating-blow-guardian": (5, 4, "템플러 → 가디언 지배의 일격 → 정전기 타격 고점"),
+    "tornado-inquisitor": (5, 4, "템플러 → 인퀴지터 회오리바람 완성형"),
+    "eviscerate-elementalist": (4, 4, "마녀 → 절개 점화 → 소각·독조 엘리멘탈리스트 전환"),
+    "static-strike-guardian": (5, 4, "템플러 → 가디언 정전기 타격 고점"),
+    "poison-concoction-pathfinder": (3, 5, "레인저 → 독성 혼합물 → 칼날 낙하(관통) 전환"),
+    "bladefall-impaling-pathfinder": (5, 4, "레인저 → 칼날 낙하 관통 패스파인더 고점"),
+    "cold-dot-spellslinger-elementalist": (3, 4, "마녀 → 냉기 도트 → 독조·CoC 전환"),
+    "stormburst-totem-hierophant": (5, 3, "템플러 → 히에로판트 폭풍 파열 토템 고점"),
+    "incinerate-venting-elementalist": (3, 3, "마녀 → 소각 분출 → 독조 엘리멘탈리스트 상위"),
+    "animate-weapon-ranged-necromancer": (4, 4, "마녀 → 무기 소환 → 신성한 유물·소환수 고점"),
+    "generals-cry-lacerate-champion": (3, 2, "듀얼리스트 → 챔피언 절단 (상한 낮음)"),
+    "static-strike-slayer": (4, 3, "듀얼리스트 → 슬레이어 정전기 타격 고점"),
+    "smite-armor-stacker-luminary": (4, 3, "스키온 → 루미너리 방어구 중첩 고점"),
+    "arc-crab-totems-reliquarian": (3, 3, "스키온 → 렐리퀘리안 게 토템 안정형"),
+    "explosive-arrow-ballista-hierophant": (4, 3, "템플러 → 히에로판트 발리스타 고점"),
+    "boneshatter-juggernaut": (3, 3, "머라우더 → 저거너트 뼈 분쇄 → 치프틴 RF 전환(전직 리셋)"),
+    "luminary-merc-aurabit": (3, 2, "스키온 → 루미너리 오라봇 (파티 시너지형)"),
+    "coc-forbidden-rite-assassin": (5, 5, "쉐도우 → 어쌔신·트릭스터 CoC 금단의 의식"),
+    "impending-doom-elementalist": (5, 3, "마녀 → 독조 엘리멘탈리스트 고점"),
+    "dual-strike-gladiator": (5, 3, "듀얼리스트 → 글래디에이터 쌍수 타격 고점"),
+    # -- PoE2 -------------------------------------------------------------
+    "poe2-spark-stormweaver": (4, 4, "소서리스 → 스톰위버 전기불꽃 고점"),
+    "poe2-permafrost-witchhunter": (4, 3, "용병 → 위치헌터 영구 동토 상위"),
+    "poe2-explosive-grenade-witchhunter": (4, 4, "용병 → 위치헌터 수류탄 → 영구 동토·폭발 화살 전환"),
+    "poe2-martial-artist-monk": (3, 5, "몽크 레벨링 → 낙뢰 무술가 그대로 전환"),
+    "poe2-falling-thunder-monk": (4, 4, "몽크 → 무술가 낙뢰 고점"),
+    "poe2-ice-strike-amazon": (4, 3, "헌트리스 → 아마존 얼음 타격 고점"),
+    "poe2-chaos-flicker-chayula": (4, 3, "몽크 → 차율라 아콜라이트 혼돈 섬광 고점"),
+    "poe2-pathfinder-spark": (3, 4, "레인저 → 패스파인더 전기불꽃 전환"),
+    "poe2-twister-gemling": (4, 3, "용병 → 보석병 회오리 고점"),
+    "poe2-gemling-twister": (4, 3, "용병 → 보석병 회오리 고점"),
+    "poe2-minion-infernalist": (3, 4, "마녀 → 인퍼널리스트 소환수 상위"),
+    "poe2-lightning-spear-tactician": (5, 3, "용병 → 택티션 번개 창 고점"),
+}
+
+# 큐레이션에 없는 빌드(직접 추가·라이브 수집)의 전환 잠재력 — 직업 계열 기준.
+CLASS_TRANSITION: dict[str, tuple[int, int, str]] = {
+    "witch": (4, 5, "마녀 계열 → 신성한 유물·CoC 금단의 의식 등 상위 전환"),
+    "shadow": (5, 5, "쉐도우 계열 → 트릭스터·어쌔신 CoC 상위 전환"),
+    "ranger": (4, 5, "레인저 계열 → 칼날 낙하·독성 혼합물 상위 전환"),
+    "marauder": (4, 5, "머라우더 계열 → RF 치프틴 등 상위 전환"),
+    "templar": (4, 4, "템플러 계열 → 히에로판트·인퀴지터 상위 전환"),
+    "duelist": (4, 3, "듀얼리스트 계열 → 슬레이어·글래디에이터 상위 전환"),
+    "scion": (4, 4, "스키온 계열 → 루미너리·렐리퀘리안 상위 전환"),
+    "sorceress": (4, 4, "소서리스 계열 → 스톰위버 상위 전환"),
+    "mercenary": (4, 4, "용병 계열 → 위치헌터·보석병·택티션 상위 전환"),
+    "monk": (4, 4, "몽크 계열 → 무술가·차율라 상위 전환"),
+    "huntress": (3, 4, "헌트리스 계열 → 아마존 상위 전환"),
+    "warrior": (4, 4, "전사 계열 → 타이탄 상위 전환"),
+}
+
+
+def _ceiling_for_build(build_id: str) -> tuple[int, int, str] | None:
+    return CEILING_BUILDS.get(build_id)
+
+
+def _transition_for_profile(profile: pob.BuildProfile) -> tuple[int, int, str]:
+    """직업명으로 전환 잠재력을 찾는다(없으면 중립 3/3)."""
+    for key in (profile.class_name, profile.ascendancy):
+        row = CLASS_TRANSITION.get((key or "").strip().lower())
+        if row:
+            return row
+    return (3, 3, "")
 
 VERDICT_RANK = {"green": 0, "yellow": 1, "red": 2}
 
@@ -61,6 +144,9 @@ class ContentFit:
     tankiness: int = 3
     budget: int = 3
     ease: int = 3
+    ceiling: int = 3
+    transition: int = 3
+    path: str = ""
     tags: tuple[str, ...] = ()
     note: str = ""
     auto: bool = False
@@ -73,6 +159,9 @@ class ContentFit:
         out.update(
             {
                 "stars": {key: self.stars(key) for key in FIELD_KEYS},
+                "ceiling": self.ceiling,
+                "transition": self.transition,
+                "path": self.path,
                 "tags": list(self.tags),
                 "note": self.note,
                 "auto": self.auto,
@@ -115,8 +204,12 @@ def load_profiles() -> dict[str, ContentFit]:
     out: dict[str, ContentFit] = {}
     for build_id, row in (data.get("builds") or {}).items():
         values = {key: _clamp(row.get(key, 3)) for key in FIELD_KEYS}
+        ceiling, transition, path = CEILING_BUILDS.get(build_id, (3, 3, ""))
         out[build_id] = ContentFit(
             **values,
+            ceiling=_clamp(ceiling),
+            transition=_clamp(transition),
+            path=path,
             tags=tuple(row.get("tags") or ()),
             note=row.get("note", ""),
             auto=False,
@@ -152,6 +245,28 @@ def _tag_labels(tags: set[str], *, dot_share: float, dps: float, dot: float) -> 
     elif dps > 0 and dot_share < 0.4 and "직접 타격" not in labels:
         labels.append("직접 타격")
     return tuple(labels[:4])
+
+
+def _estimate_ceiling(*, dps: float, ehp: float, tags: set[str]) -> int:
+    """PoB 스탯으로 도달 상한(엔드게임 화력)을 어림한다."""
+    if dps and math.isinf(dps):
+        return 5
+    if dps >= 20_000_000:
+        return 5
+    if dps >= 6_000_000:
+        return 4
+    if dps >= 1_500_000:
+        return 3
+    if dps >= 400_000:
+        return 2
+    if dps > 0:
+        return 1
+    # DPS 미기재(소환수·오라 등)는 생존력과 태그로 대신 본다.
+    if ehp and (math.isinf(ehp) or ehp >= 100_000):
+        return 4
+    if tags & {"minion", "aura", "totem"}:
+        return 3
+    return 2
 
 
 def estimate_fit(profile: pob.BuildProfile) -> ContentFit:
@@ -219,6 +334,8 @@ def estimate_fit(profile: pob.BuildProfile) -> ContentFit:
         ease += 0.5
 
     labels = _tag_labels(tags, dot_share=dot_share, dps=dps, dot=dot)
+    ceiling = _estimate_ceiling(dps=dps, ehp=ehp, tags=tags)
+    _class_ceiling, trans_floor, path = _transition_for_profile(profile)
     note_bits = []
     if ehp:
         note_bits.append(f"EHP {ehp:,.0f}")
@@ -235,6 +352,9 @@ def estimate_fit(profile: pob.BuildProfile) -> ContentFit:
         tankiness=_clamp(tankiness),
         budget=_clamp(budget),
         ease=_clamp(ease),
+        ceiling=_clamp(ceiling),
+        transition=_clamp(trans_floor),
+        path=path,
         tags=labels,
         note=note,
         auto=True,
@@ -280,6 +400,9 @@ def patch_delta(verdict) -> float:
 def category_base(category: str, fit: ContentFit) -> float:
     m, b, t = fit.mapping, fit.bossing, fit.tankiness
     e, u = fit.ease, fit.budget
+    if category == "ceiling":
+        # 무재육성 전환 가능성 + 도달 상한(보스 화력)을 가장 크게 본다.
+        return 0.45 * fit.ceiling + 0.35 * fit.transition + 0.20 * b
     if category == "mapping":
         return 0.55 * m + 0.20 * e + 0.15 * t + 0.10 * b
     if category == "bossing":
@@ -311,7 +434,11 @@ class Recommendation:
 
     def reason_for(self, category: str) -> str:
         fit = self.fit
-        if category == "mapping":
+        if category == "ceiling":
+            basis = f"고점 {fit.ceiling} · 무재육성 전환 {fit.transition}"
+            if fit.path:
+                basis += f" · {fit.path}"
+        elif category == "mapping":
             basis = f"맵핑 {fit.mapping} · 편한 조작 {fit.ease} · 탱킹 {fit.tankiness}"
         elif category == "bossing":
             basis = f"보스 {fit.bossing} · 탱킹 {fit.tankiness} · 맵핑 {fit.mapping}"
@@ -346,6 +473,9 @@ class Recommendation:
             "label": self.verdict_label,
             "headline": self.headline,
             "fit": self.fit.as_dict(),
+            "ceiling": self.fit.ceiling,
+            "transition": self.fit.transition,
+            "path": self.fit.path,
             "patch_delta": self.patch_delta,
             "buffs": self.buffs,
             "nerfs": self.nerfs,

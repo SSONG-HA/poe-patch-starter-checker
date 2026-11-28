@@ -30,6 +30,7 @@ from . import (
     datafiles,
     guide as guide_mod,
     library as library_mod,
+    live_sync,
     news,
     patchnotes,
     pob,
@@ -376,6 +377,7 @@ class AppState:
             "updated": (getattr(self.library, "_sync_meta", None) or {}).get("updated", ""),
             "last_sync": "",
             "saved": False,
+            "live": {},
         }
         self.lock = threading.RLock()
 
@@ -773,6 +775,7 @@ class AppState:
                 "updated": rep.updated_label,
                 "last_sync": time.strftime("%Y-%m-%d %H:%M:%S"),
                 "saved": rep.saved,
+                "live": self.sync_info.get("live", {}),
             }
             data = rep.to_dict()
             data["summary"] = rep.summary()
@@ -780,6 +783,24 @@ class AppState:
             data["changed"] = rep.changed
             data["counts"] = self._library_counts()
             return data
+
+    def sync_live(self, *, dry_run: bool = False, games: list[str] | None = None) -> dict:
+        """실시간(EXILEFILTER·유튜브) 빌드 수집 — ① 원격 카탈로그 뒤에 이어서 실행한다."""
+        target = [
+            datafiles.normalize_game(game) for game in (games or list(datafiles.GAMES))
+        ]
+        with self.lock:
+            try:
+                rep = live_sync.sync_live(self.library, games=target, dry_run=dry_run)
+            except Exception as exc:  # noqa: BLE001 - 수집기는 원칙적으로 예외를 올리지 않는다
+                raise ApiError(f"실시간 빌드 수집 실패: {exc}", status=502) from exc
+            if rep.changed and not dry_run:
+                self.result = None  # 새 스타터가 다음 검사·추천에 반영되도록
+            live = rep.to_dict()
+            live["at"] = time.strftime("%Y-%m-%d %H:%M:%S")
+            self.sync_info["live"] = live
+            live["counts_all"] = self._library_counts()
+            return live
 
     # -- 로컬 파일 도우미 ---------------------------------------------------
     def default_export_dir(self) -> Path:
@@ -996,6 +1017,12 @@ class Handler(BaseHTTPRequestHandler):
             return self._json({"ok": True, **state.remove_build(payload.get("id", ""))})
         if path == "/api/sync":
             return self._json({"ok": True, **state.sync_catalog(dry_run=bool(payload.get("dry_run")))})
+        if path == "/api/sync/live":
+            games = payload.get("games") or None
+            if isinstance(games, str):
+                games = [games]
+            return self._json({"ok": True, **state.sync_live(
+                dry_run=bool(payload.get("dry_run")), games=games)})
         if path == "/api/export":
             fmt = payload.get("format", "md")
             body, name = state.export_text(fmt)
